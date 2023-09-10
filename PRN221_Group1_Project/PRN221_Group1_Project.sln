@@ -3,9 +3,33 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Presentation Layer", "1. Presentation Layer", "{1FB8A6EE-71FD-40B6-ABCF-23A68E9F5B3F}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Business Layer", "2. Business Layer", "{F6C6D674-C0E5-4940-87FD-39178ECB2A1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. DataAccess Layer", "3. DataAccess Layer", "{1BB7FEDE-306E-4B5B-8723-9802C115BA80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G1FOODWebAPI", "G1FOODWebAPI\G1FOODWebAPI.csproj", "{A721EC5F-AA15-47C9-A1A2-167A0989168B}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A721EC5F-AA15-47C9-A1A2-167A0989168B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A721EC5F-AA15-47C9-A1A2-167A0989168B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A721EC5F-AA15-47C9-A1A2-167A0989168B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A721EC5F-AA15-47C9-A1A2-167A0989168B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A721EC5F-AA15-47C9-A1A2-167A0989168B} = {F6C6D674-C0E5-4940-87FD-39178ECB2A1C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {602F075C-32F3-48C3-94BA-0056502A7157}
