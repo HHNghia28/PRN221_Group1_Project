@@ -12,6 +12,8 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
+using System.Net;
 
 namespace G1FOODWebAPI.Controllers
 {
@@ -95,6 +97,8 @@ namespace G1FOODWebAPI.Controllers
 
             account.Token = CreateToken(account);
 
+            SendEmail(account.Email);
+
             return Ok(new APIResponseDTO
             {
                 StatusCode = 200,
@@ -155,6 +159,28 @@ namespace G1FOODWebAPI.Controllers
                 .AddJsonFile("appsettings.json", true, true).Build();
             var str = config["AppSettings:Audience"];
             return str;
+        }
+
+        private void SendEmail(string s)
+        {
+            string fromMail = "g1food.fpt@gmail.com";
+            string fromPassword = "gdfgxbbgtvehrcgg";
+
+            MailMessage message = new MailMessage();
+            message.From = new MailAddress(fromMail);
+            message.Subject = "Test Subject";
+            message.To.Add(new MailAddress("nghiahh.work@gmail.com"));
+            message.Body = "<html><body> " + s + " </body></html>";
+            message.IsBodyHtml = true;
+
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential(fromMail, fromPassword),
+                EnableSsl = true,
+            };
+
+            smtpClient.Send(message);
         }
     }
 }
