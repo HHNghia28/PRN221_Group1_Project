@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using G1FOODLibraby.Context;
-using DataAccess.Entities;
+using DataAccess.Context;
+using G1FOODLibrary.Entities;
 
-namespace G1FOODLibraby.DAO
+namespace DataAccess.DAO
 {
     internal class AccountDAO
     {
@@ -34,7 +34,7 @@ namespace G1FOODLibraby.DAO
 
         public IEnumerable<Account> GetAllAccounts()
         {
-            List<Account> accounts = _context.Accounts.ToList();
+            List<Account> accounts = _context.Accounts.Include(ac => ac.Users).ToList();
 
             return accounts;
         }

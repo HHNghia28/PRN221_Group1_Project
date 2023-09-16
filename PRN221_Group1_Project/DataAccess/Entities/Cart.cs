@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Entities;
+namespace G1FOODLibrary.Entities;
 
 public partial class Cart
 {

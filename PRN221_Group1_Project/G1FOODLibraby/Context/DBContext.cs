@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using DataAccess.Entities;
+using G1FOODLibrary.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace G1FOODLibraby.Context;
+namespace DataAccess.Context;
 
 public partial class DBContext : DbContext
 {

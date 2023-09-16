@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-    <ProjectReference Include="..\G1FOODLibraby\G1FOODLibraby.csproj" />
+    <ProjectReference Include="..\DataAccess\G1FOODLibraby.csproj" />
+    <ProjectReference Include="..\G1FOODLibraby\DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

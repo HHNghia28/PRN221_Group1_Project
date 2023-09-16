@@ -14,9 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. DataAccess Layer", "3. D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "G1FOODWebAPI", "G1FOODWebAPI\G1FOODWebAPI.csproj", "{A721EC5F-AA15-47C9-A1A2-167A0989168B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{273761B5-A1F3-447A-AAAB-578BE633344F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "G1FOODLibraby", "DataAccess\G1FOODLibraby.csproj", "{273761B5-A1F3-447A-AAAB-578BE633344F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G1FOODLibraby", "G1FOODLibraby\G1FOODLibraby.csproj", "{A4B0EE5A-3503-416A-B7CA-AA1D976E7CD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "G1FOODLibraby\DataAccess.csproj", "{A4B0EE5A-3503-416A-B7CA-AA1D976E7CD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

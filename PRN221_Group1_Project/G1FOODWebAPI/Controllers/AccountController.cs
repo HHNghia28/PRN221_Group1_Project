@@ -1,5 +1,5 @@
-﻿using DataAccess.Entities;
-using G1FOODLibraby.Repository;
+﻿using G1FOODLibrary.Entities;
+using DataAccess.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
