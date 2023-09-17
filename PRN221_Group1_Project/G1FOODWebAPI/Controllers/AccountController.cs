@@ -2,6 +2,8 @@
 using DataAccess.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using G1FOODLibrary.DTO;
+using Microsoft.Win32;
 
 namespace G1FOODWebAPI.Controllers
 {
@@ -14,10 +16,29 @@ namespace G1FOODWebAPI.Controllers
         public AccountController() => _accountRepository = new AccountRepository();
 
         // GET: api/<AccountController>
-        [HttpGet]
-        public IEnumerable<Account> Get()
+        [HttpGet("getAllAccounts")]
+        public IActionResult GetAllAccounts()
         {
-            return _accountRepository.GetAllAccounts();
+            try
+            {
+                var accounts = _accountRepository.GetAllAccounts();
+                return Ok(new APIResponseDTO
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get all accounts successful!",
+                    Data = accounts
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponseDTO
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
         }
     }
 }

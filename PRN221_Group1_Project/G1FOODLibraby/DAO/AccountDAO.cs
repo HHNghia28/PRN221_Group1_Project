@@ -34,11 +34,37 @@ namespace DataAccess.DAO
 
         public AccountDAO() => _context = new DBContext();
 
-        public IEnumerable<Account> GetAllAccounts()
+        public IEnumerable<AccountDTO> GetAllAccounts()
         {
-            List<Account> accounts = _context.Accounts.Include(ac => ac.Users).ToList();
+            List<AccountDTO> accountDTOs = new List<AccountDTO>();
+            try
+            {
+                var accounts = _context.Accounts
+                .Include(a => a.Role)
+                .Include(a => a.Status)
+                .Include(ac => ac.Users)
+                .Where(ac => ac.Users.Any(user => user.DefaultUser == true))
+                .ToList();
 
-            return accounts;
+                foreach (var account in accounts)
+                {
+                    accountDTOs.Add(new AccountDTO
+                    {
+                        Id = account.Id,
+                        Email = account.Email,
+                        Name = account.Users.First().Name,
+                        Phone = account.Users.First().Phone,
+                        AddressDetail = account.Users.First().AddressDetail,
+                        Role = account.Role.Name,
+                        Status = account.Status.Name
+                    });
+                }
+            } catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+
+            return accountDTOs;
         }
 
         public async Task<AccountDTO> ResgiterAsync(RegisterDTO register)
@@ -50,18 +76,32 @@ namespace DataAccess.DAO
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(register.Password);
 
+            Guid newId = Guid.NewGuid();
+
             Account account = new Account
             {
-                Id = Guid.NewGuid(),
+                Id = newId,
                 Email = register.Email,
                 EncryptedPassword = passwordHash,
                 RoleId = new Guid("C73813A0-CE6E-4F59-B281-507690B51406"),
                 StatusId = new Guid("2BB38E30-BCAC-45C4-A05E-09BF7B1BCC9E")
             };
 
+            User user = new User
+            {
+                Id = Guid.NewGuid(),
+                Name = register.Name,
+                Phone = register.Phone,
+                DefaultUser = true,
+                AccountId = newId,
+                AddressDetail = register.AddressDetail,
+                StatusId = new Guid("750301CE-21B9-444E-A0D3-53824614CA40")
+            };
+
             try
             {
                 _context.Accounts.Add(account);
+                _context.Users.Add(user);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -72,7 +112,10 @@ namespace DataAccess.DAO
             AccountDTO accountDTO = new AccountDTO
             {
                 Id = account.Id,
-                Email = account.Email
+                Email = account.Email,
+                Name = user.Name,
+                Phone = user.Phone,
+                AddressDetail = user.AddressDetail
             };
 
             return accountDTO;
@@ -80,7 +123,7 @@ namespace DataAccess.DAO
 
         public async Task<AccountDTO> LoginAsync(LoginDTO login)
         {
-            if (string.IsNullOrEmpty(login.Email) || string.IsNullOrEmpty(login.Password)) 
+            if (string.IsNullOrEmpty(login.Email) || string.IsNullOrEmpty(login.Password))
             {
                 throw new ArgumentException("Email or Password can not be empty!");
             }
