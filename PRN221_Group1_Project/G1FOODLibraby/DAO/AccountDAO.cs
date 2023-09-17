@@ -56,7 +56,7 @@ namespace DataAccess.DAO
                 Email = register.Email,
                 EncryptedPassword = passwordHash,
                 RoleId = new Guid("C73813A0-CE6E-4F59-B281-507690B51406"),
-                StatusId = new Guid("750301CE-21B9-444E-A0D3-53824614CA40")
+                StatusId = new Guid("2BB38E30-BCAC-45C4-A05E-09BF7B1BCC9E")
             };
 
             try
@@ -123,6 +123,42 @@ namespace DataAccess.DAO
             };
 
             return accountDTO;
+        }
+
+        public async Task<bool> ActiveAccountAsync(string email)
+        {
+            bool active = true;
+
+            if (string.IsNullOrEmpty(email))
+            {
+                throw new ArgumentException("Email can not be empty!");
+                active = false;
+            }
+
+            Account account = null;
+            try
+            {
+                account = await _context.Accounts
+                    .SingleOrDefaultAsync(a => a.Email.ToLower() == email.ToLower());
+
+                account.StatusId = new Guid("750301CE-21B9-444E-A0D3-53824614CA40");
+
+                _context.Accounts.Update(account);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+                active = false;
+            }
+
+            if (account == null)
+            {
+                throw new ArgumentException("Account not found!");
+                active = false;
+            }
+
+            return active;
         }
     }
 }

@@ -13,5 +13,6 @@ namespace DataAccess.Repository
         public IEnumerable<Account> GetAllAccounts();
         public Task<AccountDTO> RegisterAsync(RegisterDTO register);
         public Task<AccountDTO> LoginAsync(LoginDTO login);
+        public Task<bool> ActiveAccountAsync(string email);
     }
 }
