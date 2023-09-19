@@ -175,7 +175,6 @@ namespace DataAccess.DAO
             if (string.IsNullOrEmpty(email))
             {
                 throw new ArgumentException("Email can not be empty!");
-                active = false;
             }
 
             Account account = null;
@@ -192,13 +191,11 @@ namespace DataAccess.DAO
             catch (Exception ex)
             {
                 throw new Exception("An error occurred while querying the database!", ex);
-                active = false;
             }
 
             if (account == null)
             {
                 throw new ArgumentException("Account not found!");
-                active = false;
             }
 
             return active;
