@@ -17,7 +17,7 @@ namespace G1FOODWebCashier.SqlDependencies
         public void Subcribe()
         {
             string connectionString = GetConnectionString();
-            _oderDependency = new SqlTableDependency<Order>("Data Source=NGHIAHH;Initial Catalog=DBG1FOOD;Persist Security Info=True;User ID=nghia;Password=123");
+            _oderDependency = new SqlTableDependency<Order>(connectionString);
             _oderDependency.OnChanged += OderDependency_OnChanged;
             _oderDependency.OnError += OderDependency_OnError;
             _oderDependency.Start();
