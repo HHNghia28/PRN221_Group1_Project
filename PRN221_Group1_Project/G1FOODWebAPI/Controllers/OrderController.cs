@@ -52,5 +52,86 @@ namespace G1FOODWebAPI.Controllers
                 Data = orderDTO
             });
         }
+
+        [HttpGet("getOrderPending")]
+        public async Task<IActionResult> GetOrderPending()
+        {
+            try
+            {
+
+                var order = await _orderRepository.GetOrderPending();
+
+                return Ok(new APIResponseDTO
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get order pending successful!",
+                    Data = order
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponseDTO
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("getOrderCooking")]
+        public async Task<IActionResult> GetOrderCooking()
+        {
+            try
+            {
+
+                var order = await _orderRepository.GetOrderCooking();
+
+                return Ok(new APIResponseDTO
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get order pending successful!",
+                    Data = order
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponseDTO
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("getOrderShipping")]
+        public async Task<IActionResult> GetOrderShipping()
+        {
+            try
+            {
+
+                var order = await _orderRepository.GetOrderShipping();
+
+                return Ok(new APIResponseDTO
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get order pending successful!",
+                    Data = order
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponseDTO
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
     }
 }

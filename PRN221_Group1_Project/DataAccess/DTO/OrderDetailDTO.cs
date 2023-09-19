@@ -18,6 +18,8 @@ namespace G1FOODLibrary.DTO
 
         public string? Note { get; set; }
 
+        public string? ProductName { get; set; }
+
         public Guid? ProductId { get; set; } = Guid.Empty;
 
         public Guid? OrderId { get; set; } = Guid.Empty;

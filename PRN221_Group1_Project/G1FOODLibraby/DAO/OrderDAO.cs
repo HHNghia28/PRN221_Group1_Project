@@ -1,6 +1,7 @@
 ﻿using DataAccess.Context;
 using G1FOODLibrary.DTO;
 using G1FOODLibrary.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -101,6 +102,95 @@ namespace DataAccess.DAO
             };
 
             return orderDTO;
+        }
+
+        public async Task<IEnumerable<OrderDTO>> GetOrderByStatusAsync(Guid statusId)
+        {
+            if (statusId == Guid.Empty)
+            {
+                throw new ArgumentException("Status id can not null!");
+            }
+
+            List<OrderDTO> orderDTOs = new List<OrderDTO>();
+            List<Order> orders;
+
+            try
+            {
+               orders  = _context.Orders
+                    .Include(o => o.OrderDetails)
+                    .Include(o => o.User)
+                    .Include(o => o.Status)
+                    .Include(o => o.Voucher)
+                    .Where(o => o.StatusId == statusId).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+
+            foreach(Order order in orders)
+            {
+                IEnumerable<OrderDetailDTO> details = await GetOrderDetailByOrderIDAsync(order.Id);
+
+                if (details.Count() != 0)
+                {
+
+                    orderDTOs.Add(new OrderDTO
+                    {
+                        Id = order.Id,
+                        Date = order.Date,
+                        Note = order.Note,
+                        ScheduleId = order.ScheduleId,
+                        StatusId = order.StatusId,
+                        Status = order.Status.Name,
+                        Username = order.User.Name,
+                        VoucherId = order.VoucherId,
+                        Details = details
+                    });
+                }
+            }
+
+            return orderDTOs;
+        }
+
+        public async Task<IEnumerable<OrderDetailDTO>> GetOrderDetailByOrderIDAsync(Guid orderId)
+        {
+            if (orderId == Guid.Empty)
+            {
+                throw new ArgumentException("Order id can not null!");
+            }
+
+            List<OrderDetailDTO> orderDetailDTOs = new List<OrderDetailDTO>();
+            List<OrderDetail> orderDetails;
+
+            try
+            {
+                orderDetails = _context.OrderDetails
+                                .Include(o => o.Product)
+                                .Where(o => o.OrderId == orderId)
+                                .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+
+            foreach (OrderDetail detail in orderDetails)
+            {
+                orderDetailDTOs.Add(new OrderDetailDTO
+                {
+                    OrderId = detail.OrderId,
+                    Id = detail.Id,
+                    Note = detail.Note,
+                    Price = detail.Price,
+                    ProductId = detail.ProductId,
+                    Quantity = detail.Quantity,
+                    SalePercent = detail.SalePercent,
+                    ProductName = detail.Product.Name
+                });
+            }
+
+            return orderDetailDTOs;
         }
     }
 }

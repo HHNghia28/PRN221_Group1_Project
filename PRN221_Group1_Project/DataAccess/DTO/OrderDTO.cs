@@ -14,6 +14,14 @@ namespace G1FOODLibrary.DTO
 
         public string? Note { get; set; }
 
+        public string? Status { get; set; }
+
+        public string? Username { get; set; }
+
+        public string Code { get; set; } = null!;
+
+        public int SalePercent { get; set; }
+
         public Guid? StatusId { get; set; }
 
         public Guid? UserId { get; set; }
