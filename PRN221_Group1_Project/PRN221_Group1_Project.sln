@@ -24,11 +24,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "G1Food_Admin", "G1Food_Admi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "G1Food_Cashier", "G1Food_Cashier\G1Food_Cashier.csproj", "{793ECE1F-79CB-4A87-B4A1-1E4B5D4D8CF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G1_Food_ChefStaff", "G1_Food_ChefStaff\G1_Food_ChefStaff.csproj", "{6C63BE7E-079A-4262-9B83-6D19D10A5240}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "G1_Food_ChefStaff", "G1_Food_ChefStaff\G1_Food_ChefStaff.csproj", "{6C63BE7E-079A-4262-9B83-6D19D10A5240}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G1_Food_Inventory", "G1_Food_Inventory\G1_Food_Inventory.csproj", "{317CD759-6EA4-4AF7-9C22-D673E49D0EDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "G1_Food_Inventory", "G1_Food_Inventory\G1_Food_Inventory.csproj", "{317CD759-6EA4-4AF7-9C22-D673E49D0EDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G1_Food_SellingStaff", "G1_Food_SellingStaff\G1_Food_SellingStaff.csproj", "{AAAE74D8-A1FE-4BCE-BF93-19D654F1BB71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "G1_Food_SellingStaff", "G1_Food_SellingStaff\G1_Food_SellingStaff.csproj", "{AAAE74D8-A1FE-4BCE-BF93-19D654F1BB71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
