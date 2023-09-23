@@ -9,11 +9,8 @@
           integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="./css/sb-admin-2.min.css" rel="stylesheet" />
-
     <link href="./vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./css/base.css" />
-
-
 </head>
 
 <body id="page-top">
@@ -29,7 +26,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item mt-4 active">
-                <a class="nav-link " href="index.html">
+                <a class="nav-link " href="">
                     <i class="fas fa-fw fa-tachometer-alt main-color"></i>
                     <span class="text-dark">Dashboard</span>
                 </a>
@@ -38,47 +35,16 @@
             <!-- Heading -->
             <!-- <div class="sidebar-heading main-color">All components</div> -->
             <li class="nav-item">
-                <a class="nav-link" href="~/Pages/Demo.cshtml">
+                <a class="nav-link" href="../InventoryImport">
                     <i class="fas fa-fw fa-chart-area main-color"></i>
-                    <span class="text-dark">Demo</span>
+                    <span class="text-dark">Inventory Import</span>
                 </a>
             </li>
-
-            <li class="nav-item text-dark">
-                <a class="nav-link text-dark" href="">
-                    <i class="fas fa-fw fa-table main-color"></i>
-                    <span>Item</span>
+            <li class="nav-item">
+                <a class="nav-link" href="../InventoryExport">
+                    <i class="fas fa-fw fa-chart-area main-color"></i>
+                    <span class="text-dark">Inventory Export</span>
                 </a>
-            </li>
-
-            <li class="nav-item text-dark">
-                <a class="nav-link text-dark" href="">
-                    <i class="fas fa-fw fa-table main-color"></i>
-                    <span>Item 3</span>
-                </a>
-            </li>
-
-            <li class="nav-item text-dark">
-                <a class="nav-link text-dark" href="">
-                    <i class="fas fa-fw fa-table main-color"></i>
-                    <span>Item 4</span>
-                </a>
-            </li>
-
-            <li class="nav-item text-wgb">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                   aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench main-color"></i>
-                    <span class="text-dark">Item 5</span>
-                </a>
-                <div id="collapseUtilities" class="collapse text-dark" aria-labelledby="headingUtilities"
-                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header main-color">Sub item:</h6>
-                        <a class="collapse-item text-dark" href="">Sub item 1</a>
-                        <a class="collapse-item text-dark" href="">Sub item 2</a>
-                    </div>
-                </div>
             </li>
 
             <!-- Divider -->
@@ -161,9 +127,7 @@
                     </ul>
                 </nav>
                 <div class="container">
-                    <main role="main" class="pb-3">
-                        @RenderBody()
-                    </main>
+                    @RenderBody()
                 </div>
             </div>
         </div>

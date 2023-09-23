@@ -1,7 +1,7 @@
 ﻿@page
 @model InventoryImportModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Inventory Import";
 }
 
 <div>
@@ -78,10 +78,14 @@
             </div>
 
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
+                <div class="card-header py-3 d-flex justify-content-between">
                     <h6 class="m-0 font-weight-bold main-color">
                         Data table's name
                     </h6>
+                    <button class="btn bg-success">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Save
+                    </button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
