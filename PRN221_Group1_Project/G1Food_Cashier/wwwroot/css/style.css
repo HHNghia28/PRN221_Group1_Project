@@ -1,0 +1,40 @@
+﻿/*Your css here*/
+.card-body-cashier {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0.5rem;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.cashier {
+    height: 600px;
+}
+
+.img-cashier {
+    width: 270px;
+    height: 270px;
+}
+
+.text-line-through {
+    text-decoration: line-through;
+    ;
+}
+
+.text-cashier {
+    font-size: 10px;
+}
+
+.py-1 {
+    padding: 1em;
+}
+
+.mt-note {
+    margin-top: -0.5em;
+}
+
+.border-radius-1 {
+    border-radius: 0.5em;
+}

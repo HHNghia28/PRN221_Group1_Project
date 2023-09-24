@@ -20,6 +20,8 @@ namespace G1FOODLibrary.DTO
 
         public string? ProductName { get; set; }
 
+        public string? Image { get; set; }
+
         public Guid? ProductId { get; set; } = Guid.Empty;
 
         public Guid? OrderId { get; set; } = Guid.Empty;

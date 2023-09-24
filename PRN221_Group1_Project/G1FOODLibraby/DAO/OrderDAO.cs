@@ -186,7 +186,8 @@ namespace DataAccess.DAO
                     ProductId = detail.ProductId,
                     Quantity = detail.Quantity,
                     SalePercent = detail.SalePercent,
-                    ProductName = detail.Product.Name
+                    ProductName = detail.Product.Name,
+                    Image = detail.Product.Image
                 });
             }
 
