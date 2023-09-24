@@ -1,8 +1,8 @@
 ﻿using G1FOODLibrary.Entities;
-using G1FOODWebCashier.Hubs;
+using G1Food_Cashier.Hubs;
 using TableDependency.SqlClient;
 
-namespace G1FOODWebCashier.SqlDependencies
+namespace G1Food_Cashier.SqlDependencies
 {
     public class OrderPendingDependency
     {

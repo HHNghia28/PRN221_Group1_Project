@@ -1,6 +1,6 @@
-﻿using G1FOODWebCashier.SqlDependencies;
+﻿using G1Food_Cashier.SqlDependencies;
 
-namespace G1FOODWebCashier.MiddlewareExtensions
+namespace G1Food_Cashier.MiddlewareExtensions
 {
     public static class ApplicationBuilderExtension
     {

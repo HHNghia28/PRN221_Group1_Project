@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
-namespace G1FOODWebCashier.Hubs
+namespace G1Food_Cashier.Hubs
 {
     public class OrderHub : Hub
     {

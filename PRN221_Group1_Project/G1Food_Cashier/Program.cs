@@ -1,7 +1,17 @@
+using G1Food_Cashier.Hubs;
+using G1Food_Cashier.MiddlewareExtensions;
+using G1Food_Cashier.SqlDependencies;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddSingleton<OrderHub>();
+builder.Services.AddSingleton<OrderPendingDependency>();
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -21,5 +31,9 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.MapHub<OrderHub>("/orderHub");
+
+app.UseOrderPendingDependency();
 
 app.Run();
