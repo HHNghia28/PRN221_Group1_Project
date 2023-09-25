@@ -34,10 +34,13 @@
     background: var(--main-color);
 }
 
-/* Product list */
-.card-name a {
-    font-size: var(--font-size-mml);
-}
+    .owl-theme .owl-dots:nth-child(2) {
+        display: none !important;
+    }
+    /* Product list */
+    .card-name a {
+        font-size: var(--font-size-mml);
+    }
 .card-product-body p {
     margin-bottom: 0px !important;
 }
