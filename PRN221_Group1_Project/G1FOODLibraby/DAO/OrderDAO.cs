@@ -193,5 +193,76 @@ namespace DataAccess.DAO
 
             return orderDetailDTOs;
         }
+
+        public async Task UpdateStatusOrderAsync(Guid guid, Guid stutusId)
+        {
+            if (guid == Guid.Empty)
+            {
+                throw new ArgumentNullException("Order ID can not null!");
+            }
+
+            try
+            {
+                var order = _context.Orders.FirstOrDefault(o => o.Id == guid);
+
+                if (order == null)
+                {
+                    throw new Exception("Order not found!");
+                }
+
+                order.StatusId = stutusId;
+
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+        }
+
+        public async Task<IEnumerable<OrderDTO>> GetOrdersAsync()
+        {
+
+            List<OrderDTO> orderDTOs = new List<OrderDTO>();
+            List<Order> orders;
+
+            try
+            {
+                orders = _context.Orders
+                     .Include(o => o.OrderDetails)
+                     .Include(o => o.User)
+                     .Include(o => o.Status)
+                     .Include(o => o.Voucher)
+                     .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+
+            foreach (Order order in orders)
+            {
+                IEnumerable<OrderDetailDTO> details = await GetOrderDetailByOrderIDAsync(order.Id);
+
+                if (details.Count() != 0)
+                {
+
+                    orderDTOs.Add(new OrderDTO
+                    {
+                        Id = order.Id,
+                        Date = order.Date,
+                        Note = order.Note,
+                        ScheduleId = order.ScheduleId,
+                        StatusId = order.StatusId,
+                        Status = order.Status.Name,
+                        Username = order.User.Name,
+                        VoucherId = order.VoucherId,
+                        Details = details
+                    });
+                }
+            }
+
+            return orderDTOs;
+        }
     }
 }
