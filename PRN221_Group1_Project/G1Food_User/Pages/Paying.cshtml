@@ -1,0 +1,174 @@
+﻿@page
+@model G1Food_User.Pages.PayingModel
+@{
+    ViewData["Title"] = "Paying";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paying</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="~/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/paying.css" type="text/css" />
+    <title>Paying</title>
+</head>
+<body>
+    <main class="container-fluid mt-content bg-main">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-sm-12 col-md-6 col-lg-7">
+                    <div class="d-flex justify-content-between mt-5">
+                        <h6 class="bold">GIỎ HÀNG CỦA BẠN (2 Sản phẩm)</h6>
+                        <a class="btn sm" href="./index.html">
+                            <i class="fa-solid fa-plus"></i>
+                            Thêm món ăn
+                        </a>
+                    </div>
+                    <div class="paying-desction mt-3">
+                        <i class="fa-solid fa-gift main-color mr-2"></i>
+                        <span>Mua nhiều hơn với hóa đơn 150,000 VND để nhận miễn phí 01 khoai tây chiên (M). Mua nhiều hơn với hóa đơn 225,000 VND để nhận miễn phí 01 phần Burger Tôm nhé. Lưu ý: chỉ áp dụng một số cửa hàng nhé</span>
+                    </div>
+                    <table class="table table-hover table-bordered text-center mt-5">
+                        <thead class="align-middle">
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Ảnh</th>
+                                <th>Số lượng</th>
+                                <th>Gía</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="align-middle product-name">
+                                    <a href="">Combo Burger Tôm</a>
+                                </td>
+                                <td class="align-middle product-img">
+                                    <img src="./img/card_1.jpg" alt="">
+                                </td>
+                                <td class="align-middle product-quanity">
+                                    <div class="quantity-group justify-content-center">
+                                        <input type="number" id="quantity-input" value="1" min="1" />
+                                    </div>
+                                </td>
+                                <td class="align-middle product-total bold main-color">120.000vnd</td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle product-name">
+                                    <a href="">Combo Burger Tôm</a>
+                                </td>
+                                <td class="align-middle product-img">
+                                    <img src="./img/card_1.jpg" alt="">
+                                </td>
+                                <td class="align-middle product-quanity">
+                                    <div class="quantity-group justify-content-center">
+                                        <input type="number" id="quantity-input" value="1" min="1" />
+                                    </div>
+                                </td>
+                                <td class="align-middle product-total bold main-color">120.000vnd</td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle product-name">
+                                    <a href="">Combo Burger Tôm</a>
+                                </td>
+                                <td class="align-middle product-img">
+                                    <img src="./img/card_1.jpg" alt="">
+                                </td>
+                                <td class="align-middle product-quanity">
+                                    <div class="quantity-group justify-content-center">
+                                        <input type="number" id="quantity-input" value="1" min="1" />
+                                    </div>
+                                </td>
+                                <td class="align-middle product-total bold main-color">120.000vnd</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="paying-note mt-3">
+                        <p class="bold">Ghi chú cho đơn hàng</p>
+                        <input class="" type="text" placeholder="Vui lòng nhập lưu ý cho cửa hàng">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-5 mt-5">
+                    <div class="paying-info">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="bold"> <i class="fa-regular fa-user main-color mr-2"></i> Thông tin nhân hàng</h6>
+                            <a class="btn sm bg-info" href="./index.html">
+                                <i class="fa-solid fa-plus"></i>
+                                Thêm địa chỉ
+                            </a>
+                        </div>
+                        <div class="d-flex mt-4">
+                            <span class="bold mr-2">Tên:</span>
+                            <span>Nguyễn Ngọc Như Ý</span>
+                        </div>
+                        <div class="d-flex mt-2">
+                            <span class="bold mr-2">Phone:</span>
+                            <span>05866812890</span>
+                        </div>
+                        <div class="d-flex mt-2">
+                            <div class="bold mr-2 ">Địa chỉ:</div>
+                            <span>600 Nguyễn Văn Cừ nối dài, An Bình, Ninh Kiều, Cần Thơ 900000, Việt Nam</span>
+                        </div>
+                        <div class="d-flex mt-2">
+                            <span class="bold mr-2">Cửa hàng:</span>
+                            <span>G1-Food CẦN THƠ</span>
+                        </div>
+                        <div class="diliver full mt-4"></div>
+                        <p class="mt-2 text-center fs-md">Thời gian tiếp nhận đơn hàng trực tuyến từ 08:00 đến 21:00 hằng ngày</p>
+                    </div>
+                    <div class="paying-total mt-3">
+                        <div class="d-flex mt-2 justify-content-between">
+                            <span class="bold mr-2">Tạm tính:</span>
+                            <span class="bold">315.000₫</span>
+                        </div>
+                        <div class="d-flex mt-2 justify-content-between">
+                            <span class="bold mr-2">Phí giao hàng:</span>
+                            <span>30.000₫</span>
+                        </div>
+                        <div class="d-flex mt-2 align-items-lg-center">
+                            <span class="bold mr-2">Voucher:</span>
+                            <select name="" id="" class="paying-voucher">
+                                <option class="flex justify-content-between" value="1">
+                                    voucher 1
+                                    <span>-20%</span>
+                                </option>
+                                <option value="2">
+                                    voucher 2
+                                    <span>-20%</span>
+                                </option>
+                                <option value="3">
+                                    voucher 3
+                                    <span>-20%</span>
+                                </option>
+                            </select>
+                        </div>
+                        <div class="d-flex mt-2 justify-content-between">
+                            <span class="bold mr-2">Tổng cộng:</span>
+                            <span class="bold main-color">10.000.000d</span>
+                        </div>
+                        <p class="mt-3 fs-md ml-0 mb-0">Bạn vui lòng kiểm tra lại thông tin trước khi đặt hàng!</p>
+                        <a href="" class="btn full mt-3">Hoàn tất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="~/js/main.js" type="text/javascript" ></script>
+</body>
+</html>

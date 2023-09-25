@@ -1,6 +1,5 @@
-﻿// Set active navbar tab
+// Set active navbar tab
 const navItems = document.querySelectorAll('.header-list li');
-console.group(navItems);
 navItems.forEach(item => {
     item.addEventListener('click', () => {
         const currentActiveTab = document.querySelector('.header-list li.active');
@@ -11,44 +10,45 @@ navItems.forEach(item => {
 })
 
 // Show hide menu 
-const btnOpenMenu = document.querySelector('.btn-menu');
-const btnCloseMenu = document.querySelector('.close-nav-menu');
-const headerMenu = document.querySelector('.header-menu');
 const overplay = document.querySelector('.overplay');
-const formWrapper = document.querySelector('.form-wrapper');
-const btnCloseForm = document.querySelector('.close-form ');
-
-
-btnOpenMenu.addEventListener('click', () => {
-    console.log('clicked open');
-    headerMenu.classList.add('d-block', 'd-lg-none');
-})
-btnCloseMenu.addEventListener('click', () => {
-    console.log('clicked close');
-    headerMenu.classList.remove('d-block', 'd-lg-none');
+const orderedList = document.querySelectorAll('.order-list tr');
+const orderDetailContainer = document.querySelector('.oderDetail-container');
+const btnCloseOrderDetail = document.querySelector('.btn-close-order-detail');
+console.log(overplay);
+orderedList.forEach((order, index) => {
+    order.addEventListener('click', () => {
+        overplay.classList.add('d-block');
+        orderDetailContainer.classList.add('d-block');
+    })
 })
 
-// Show hide login, register form
-const btnLogin = document.querySelector('.btn-login');
-const btnRegister = document.querySelector('.btn-register');
+btnCloseOrderDetail.addEventListener('click', () => {
+    overplay.classList.remove('d-block');
+    orderDetailContainer.classList.remove('d-block');
+})
 
-const showOverplay = () => {
-    overplay.classList.add('d-flex');
+// Handle inscrease quantity in product detail
+const increaseQuantity = (button)  => {
+    const parentlEement = button.parentNode ;
+    const quantityInput = parentlEement.querySelector('#quantity-input');
+    console.log(quantityInput);
+    let quantity = parseInt(quantityInput.value, 10);
+    quantityInput.value = quantity + 1;
+  }
+  
+const decreaseQuantity = (button) => {
+    const parentlEement = button.parentNode;
+    const quantityInput = parentlEement.querySelector('#quantity-input');
+    let quantity = parseInt(quantityInput.value, 10);
+    if (quantity > 1) {
+      quantityInput.value = quantity - 1;
+    }
 }
-const hideOverplay = () => {
-    overplay.classList.remove('d-flex');
-}
-
-btnLogin.addEventListener('click', () => {
-    showOverplay();
-    formWrapper.classList.add('d-block');
-})
-
-btnRegister.addEventListener('click', () => {
-    showOverplay();
-    formWrapper.classList.add('d-block');
-})
-btnCloseForm.addEventListener('click', () => {
-    hideOverplay();
-    formWrapper.classList.remove('d-block');
-})
+//   Handle show form input comment
+// const inputComment = document.querySelector('.comment-wrapper.reply input');
+// const buttonReplyComment = document.querySelector('.comment-wrapper.reply button');
+// console.log(inputComment);
+// console.log(buttonReplyComment)
+// buttonReplyComment.addEventListener('click', () => {
+//     inputComment.style.display = 'block';
+// })
