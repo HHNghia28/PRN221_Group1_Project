@@ -10,30 +10,30 @@ namespace DataAccess.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        public Task<ProductDTO> AddProduct(ProductDTO productDTO) => ProductDAO.Instance.AddProduct(productDTO);
+        public Task AddProduct(ProductRequest productDTO) => ProductDAO.Instance.AddProduct(productDTO);
 
-        public Task<RecipeDTO> AddRecipe(RecipeDTO recipeDTO) => ProductDAO.Instance.AddRecipe(recipeDTO);
+        public Task AddRecipe(RecipeRequest recipeDTO) => ProductDAO.Instance.AddRecipe(recipeDTO);
 
-        public Task<ProductDTO> DeleteProduct(Guid id) => ProductDAO.Instance.DeleteProduct(id);
+        public Task DeleteProduct(Guid id) => ProductDAO.Instance.DeleteProduct(id);
 
-        public Task<RecipeDTO> DeleteRecipe(Guid guid) => ProductDAO.Instance.DeleteRecipe(guid);
+        public Task DeleteRecipe(Guid guid) => ProductDAO.Instance.DeleteRecipe(guid);
 
-        public Task<IEnumerable<CategogyWarehouseItemDTO>> GetCategogyWarehouseItem() => ProductDAO.Instance.GetCategogyWarehouseItem();
+        public Task<IEnumerable<CategogyWarehouseItemResponse>> GetCategogyWarehouseItem() => ProductDAO.Instance.GetCategogyWarehouseItem();
 
-        public Task<IEnumerable<CommentDTO>> GetCommentByProductID(Guid guid) => ProductDAO.Instance.GetCommentByProductID(guid);
+        public Task<IEnumerable<CommentResponse>> GetCommentByProductID(Guid guid) => ProductDAO.Instance.GetCommentByProductID(guid);
 
-        public Task<ProductDTO> GetProduct(Guid id) => ProductDAO.Instance.GetProduct(id);
+        public Task<ProductResponse> GetProduct(Guid id) => ProductDAO.Instance.GetProduct(id);
 
-        public Task<IEnumerable<CategoryDTO>> GetProductCategories() => ProductDAO.Instance.GetProductCategories();
+        public Task<IEnumerable<CategoryResponse>> GetProductCategories() => ProductDAO.Instance.GetProductCategories();
 
-        public Task<IEnumerable<ProductDTO>> GetProducts() => ProductDAO.Instance.GetProducts();
+        public Task<IEnumerable<ProductResponse>> GetProducts() => ProductDAO.Instance.GetProducts();
 
-        public Task<IEnumerable<RecipeDTO>> GetRecipeByProductId(Guid guid) => ProductDAO.Instance.GetRecipeByProductId(guid);
+        public Task<IEnumerable<RecipeResponse>> GetRecipeByProductId(Guid guid) => ProductDAO.Instance.GetRecipeByProductId(guid);
 
-        public Task<IEnumerable<WarehouseItemDTO>> GetWarehouseItems() => ProductDAO.Instance.GetWarehouseItems();
+        public Task<IEnumerable<WarehouseItemResponse>> GetWarehouseItems() => ProductDAO.Instance.GetWarehouseItems();
 
-        public Task<ProductDTO> UpdateProduct(ProductDTO productDTO) => ProductDAO.Instance.UpdateProduct(productDTO);
+        public Task UpdateProduct(ProductRequest productDTO, Guid id) => ProductDAO.Instance.UpdateProduct(productDTO, id);
 
-        public Task<RecipeDTO> UpdateRecipe(RecipeDTO recipeDTO) => ProductDAO.Instance.UpdateRecipe(recipeDTO);
+        public Task UpdateRecipe(RecipeRequest recipeDTO, Guid id) => ProductDAO.Instance.UpdateRecipe(recipeDTO, id);
     }
 }

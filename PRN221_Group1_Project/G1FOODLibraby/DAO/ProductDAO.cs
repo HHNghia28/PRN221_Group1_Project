@@ -33,9 +33,9 @@ namespace DataAccess.DAO
 
         public ProductDAO() => _context = new DBContext();
 
-        public async Task<IEnumerable<ProductDTO>> GetProducts()
+        public async Task<IEnumerable<ProductResponse>> GetProducts()
         {
-            List<ProductDTO> productDTOs = new List<ProductDTO>();
+            List<ProductResponse> productDTOs = new List<ProductResponse>();
 
             try
             {
@@ -44,7 +44,7 @@ namespace DataAccess.DAO
                 foreach (var product in products)
                 {
 
-                    productDTOs.Add(new ProductDTO
+                    productDTOs.Add(new ProductResponse
                     {
                         Id = product.Id,
                         Name = product.Name,
@@ -66,9 +66,9 @@ namespace DataAccess.DAO
             return productDTOs;
         }
 
-        public async Task<ProductDTO> GetProduct(Guid id)
+        public async Task<ProductResponse> GetProduct(Guid id)
         {
-            ProductDTO productDTO = null;
+            ProductResponse productDTO = null;
 
             try
             {
@@ -79,7 +79,7 @@ namespace DataAccess.DAO
                     throw new Exception("Product not exist!");
                 }
 
-                productDTO = new ProductDTO
+                productDTO = new ProductResponse
                 {
                     Id = product.Id,
                     CategogyId = product.CategogyId,
@@ -99,7 +99,7 @@ namespace DataAccess.DAO
             return productDTO;
         }
 
-        public async Task<ProductDTO> AddProduct(ProductDTO productDTO)
+        public async Task AddProduct(ProductRequest productDTO)
         {
             if (productDTO == null)
             {
@@ -124,10 +124,6 @@ namespace DataAccess.DAO
 
                 _context.Products.Add(product);
                 await _context.SaveChangesAsync();
-
-                productDTO.Id = id;
-
-                return productDTO;
             }
             catch (Exception ex)
             {
@@ -135,7 +131,7 @@ namespace DataAccess.DAO
             }
         }
 
-        public async Task<ProductDTO> UpdateProduct(ProductDTO productDTO)
+        public async Task UpdateProduct(ProductRequest productDTO, Guid id)
         {
             if (productDTO == null)
             {
@@ -144,7 +140,7 @@ namespace DataAccess.DAO
 
             try
             {
-                var existProduct = _context.Products.FirstOrDefault(p => p.Id == productDTO.Id);
+                var existProduct = _context.Products.FirstOrDefault(p => p.Id == id);
 
                 if (existProduct == null)
                 {
@@ -158,8 +154,6 @@ namespace DataAccess.DAO
                 existProduct.Image = productDTO.Image;
 
                 await _context.SaveChangesAsync();
-
-                return productDTO;
             }
             catch (Exception ex)
             {
@@ -167,14 +161,12 @@ namespace DataAccess.DAO
             }
         }
 
-        public async Task<ProductDTO> DeleteProduct(Guid id)
+        public async Task DeleteProduct(Guid id)
         {
             if (id == Guid.Empty)
             {
                 throw new ArgumentNullException("ID can not null!");
             }
-
-            ProductDTO productDTO = null;
 
             try
             {
@@ -185,23 +177,9 @@ namespace DataAccess.DAO
                     throw new Exception("Product not exist!");
                 }
 
-                _context.Products.Remove(existProduct);
+                existProduct.StatusId = new Guid("C9118626-2A37-4902-96F3-9B5BD8351A2D");
 
                 await _context.SaveChangesAsync();
-
-                productDTO = new ProductDTO
-                {
-                    Id = existProduct.Id,
-                    CategogyId = existProduct.CategogyId,
-                    Name = existProduct.Name,
-                    Image = existProduct.Image,
-                    Price = existProduct.Price,
-                    Description = existProduct?.Description,
-                    Category = existProduct.Categogy.Name,
-                    Status = existProduct.Status.Name
-                };
-
-                return productDTO;
             }
             catch (Exception ex)
             {
@@ -209,17 +187,17 @@ namespace DataAccess.DAO
             }
         }
 
-        public async Task<IEnumerable<CategoryDTO>> GetProductCategories()
+        public async Task<IEnumerable<CategoryResponse>> GetProductCategories()
         {
             try
             {
-                List<CategoryDTO> categoriesDTO = new List<CategoryDTO>();
+                List<CategoryResponse> categoriesDTO = new List<CategoryResponse>();
 
                 var categorys = _context.Categogies.ToList();
 
                 foreach (var category in categorys)
                 {
-                    categoriesDTO.Add(new CategoryDTO
+                    categoriesDTO.Add(new CategoryResponse
                     {
                         Id = category.Id,
                         Name = category.Name,
@@ -235,17 +213,17 @@ namespace DataAccess.DAO
             }
         }
 
-        public async Task<IEnumerable<CategogyWarehouseItemDTO>> GetCategogyWarehouseItem()
+        public async Task<IEnumerable<CategogyWarehouseItemResponse>> GetCategogyWarehouseItem()
         {
             try
             {
-                List<CategogyWarehouseItemDTO> categoriesDTO = new List<CategogyWarehouseItemDTO>();
+                List<CategogyWarehouseItemResponse> categoriesDTO = new List<CategogyWarehouseItemResponse>();
 
                 var categorys = _context.CategogyWarehouseItems.ToList();
 
                 foreach (var category in categorys)
                 {
-                    categoriesDTO.Add(new CategogyWarehouseItemDTO
+                    categoriesDTO.Add(new CategogyWarehouseItemResponse
                     {
                         Id = category.Id,
                         Name = category.Name,
@@ -261,24 +239,22 @@ namespace DataAccess.DAO
             }
         }
 
-        public async Task<IEnumerable<CommentDTO>> GetCommentByProductID(Guid guid)
+        public async Task<IEnumerable<CommentResponse>> GetCommentByProductID(Guid guid)
         {
             try
             {
-                List<CommentDTO> commentDTOs = new List<CommentDTO>();
+                List<CommentResponse> commentDTOs = new List<CommentResponse>();
 
                 var comments = _context.Comments.Where(c => c.Id == guid).ToList();
 
                 foreach (var item in comments)
                 {
-                    commentDTOs.Add(new CommentDTO
+                    commentDTOs.Add(new CommentResponse
                     {
                         Id = item.Id,
                         AccountName = await GetUsername(item.Id),
-                        AccountId = item.Id,
                         Content = item.Content,
                         ParentCommentId = item.Id,
-                        ProductId = item.Id,
                         ParentName = await GetUsername(item.ParentCommentId ?? Guid.Empty),
                     });
                 }
@@ -321,9 +297,9 @@ namespace DataAccess.DAO
             }
         }
 
-        public async Task<IEnumerable<WarehouseItemDTO>> GetWarehouseItems()
+        public async Task<IEnumerable<WarehouseItemResponse>> GetWarehouseItems()
         {
-            List<WarehouseItemDTO> warehouseItemDTOs = new List<WarehouseItemDTO>();
+            List<WarehouseItemResponse> warehouseItemDTOs = new List<WarehouseItemResponse>();
 
             try
             {
@@ -331,10 +307,9 @@ namespace DataAccess.DAO
 
                 foreach (var item in warehouseItems)
                 {
-                    warehouseItemDTOs.Add(new WarehouseItemDTO
+                    warehouseItemDTOs.Add(new WarehouseItemResponse
                     {
                         Id = item.Id,
-                        CategogyItemId = item.Id,
                         Description = item.Description,
                         Name = item.Name,
                         CategoryName = item.CategogyItem.Name,
@@ -350,7 +325,7 @@ namespace DataAccess.DAO
             return warehouseItemDTOs;
         }
 
-        public async Task<RecipeDTO> AddRecipe(RecipeDTO recipeDTO)
+        public async Task AddRecipe(RecipeRequest recipeDTO)
         {
             if (recipeDTO == null) throw new ArgumentNullException("Recipe can not null!");
 
@@ -368,10 +343,6 @@ namespace DataAccess.DAO
 
                 _context.Recipes.Add(recipe);
                 await _context.SaveChangesAsync();
-
-                recipeDTO.Id = guid;
-
-                return recipeDTO;
             }
             catch (Exception ex)
             {
@@ -379,13 +350,13 @@ namespace DataAccess.DAO
             }
         }
 
-        public async Task<RecipeDTO> UpdateRecipe(RecipeDTO recipeDTO)
+        public async Task UpdateRecipe(RecipeRequest recipeDTO, Guid id)
         {
             if (recipeDTO == null) throw new ArgumentNullException("Recipe can not null!");
 
             try
             {
-                var existRecipe = _context.Recipes.FirstOrDefault(x => x.Id ==  recipeDTO.Id);
+                var existRecipe = _context.Recipes.FirstOrDefault(x => x.Id == id);
 
                 if (existRecipe == null)
                 {
@@ -397,8 +368,6 @@ namespace DataAccess.DAO
                 existRecipe.ProductId = recipeDTO.ProductId;
 
                 await _context.SaveChangesAsync();
-
-                return recipeDTO;
             }
             catch (Exception ex)
             {
@@ -406,7 +375,7 @@ namespace DataAccess.DAO
             }
         }
 
-        public async Task<RecipeDTO> DeleteRecipe(Guid guid)
+        public async Task DeleteRecipe(Guid guid)
         {
             if (guid == Guid.Empty) throw new ArgumentNullException("Recipe ID can not null!");
 
@@ -422,14 +391,6 @@ namespace DataAccess.DAO
                 _context.Recipes.Remove(existRecipe);
 
                 await _context.SaveChangesAsync();
-
-                return new RecipeDTO
-                {
-                    Id = existRecipe.Id,
-                    ProductId = existRecipe.ProductId,
-                    Quantity = existRecipe.Quantity,
-                    WarehouseItemId = existRecipe.WarehouseItemId
-                };
             }
             catch (Exception ex)
             {
@@ -437,25 +398,22 @@ namespace DataAccess.DAO
             }
         }
 
-        public async Task<IEnumerable<RecipeDTO>> GetRecipeByProductId(Guid guid)
+        public async Task<IEnumerable<RecipeResponse>> GetRecipeByProductId(Guid guid)
         {
             if (guid == Guid.Empty) throw new ArgumentNullException("Product ID can not null!");
 
             try
             {
-                List<RecipeDTO> recipeDTOs = new List<RecipeDTO>();
+                List<RecipeResponse> recipeDTOs = new List<RecipeResponse>();
 
                 var recipes = _context.Recipes.Include(x => x.Product).Include(x => x.WarehouseItem).ThenInclude(w => w.Unit).Where(x => x.ProductId == guid).ToList();
 
                 foreach (var item in recipes)
                 {
-                    recipeDTOs.Add(new RecipeDTO
+                    recipeDTOs.Add(new RecipeResponse
                     {
                         Id = item.Id,
-                        ProductId = item.ProductId,
                         Quantity = item.Quantity,
-                        WarehouseItemId = item.WarehouseItemId,
-                        ProductName = item.Product.Name,
                         WarehouseItemName = item.WarehouseItem.Name,
                         Unit = item.WarehouseItem.Unit.Name
                     });

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace G1FOODLibrary.DTO
 {
-    public class CommentDTO
+    public class CommentResponse
     {
         public Guid Id { get; set; }
 
@@ -15,12 +15,6 @@ namespace G1FOODLibrary.DTO
         public string? AccountName { get; set; }
 
         public string? ParentName { get; set; }
-
-        public Guid? StatusId { get; set; }
-
-        public Guid? AccountId { get; set; }
-
-        public Guid? ProductId { get; set; }
 
         public Guid? ParentCommentId { get; set; }
     }

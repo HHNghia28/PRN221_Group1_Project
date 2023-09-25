@@ -19,7 +19,7 @@ namespace G1FOODWebAPI.Controllers
             try
             {
                 var products = await _productRepository.GetProducts();
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
@@ -29,7 +29,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -44,7 +44,7 @@ namespace G1FOODWebAPI.Controllers
             try
             {
                 var products = await _productRepository.GetProduct(new Guid(id));
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
@@ -54,7 +54,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -64,23 +64,22 @@ namespace G1FOODWebAPI.Controllers
         }
 
         [HttpPost("addProduct")]
-        public async Task<IActionResult> AddProduct([FromBody] ProductDTO productDTO)
+        public async Task<IActionResult> AddProduct([FromBody] ProductRequest productDTO)
         {
             try
             {
-                var products = await _productRepository.AddProduct(productDTO);
+                await _productRepository.AddProduct(productDTO);
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Add product successful!",
-                    Data = products
+                    Message = "Add product successful!"
                 });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -90,23 +89,22 @@ namespace G1FOODWebAPI.Controllers
         }
 
         [HttpPut("updateProduct")]
-        public async Task<IActionResult> UpdateProduct([FromBody] ProductDTO productDTO)
+        public async Task<IActionResult> UpdateProduct([FromBody] ProductRequest productDTO, string id)
         {
             try
             {
-                var products = await _productRepository.UpdateProduct(productDTO);
+                await _productRepository.UpdateProduct(productDTO, new Guid(id));
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Update product successful!",
-                    Data = products
+                    Message = "Update product successful!"
                 });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -120,19 +118,18 @@ namespace G1FOODWebAPI.Controllers
         {
             try
             {
-                var products = await _productRepository.DeleteProduct(new Guid(id));
+                await _productRepository.DeleteProduct(new Guid(id));
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Delete product successful!",
-                    Data = products
+                    Message = "Delete product successful!"
                 });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -147,7 +144,7 @@ namespace G1FOODWebAPI.Controllers
             try
             {
                 var recipes = await _productRepository.GetRecipeByProductId(new Guid(id));
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
@@ -157,7 +154,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -167,23 +164,22 @@ namespace G1FOODWebAPI.Controllers
         }
 
         [HttpPost("addRecipe")]
-        public async Task<IActionResult> AddRecipe([FromBody] RecipeDTO recipeDTO)
+        public async Task<IActionResult> AddRecipe([FromBody] RecipeRequest recipeDTO)
         {
             try
             {
-                var recipes = await _productRepository.AddRecipe(recipeDTO);
+                await _productRepository.AddRecipe(recipeDTO);
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Add recipe successful!",
-                    Data = recipes
+                    Message = "Add recipe successful!"
                 });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -193,23 +189,22 @@ namespace G1FOODWebAPI.Controllers
         }
 
         [HttpPut("updateRecipe")]
-        public async Task<IActionResult> UpdateRecipe([FromBody] RecipeDTO recipeDTO)
+        public async Task<IActionResult> UpdateRecipe([FromBody] RecipeRequest recipeDTO, string id)
         {
             try
             {
-                var recipes = await _productRepository.UpdateRecipe(recipeDTO);
+                await _productRepository.UpdateRecipe(recipeDTO, new Guid(id));
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Update recipe successful!",
-                    Data = recipes
+                    Message = "Update recipe successful!"
                 });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -223,19 +218,18 @@ namespace G1FOODWebAPI.Controllers
         {
             try
             {
-                var recipes = await _productRepository.DeleteRecipe(new Guid(id));
+                await _productRepository.DeleteRecipe(new Guid(id));
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Delete recipe successful!",
-                    Data = recipes
+                    Message = "Delete recipe successful!"
                 });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -251,7 +245,7 @@ namespace G1FOODWebAPI.Controllers
             {
                 var categories = await _productRepository.GetProductCategories();
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
@@ -261,7 +255,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -277,7 +271,7 @@ namespace G1FOODWebAPI.Controllers
             {
                 var categories = await _productRepository.GetCategogyWarehouseItem();
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
@@ -287,7 +281,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -303,7 +297,7 @@ namespace G1FOODWebAPI.Controllers
             {
                 var categories = await _productRepository.GetWarehouseItems();
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
@@ -313,7 +307,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -329,7 +323,7 @@ namespace G1FOODWebAPI.Controllers
             {
                 var categories = await _productRepository.GetCommentByProductID(new Guid(id));
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
@@ -339,7 +333,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,

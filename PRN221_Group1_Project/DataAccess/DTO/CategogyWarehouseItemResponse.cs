@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace G1FOODLibrary.DTO
 {
-    public class CategoryDTO
+    public class CategogyWarehouseItemResponse
     {
         public Guid Id { get; set; }
 

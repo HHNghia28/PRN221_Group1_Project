@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace G1FOODLibrary.DTO
 {
-    public class OrderDTO
+    public class OrderResponse
     {
         public Guid Id { get; set; }
 
@@ -18,18 +18,8 @@ namespace G1FOODLibrary.DTO
 
         public string? Username { get; set; }
 
-        public string Code { get; set; } = null!;
-
         public int SalePercent { get; set; }
 
-        public Guid? StatusId { get; set; }
-
-        public Guid? UserId { get; set; }
-
-        public Guid? ScheduleId { get; set; }
-
-        public Guid? VoucherId { get; set; }
-
-        public IEnumerable<OrderDetailDTO> Details { get; set; } = null;
+        public IEnumerable<OrderDetailResponse> Details { get; set; } = null;
     }
 }

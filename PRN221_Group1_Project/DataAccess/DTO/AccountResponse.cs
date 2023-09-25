@@ -6,16 +6,23 @@ using System.Threading.Tasks;
 
 namespace G1FOODLibrary.DTO
 {
-    public class RegisterDTO
+    public class AccountResponse
     {
-        public string Email { get; set; } = null!;
+        public Guid Id { get; set; }
 
-        public string Password { get; set; } = null!;
+        public string Email { get; set; } = null!;
 
         public string Name { get; set; } = null!;
 
         public string AddressDetail { get; set; } = null!;
 
         public string Phone { get; set; } = null!;
+
+        public string? Token { get; set; } 
+
+        public string? Role { get; set; }
+
+        public string? Status { get; set; }
+        public Guid? RoleId { get; set; }
     }
 }

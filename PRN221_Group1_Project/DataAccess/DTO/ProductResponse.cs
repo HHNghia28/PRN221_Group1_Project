@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace G1FOODLibrary.DTO
 {
-    public class ProductDTO
+    public class ProductResponse
     {
         public Guid Id { get; set; }
 
@@ -28,6 +28,6 @@ namespace G1FOODLibrary.DTO
 
         public Guid? CategogyId { get; set; }
 
-        public IEnumerable<CommentDTO> Comments { get; set; }
+        public IEnumerable<CommentResponse> Comments { get; set; }
     }
 }

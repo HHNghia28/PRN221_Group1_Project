@@ -22,7 +22,7 @@ namespace G1FOODWebAPI.Controllers
             try
             {
                 var accounts = _accountRepository.GetAllAccounts();
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
@@ -32,7 +32,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,

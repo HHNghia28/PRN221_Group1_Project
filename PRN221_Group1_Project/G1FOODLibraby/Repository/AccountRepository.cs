@@ -13,10 +13,10 @@ namespace DataAccess.Repository
     {
         public Task<bool> ActiveAccountAsync(string email) => AccountDAO.Instance.ActiveAccountAsync(email);
 
-        public IEnumerable<AccountDTO> GetAllAccounts() => AccountDAO.Instance.GetAllAccounts();
+        public IEnumerable<AccountResponse> GetAllAccounts() => AccountDAO.Instance.GetAllAccounts();
 
-        public Task<AccountDTO> LoginAsync(LoginDTO login) => AccountDAO.Instance.LoginAsync(login);
+        public Task<AccountResponse> LoginAsync(LoginRequest login) => AccountDAO.Instance.LoginAsync(login);
 
-        public Task<AccountDTO> RegisterAsync(RegisterDTO register) => AccountDAO.Instance.ResgiterAsync(register);
+        public Task<AccountResponse> RegisterAsync(RegisterRequest register) => AccountDAO.Instance.ResgiterAsync(register);
     }
 }

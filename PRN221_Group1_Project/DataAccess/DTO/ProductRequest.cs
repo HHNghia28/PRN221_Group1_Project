@@ -6,20 +6,21 @@ using System.Threading.Tasks;
 
 namespace G1FOODLibrary.DTO
 {
-    public class WarehouseItemDTO
+    public class ProductRequest
     {
-        public Guid Id { get; set; }
 
         public string Name { get; set; } = null!;
 
         public string? Description { get; set; }
 
-        public string? CategoryName { get; set; }
+        public decimal Price { get; set; }
 
-        public string? Unitname { get; set; }
+        public int? SalePercent { get; set; }
 
-        public Guid? CategogyItemId { get; set; }
+        public string? Image { get; set; }
 
-        public Guid? UnitId { get; set; }
+        public Guid? StatusId { get; set; }
+
+        public Guid? CategogyId { get; set; }
     }
 }

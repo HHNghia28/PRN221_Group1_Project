@@ -34,9 +34,9 @@ namespace DataAccess.DAO
 
         public AccountDAO() => _context = new DBContext();
 
-        public IEnumerable<AccountDTO> GetAllAccounts()
+        public IEnumerable<AccountResponse> GetAllAccounts()
         {
-            List<AccountDTO> accountDTOs = new List<AccountDTO>();
+            List<AccountResponse> accountDTOs = new List<AccountResponse>();
             try
             {
                 var accounts = _context.Accounts
@@ -48,7 +48,7 @@ namespace DataAccess.DAO
 
                 foreach (var account in accounts)
                 {
-                    accountDTOs.Add(new AccountDTO
+                    accountDTOs.Add(new AccountResponse
                     {
                         Id = account.Id,
                         Email = account.Email,
@@ -59,7 +59,8 @@ namespace DataAccess.DAO
                         Status = account.Status.Name
                     });
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception("An error occurred while querying the database!", ex);
             }
@@ -67,7 +68,7 @@ namespace DataAccess.DAO
             return accountDTOs;
         }
 
-        public async Task<AccountDTO> ResgiterAsync(RegisterDTO register)
+        public async Task<AccountResponse> ResgiterAsync(RegisterRequest register)
         {
             if (string.IsNullOrEmpty(register.Email) || string.IsNullOrEmpty(register.Password))
             {
@@ -109,19 +110,20 @@ namespace DataAccess.DAO
                 throw new Exception("An error occurred while querying the database!", ex);
             }
 
-            AccountDTO accountDTO = new AccountDTO
+            AccountResponse accountDTO = new AccountResponse
             {
                 Id = account.Id,
                 Email = account.Email,
                 Name = user.Name,
                 Phone = user.Phone,
-                AddressDetail = user.AddressDetail
+                AddressDetail = user.AddressDetail,
+                RoleId = account.RoleId
             };
 
             return accountDTO;
         }
 
-        public async Task<AccountDTO> LoginAsync(LoginDTO login)
+        public async Task<AccountResponse> LoginAsync(LoginRequest login)
         {
             if (string.IsNullOrEmpty(login.Email) || string.IsNullOrEmpty(login.Password))
             {
@@ -134,6 +136,7 @@ namespace DataAccess.DAO
                 account = await _context.Accounts
                     .Include(a => a.Role)
                     .Include(a => a.Status)
+                    .Include(ac => ac.Users)
                     .SingleOrDefaultAsync(a => a.Email.ToLower() == login.Email.ToLower());
             }
             catch (Exception ex)
@@ -156,13 +159,16 @@ namespace DataAccess.DAO
                 throw new ArgumentException("Account is inactive!");
             }
 
-            AccountDTO accountDTO = new AccountDTO
+            AccountResponse accountDTO = new AccountResponse
             {
                 Id = account.Id,
                 Email = account.Email,
-                Status = account.Status.Name,
+                Name = account.Users.First().Name,
+                Phone = account.Users.First().Phone,
+                AddressDetail = account.Users.First().AddressDetail,
                 Role = account.Role.Name,
-                RoleId = account.Role.Id
+                Status = account.Status.Name,
+                RoleId = account.RoleId
             };
 
             return accountDTO;

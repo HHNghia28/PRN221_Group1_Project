@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace G1FOODLibrary.DTO
 {
-    public class APIResponseDTO
+    public class APIResponse
     {
         public bool Success { get; set; }
         public string? Message { get; set; }
