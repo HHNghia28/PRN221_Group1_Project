@@ -1,0 +1,217 @@
+
+/* Slider customer */
+
+
+.transition {
+    transition: all 0.3s linear;
+}
+
+.slider-img {
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    resize: both;
+}
+.slider-buttons {
+    width: 100%;
+    top: 50%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 32px;
+}
+.slider-buttons button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.slider-buttons button i {
+    color: var(--main-color);
+    font-size: var(--font-size-lg);
+}
+.owl-theme {
+    position: relative;
+}
+.owl-theme .owl-nav {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 5%;
+    z-index: 590;
+}
+
+.owl-theme .owl-nav button span {
+    color: var(--main-color) !important;
+    width: 100px !important;
+    height: 100px !important;
+}
+.owl-theme .owl-dots {
+    position: absolute;
+    bottom: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.owl-theme .owl-dots .owl-dot span {
+    border: none;
+    outline: none;
+    background: var(--primary-color);
+}
+
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+    background: var(--main-color);
+}
+
+/*  Main content*/
+.bg-main {
+    background-color: var(--bg-main-color);
+}
+.content-nav {
+    border-radius: var(--rounded-md);
+    overflow: hidden;
+}
+.content-nav .row .item {
+    justify-content: center;
+    align-items: center;
+    height: 140px;
+    padding: 12px 0;
+    cursor: pointer;
+    background-color: var(--primary-color);
+}
+
+.content-nav .row .item:hover {
+    background-color: var(--main-color);
+}
+
+.content-nav .row .item:hover p,
+.content-nav .row .item:hover p a,
+.content-nav .row .item:hover i  {
+    color: var(--white-color) !important;
+}
+
+.content-nav .row .item:nth-child(1)::before,
+.content-nav .row .item:nth-child(2)::before,
+.content-nav .row .item:nth-child(3)::before {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    height: 72px;
+    width: 2px;
+    background-color: var(--main-color);
+}
+
+.content-nav .row .item i {
+    font-size: var(--font-size-xl);
+}
+
+.content-nav .row .item p {
+    margin-bottom: 0;
+    margin-left: 18px;
+}
+
+/* Card */
+.card-product {
+    overflow: hidden;
+    border-radius: var(--rounded-md);
+    box-shadow: 0 2px 2px rgba(0,0,0,0.12), 0 5px 10px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+.card-product:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    transform: translateY(-12px);
+}
+
+.card-product:hover .card-img {
+    transform: scale(1.1);
+    transition: all 0.3s linear;
+}
+.card-product-body {
+    padding: 16px;
+}
+.card-product-body p {
+    margin-bottom: 8px;
+}
+.card-name a{
+    --font-size-name: 20px;
+    color: var(--black-color);
+    font-size: var(--font-size-name);
+    font-weight: 500;
+}
+.card-description {
+    font-size: var(--font-size-md);
+    color: #888;
+}
+.card-price {
+    font-size: var(--font-size-lg);
+    color: var(--main-color);
+    font-weight: bold;
+}
+.card-discount i {
+    margin-right: 12px;
+    color: var(--main-color);
+}
+.card-discount {
+    font-size: var(--font-size-md);
+    text-decoration: line-through;
+    color: #888;
+}
+.cart-quantiy {
+    font-size: var(--font-size-sm);
+    width: 20px;
+    height: 20px;
+    background-color: var(--main-color);
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50%;
+    color: var(--white-color);
+    top: -8px;
+    right: -8px;
+    box-shadow: 1px 1px 2px #ddd;
+}
+
+/* Voucher */
+.voucher {
+    padding: 12px;
+    border-radius: var(--rounded-md);
+    transition: all 0.3s ease-in-out;
+}
+.voucher:hover {
+    background-color: var(--main-color);
+}
+.voucher:hover  div p ,
+.voucher:hover  div i {
+    color: var(--white-color) !important;
+}
+.voucher-name , 
+.voucher-discount,
+.voucher-condition {
+    font-size: var(--font-size-md);
+    color: var(--dark);
+    font-weight: 500;
+    margin-left: 4px;
+}
+
+.voucher-discount {
+    color: var(--main-color);
+}
+
+.voucher-condition {
+    color: #888;
+    margin-left: 12px;
+    margin-bottom: 0;
+    font-weight: normal;
+    font-size: 14px;
+}
+.icon-dolar {
+    font-size: var(--font-size-xl);
+}
+
+#slider-voucher .owl-dots {
+    bottom: -36px !important;
+}
