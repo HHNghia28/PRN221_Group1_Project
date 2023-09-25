@@ -174,6 +174,9 @@ a.btn {
 /* Form component */
 .wrapper {
     overflow-y: scroll;
+    top: 0;
+    overflow-y: scroll;
+    z-index: 1999;
 }
 .form-wrapper {
     margin: 4% auto;
@@ -433,7 +436,7 @@ a.btn {
     margin-top: 133px;
 }
 .z-100 {
-    z-index: 1000;
+    z-index: 2000 !important;
 }
 
 /* Width - height */

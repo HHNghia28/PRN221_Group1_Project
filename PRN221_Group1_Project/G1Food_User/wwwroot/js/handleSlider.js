@@ -11,7 +11,7 @@ $('#slider-header').owlCarousel({
 
 $('#slider-voucher').owlCarousel({
     loop:true,
-    items: 4,
+    items: 1,
     dotsEach: 1,
     margin:10,
     dots:true,

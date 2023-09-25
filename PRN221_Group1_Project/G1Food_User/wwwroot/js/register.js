@@ -6,7 +6,7 @@ const phone = document.getElementById("phone");
 const password = document.getElementById("password");
 const passwordConfirm = document.getElementById("password-confirm");
 const address = document.getElementById("address");
-const formConfirm = document.getElementById("form-confirms");
+const formConfirm = document.getElementById("form-confirm");
 const formRegister = document.getElementById("register-form");
 
 
@@ -159,8 +159,10 @@ formRegister.addEventListener("submit", (event) => {
     let isFormConfirmed = checkFormConfirm(formConfirm);
     console.log(isFormConfirmed);
     if(isFormConfirmed && isFullName && isEmailValid && isPasswordValid && isPasswordConfirmValid && isPhoneValid && isAddressValid) {
-       return true;
-    }else {
+        return true;
+        console.log('success');
+    } else {
+        console.log('failed');
         return false;
     }
 });
