@@ -8,6 +8,8 @@ using DataAccess.Context;
 using G1FOODLibrary.Entities;
 using System.Security.Authentication;
 using G1FOODLibrary.DTO;
+using Microsoft.Identity.Client;
+using Microsoft.Win32;
 
 namespace DataAccess.DAO
 {
@@ -137,7 +139,7 @@ namespace DataAccess.DAO
                     .Include(a => a.Role)
                     .Include(a => a.Status)
                     .Include(ac => ac.Users)
-                    .SingleOrDefaultAsync(a => a.Email.ToLower() == login.Email.ToLower());
+                    .FirstOrDefaultAsync(a => a.Email.ToLower() == login.Email.ToLower());
             }
             catch (Exception ex)
             {
@@ -187,7 +189,7 @@ namespace DataAccess.DAO
             try
             {
                 account = await _context.Accounts
-                    .SingleOrDefaultAsync(a => a.Email.ToLower() == email.ToLower());
+                    .FirstOrDefaultAsync(a => a.Email.ToLower() == email.ToLower());
 
                 account.StatusId = new Guid("750301CE-21B9-444E-A0D3-53824614CA40");
 
@@ -205,6 +207,117 @@ namespace DataAccess.DAO
             }
 
             return active;
+        }
+
+        public async Task<IEnumerable<UserResponse>> GetUsersByAccountId(Guid accountId)
+        {
+            if (accountId == Guid.Empty)
+            {
+                throw new ArgumentException("Account ID can not be empty!");
+            }
+
+            try
+            {
+                var users = _context.Users.Where(u => u.AccountId == accountId).ToList();
+
+                List<UserResponse> userResponses = new List<UserResponse>();
+
+                foreach (var item in users)
+                {
+                    userResponses.Add(new UserResponse
+                    {
+                        Id = item.Id,
+                        AddressDetail = item.AddressDetail,
+                        Name = item.Name,
+                        Phone = item.Phone
+                    });
+                }
+
+                return userResponses;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+        }
+
+        public async Task AddUser(UserRequest userRequest)
+        {
+            if (userRequest == null)
+            {
+                throw new ArgumentException("User can not be empty!");
+            }
+
+            try
+            {
+                User user = new User
+                {
+                    Id = new Guid(),
+                    AccountId = userRequest.AccountId,
+                    Name = userRequest.Name,
+                    AddressDetail = userRequest.AddressDetail,
+                    Phone = userRequest.Phone
+                };
+
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+        }
+
+        public async Task DeleteAccount(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("Account ID can not be empty!");
+            }
+
+            try
+            {
+                var account = _context.Accounts.FirstOrDefault(a => a.Id == id);
+
+                if (account == null)
+                {
+                    throw new Exception("Account not exist!");
+                }
+
+                account.StatusId = new Guid("FF07CAA9-3D82-41CA-8DAD-643A97455590");
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+        }
+
+        public async Task UpdatePassword(Guid id, string password)
+        {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("Account ID can not be empty!");
+            }
+
+            try
+            {
+                var account = _context.Accounts.FirstOrDefault(a => a.Id == id);
+
+                if (account == null)
+                {
+                    throw new Exception("Account not exist!");
+                }
+
+                account.EncryptedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
         }
     }
 }

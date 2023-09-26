@@ -198,6 +198,80 @@ namespace G1FOODWebAPI.Controllers
             }
         }
 
+        [HttpGet("getOrderHistory")]
+        public async Task<IActionResult> GetOrderHistory(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+
+            try
+            {
+
+                var order = await _orderRepository.GetOrderHistoryAsync(new Guid(id));
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get order history successful!",
+                    Data = order
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponse
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("getOrderDetail")]
+        public async Task<IActionResult> GetOrderDetail(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+
+            try
+            {
+
+                var order = await _orderRepository.GetOrderDetailAsync(new Guid(id));
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get order successful!",
+                    Data = order
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponse
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
         [HttpPut("orderUpdateCooking")]
         public async Task<IActionResult> OrderUpdateCooking(string id)
         {

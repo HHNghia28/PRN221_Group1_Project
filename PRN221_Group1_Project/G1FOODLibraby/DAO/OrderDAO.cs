@@ -245,5 +245,92 @@ namespace DataAccess.DAO
 
             return orderDTOs;
         }
+
+        public async Task<IEnumerable<OrderResponse>> GetOrderHistoryAsync(Guid accountId)
+        {
+            if (accountId == Guid.Empty)
+            {
+                throw new ArgumentNullException("Account ID can not null!");
+            }
+
+            try
+            {
+                List<OrderResponse> orderResponses = new List<OrderResponse>();
+
+                var users = _context.Users.Where(u => u.AccountId == accountId).ToList();
+
+                foreach (var item in users)
+                {
+                    var orders = _context.Orders
+                        .Include(o => o.User)
+                        .Where(o => o.UserId == item.Id)
+                        .ToList();
+
+                    foreach (var item1 in orders)
+                    {
+                        orderResponses.Add(new OrderResponse
+                        {
+                            Id = item1.Id,
+                            Date = item1.Date,
+                            Note = item1.Note,
+                            Username = item1.User.Name
+                        });
+                    }
+                }
+
+                return orderResponses;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+        }
+
+        public async Task<OrderResponse> GetOrderDetailAsync(Guid orderId)
+        {
+            if (orderId == Guid.Empty)
+            {
+                throw new ArgumentNullException("Order ID can not null!");
+            }
+
+            try
+            {
+                List<OrderDetailResponse> orderDetailResponses = new List<OrderDetailResponse>();
+
+                var order = _context.Orders.Include(o => o.Status).Include(o => o.User).FirstOrDefault(o => o.Id == orderId);
+                var orderDetails = _context.OrderDetails.Include(o => o.Product).Where(o => o.OrderId == order.Id).ToList();
+
+                foreach (var item in orderDetails)
+                {
+                    orderDetailResponses.Add(new OrderDetailResponse
+                    {
+                        Id = item.Id,
+                        Image = item.Product.Image,
+                        ProductName = item.Product.Name,
+                        Price = item.Price,
+                        Note = item.Note,
+                        Quantity = item.Quantity,
+                        SalePercent = item.SalePercent
+                    });
+                }
+
+                OrderResponse orderResponse = new OrderResponse
+                {
+                    Id = order.Id,
+                    Note = order.Note,
+                    Date = order.Date,
+                    Status = order.Status.Name,
+                    Username = order.User.Name,
+                    Details = orderDetailResponses
+                };
+
+                return orderResponse;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+        }
     }
 }
