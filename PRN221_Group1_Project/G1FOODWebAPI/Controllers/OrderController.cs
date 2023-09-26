@@ -14,11 +14,11 @@ namespace G1FOODWebAPI.Controllers
         public OrderController() => _orderRepository = new OrderRepository();
 
         [HttpPost("addOrder")]
-        public async Task<IActionResult> AddOrder([FromBody] OrderCreateDTO order)
+        public async Task<IActionResult> AddOrder([FromBody] OrderRequest order)
         {
             if (!ModelState.IsValid)
             {
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 400,
                     Success = false,
@@ -26,17 +26,15 @@ namespace G1FOODWebAPI.Controllers
                 });
             }
 
-            OrderDTO orderDTO = new OrderDTO();
-
             try
             {
 
-                orderDTO = await _orderRepository.AddOrderAsync(order);
+                await _orderRepository.AddOrderAsync(order);
 
             }
             catch (Exception ex)
             {
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 400,
                     Success = false,
@@ -44,24 +42,33 @@ namespace G1FOODWebAPI.Controllers
                 });
             }
 
-            return Ok(new APIResponseDTO
+            return Ok(new APIResponse
             {
                 StatusCode = 200,
                 Success = true,
-                Message = "Add order successful!",
-                Data = orderDTO
+                Message = "Add order successful!"
             });
         }
 
         [HttpGet("getOrderPending")]
         public async Task<IActionResult> GetOrderPending()
         {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+
             try
             {
 
-                var order = await _orderRepository.GetOrderPending();
+                var order = await _orderRepository.GetOrderPendingAsync();
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
@@ -71,7 +78,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -83,22 +90,32 @@ namespace G1FOODWebAPI.Controllers
         [HttpGet("getOrderCooking")]
         public async Task<IActionResult> GetOrderCooking()
         {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+
             try
             {
 
-                var order = await _orderRepository.GetOrderCooking();
+                var order = await _orderRepository.GetOrderCookingAsync();
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Get order pending successful!",
+                    Message = "Get order cooking successful!",
                     Data = order
                 });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,
@@ -107,15 +124,25 @@ namespace G1FOODWebAPI.Controllers
             }
         }
 
-        [HttpGet("getOrderShipping")]
-        public async Task<IActionResult> GetOrderShipping()
+        [HttpGet("getOrderDelivering")]
+        public async Task<IActionResult> GetOrderDelivering()
         {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+
             try
             {
 
-                var order = await _orderRepository.GetOrderShipping();
+                var order = await _orderRepository.GetOrderDeliveringAsync();
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
@@ -125,7 +152,184 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new APIResponseDTO
+                return StatusCode(500, new APIResponse
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("getOrders")]
+        public async Task<IActionResult> GetOrders()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+
+            try
+            {
+
+                var order = await _orderRepository.GetOrdersAsync();
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get order successful!",
+                    Data = order
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponse
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpPut("orderUpdateCooking")]
+        public async Task<IActionResult> OrderUpdateCooking(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+
+            try
+            {
+                await _orderRepository.UpdateOrderStatusToCookingAsync(new Guid(id));
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Order update cooking successful!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponse
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpPut("orderUpdateBlock")]
+        public async Task<IActionResult> OrderUpdateBlock(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+
+            try
+            {
+                await _orderRepository.UpdateOrderStatusToBlockAsync(new Guid(id));
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Order update block successful!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponse
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpPut("orderUpdateDelivered")]
+        public async Task<IActionResult> OrderUpdateDelivered(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+
+            try
+            {
+                await _orderRepository.UpdateOrderStatusToDeliveredAsync(new Guid(id));
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Order update delivered successful!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponse
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpPut("orderUpdateDelivering")]
+        public async Task<IActionResult> OrderUpdateDelivering(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+
+            try
+            {
+                await _orderRepository.UpdateOrderStatusToDeliveringAsync(new Guid(id));
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Order update delivering successful!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponse
                 {
                     StatusCode = 500,
                     Success = false,

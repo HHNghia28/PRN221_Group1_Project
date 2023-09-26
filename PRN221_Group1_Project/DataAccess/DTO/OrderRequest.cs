@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace G1FOODLibrary.DTO
 {
-    public class OrderCreateDTO
+    public class OrderRequest
     {
 
         public string? Note { get; set; }
@@ -15,8 +15,6 @@ namespace G1FOODLibrary.DTO
 
         public Guid? VoucherId { get; set; } = Guid.Empty;
 
-        public Guid? ScheduleId { get; set; } = Guid.Empty;
-
-        public IEnumerable<OrderDetailDTO> Details { get; set; } = null;
+        public IEnumerable<OrderDetailRequest> Details { get; set; } = null;
     }
 }

@@ -9,10 +9,15 @@ namespace DataAccess.Repository
 {
     public interface IOrderRepository
     {
-        public Task<OrderDTO> AddOrderAsync(OrderCreateDTO orderDTO);
-        public Task<IEnumerable<OrderDTO>> GetOrderPending();
-        public Task<IEnumerable<OrderDTO>> GetOrderCooking();
-        public Task<IEnumerable<OrderDTO>> GetOrderShipping();
-        public Task<IEnumerable<OrderDTO>> GetOrderFinish();
+        public Task AddOrderAsync(OrderRequest orderDTO);
+        public Task<IEnumerable<OrderResponse>> GetOrdersAsync();
+        public Task<IEnumerable<OrderResponse>> GetOrderPendingAsync();
+        public Task<IEnumerable<OrderResponse>> GetOrderCookingAsync();
+        public Task<IEnumerable<OrderResponse>> GetOrderDeliveringAsync();
+        public Task<IEnumerable<OrderResponse>> GetOrderFinishAsync();
+        public Task UpdateOrderStatusToCookingAsync(Guid orderId);
+        public Task UpdateOrderStatusToDeliveringAsync(Guid orderId);
+        public Task UpdateOrderStatusToDeliveredAsync(Guid orderId);
+        public Task UpdateOrderStatusToBlockAsync(Guid orderId);
     }
 }

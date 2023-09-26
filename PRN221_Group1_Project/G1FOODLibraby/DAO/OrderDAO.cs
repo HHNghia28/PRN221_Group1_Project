@@ -34,44 +34,52 @@ namespace DataAccess.DAO
 
         public OrderDAO() => _context = new DBContext();
 
-        public async Task<OrderDTO> AddOrderAsync(OrderCreateDTO order)
+        public async Task AddOrderAsync(OrderRequest order)
         {
             if (order == null)
             {
                 throw new ArgumentException("Order can not null!");
             }
 
-            Guid guid = Guid.NewGuid();
-
-            Order newOrder = new Order
-            {
-                Id = guid,
-                Date = DateTime.Now,
-                Note = order.Note,
-                StatusId = new Guid("DE3E4850-B990-4D62-BA90-4BBB49506722"),
-                UserId = order.UserId,
-                ScheduleId = order.ScheduleId == Guid.Empty ? null : order.ScheduleId,
-                VoucherId = order.VoucherId == Guid.Empty ? null : order.VoucherId
-            };
-
-            List<OrderDetail> orderDetails = new List<OrderDetail>();
-
-            foreach (OrderDetailDTO detail in order.Details) 
-            {
-                orderDetails.Add(new OrderDetail
-                {
-                    Id = Guid.NewGuid(),
-                    Note = detail.Note,
-                    Price = detail.Price,
-                    Quantity = detail.Quantity,
-                    SalePercent = detail.SalePercent,
-                    OrderId = guid,
-                    ProductId = detail.ProductId
-                });
-            }
-
             try
             {
+
+                Guid guid = Guid.NewGuid();
+
+                Order newOrder = new Order
+                {
+                    Id = guid,
+                    Date = DateTime.Now,
+                    Note = order.Note,
+                    StatusId = new Guid("DE3E4850-B990-4D62-BA90-4BBB49506722"),
+                    UserId = order.UserId,
+                    ScheduleId = null,
+                    VoucherId = order.VoucherId == Guid.Empty ? null : order.VoucherId
+                };
+
+                List<OrderDetail> orderDetails = new List<OrderDetail>();
+
+                foreach (OrderDetailRequest detail in order.Details)
+                {
+                    var product = _context.Products.FirstOrDefault(p => p.Id == detail.ProductId);
+
+                    if (product == null)
+                    {
+                        throw new Exception("Product not exist!");
+                    }
+
+                    orderDetails.Add(new OrderDetail
+                    {
+                        Id = Guid.NewGuid(),
+                        Note = detail.Note,
+                        Price = product.Price,
+                        Quantity = detail.Quantity,
+                        SalePercent = product.SalePercent,
+                        OrderId = guid,
+                        ProductId = detail.ProductId
+                    });
+                }
+
                 _context.Orders.Add(newOrder);
                 foreach (OrderDetail detail in orderDetails)
                 {
@@ -83,35 +91,16 @@ namespace DataAccess.DAO
             {
                 throw new Exception("An error occurred while querying the database!", ex);
             }
-
-            foreach (OrderDetailDTO detail in order.Details)
-            {
-                detail.OrderId = guid;
-            }
-
-            OrderDTO orderDTO = new OrderDTO
-            {
-                Id = guid,
-                Date = DateTime.Now,
-                Note = order.Note,
-                StatusId = new Guid("DE3E4850-B990-4D62-BA90-4BBB49506722"),
-                UserId = order.UserId,
-                ScheduleId = order.ScheduleId == Guid.Empty ? null : order.ScheduleId,
-                VoucherId = order.VoucherId == Guid.Empty ? null : order.VoucherId,
-                Details = order.Details
-            };
-
-            return orderDTO;
         }
 
-        public async Task<IEnumerable<OrderDTO>> GetOrderByStatusAsync(Guid statusId)
+        public async Task<IEnumerable<OrderResponse>> GetOrderByStatusAsync(Guid statusId)
         {
             if (statusId == Guid.Empty)
             {
                 throw new ArgumentException("Status id can not null!");
             }
 
-            List<OrderDTO> orderDTOs = new List<OrderDTO>();
+            List<OrderResponse> orderDTOs = new List<OrderResponse>();
             List<Order> orders;
 
             try
@@ -130,21 +119,18 @@ namespace DataAccess.DAO
 
             foreach(Order order in orders)
             {
-                IEnumerable<OrderDetailDTO> details = await GetOrderDetailByOrderIDAsync(order.Id);
+                IEnumerable<OrderDetailResponse> details = await GetOrderDetailByOrderIDAsync(order.Id);
 
                 if (details.Count() != 0)
                 {
 
-                    orderDTOs.Add(new OrderDTO
+                    orderDTOs.Add(new OrderResponse
                     {
                         Id = order.Id,
                         Date = order.Date,
                         Note = order.Note,
-                        ScheduleId = order.ScheduleId,
-                        StatusId = order.StatusId,
                         Status = order.Status.Name,
                         Username = order.User.Name,
-                        VoucherId = order.VoucherId,
                         Details = details
                     });
                 }
@@ -153,14 +139,14 @@ namespace DataAccess.DAO
             return orderDTOs;
         }
 
-        public async Task<IEnumerable<OrderDetailDTO>> GetOrderDetailByOrderIDAsync(Guid orderId)
+        public async Task<IEnumerable<OrderDetailResponse>> GetOrderDetailByOrderIDAsync(Guid orderId)
         {
             if (orderId == Guid.Empty)
             {
                 throw new ArgumentException("Order id can not null!");
             }
 
-            List<OrderDetailDTO> orderDetailDTOs = new List<OrderDetailDTO>();
+            List<OrderDetailResponse> orderDetailDTOs = new List<OrderDetailResponse>();
             List<OrderDetail> orderDetails;
 
             try
@@ -177,13 +163,11 @@ namespace DataAccess.DAO
 
             foreach (OrderDetail detail in orderDetails)
             {
-                orderDetailDTOs.Add(new OrderDetailDTO
+                orderDetailDTOs.Add(new OrderDetailResponse
                 {
-                    OrderId = detail.OrderId,
                     Id = detail.Id,
                     Note = detail.Note,
                     Price = detail.Price,
-                    ProductId = detail.ProductId,
                     Quantity = detail.Quantity,
                     SalePercent = detail.SalePercent,
                     ProductName = detail.Product.Name,
@@ -192,6 +176,74 @@ namespace DataAccess.DAO
             }
 
             return orderDetailDTOs;
+        }
+
+        public async Task UpdateStatusOrderAsync(Guid guid, Guid stutusId)
+        {
+            if (guid == Guid.Empty)
+            {
+                throw new ArgumentNullException("Order ID can not null!");
+            }
+
+            try
+            {
+                var order = _context.Orders.FirstOrDefault(o => o.Id == guid);
+
+                if (order == null)
+                {
+                    throw new Exception("Order not found!");
+                }
+
+                order.StatusId = stutusId;
+
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+        }
+
+        public async Task<IEnumerable<OrderResponse>> GetOrdersAsync()
+        {
+
+            List<OrderResponse> orderDTOs = new List<OrderResponse>();
+            List<Order> orders;
+
+            try
+            {
+                orders = _context.Orders
+                     .Include(o => o.OrderDetails)
+                     .Include(o => o.User)
+                     .Include(o => o.Status)
+                     .Include(o => o.Voucher)
+                     .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while querying the database!", ex);
+            }
+
+            foreach (Order order in orders)
+            {
+                IEnumerable<OrderDetailResponse> details = await GetOrderDetailByOrderIDAsync(order.Id);
+
+                if (details.Count() != 0)
+                {
+
+                    orderDTOs.Add(new OrderResponse
+                    {
+                        Id = order.Id,
+                        Date = order.Date,
+                        Note = order.Note,
+                        Status = order.Status.Name,
+                        Username = order.User.Name,
+                        Details = details
+                    });
+                }
+            }
+
+            return orderDTOs;
         }
     }
 }

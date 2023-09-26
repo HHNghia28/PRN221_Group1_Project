@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace G1FOODLibrary.DTO
 {
-    public class LoginDTO
+    public class LoginRequest
     {
         [Required(ErrorMessage = "Email không được bỏ trống!")]
         [MaxLength(100, ErrorMessage = "Email phải dưới 100 ký tự!")]

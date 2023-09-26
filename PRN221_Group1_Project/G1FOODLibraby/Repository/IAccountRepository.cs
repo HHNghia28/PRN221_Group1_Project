@@ -10,9 +10,9 @@ namespace DataAccess.Repository
 {
     public interface IAccountRepository
     {
-        public IEnumerable<AccountDTO> GetAllAccounts();
-        public Task<AccountDTO> RegisterAsync(RegisterDTO register);
-        public Task<AccountDTO> LoginAsync(LoginDTO login);
+        public IEnumerable<AccountResponse> GetAllAccounts();
+        public Task<AccountResponse> RegisterAsync(RegisterRequest register);
+        public Task<AccountResponse> LoginAsync(LoginRequest login);
         public Task<bool> ActiveAccountAsync(string email);
     }
 }

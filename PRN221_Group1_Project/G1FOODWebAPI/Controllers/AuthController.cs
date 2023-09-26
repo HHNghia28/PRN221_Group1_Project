@@ -28,11 +28,11 @@ namespace G1FOODWebAPI.Controllers
         public AuthController() => _accountRepository = new AccountRepository();
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDTO register)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest register)
         {
             if (!ModelState.IsValid)
             {
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 400,
                     Success = false,
@@ -40,7 +40,7 @@ namespace G1FOODWebAPI.Controllers
                 });
             }
 
-            AccountDTO account = new AccountDTO();
+            AccountResponse account = new AccountResponse();
 
             try
             {
@@ -50,7 +50,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 400,
                     Success = false,
@@ -58,7 +58,7 @@ namespace G1FOODWebAPI.Controllers
                 });
             }
 
-            return Ok(new APIResponseDTO
+            return Ok(new APIResponse
             {
                 StatusCode = 200,
                 Success = true,
@@ -68,11 +68,11 @@ namespace G1FOODWebAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDTO login)
+        public async Task<IActionResult> Login([FromBody] LoginRequest login)
         {
             if (!ModelState.IsValid)
             {
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 400,
                     Success = false,
@@ -80,7 +80,7 @@ namespace G1FOODWebAPI.Controllers
                 });
             }
 
-            AccountDTO account = new AccountDTO();
+            AccountResponse account = new AccountResponse();
             try
             {
 
@@ -89,7 +89,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 400,
                     Success = false,
@@ -99,7 +99,7 @@ namespace G1FOODWebAPI.Controllers
 
             account.Token = CreateToken(account, 960);
 
-            return Ok(new APIResponseDTO
+            return Ok(new APIResponse
             {
                 StatusCode = 200,
                 Success = true,
@@ -113,7 +113,7 @@ namespace G1FOODWebAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 400,
                     Success = false,
@@ -123,7 +123,7 @@ namespace G1FOODWebAPI.Controllers
 
             try
             {
-                AccountDTO account = new AccountDTO
+                AccountResponse account = new AccountResponse
                 {
                     Email = email,
                     RoleId = new Guid("C73813A0-CE6E-4F59-B281-507690B51406")
@@ -136,7 +136,7 @@ namespace G1FOODWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 400,
                     Success = false,
@@ -144,7 +144,7 @@ namespace G1FOODWebAPI.Controllers
                 });
             }
 
-            return Ok(new APIResponseDTO
+            return Ok(new APIResponse
             {
                 StatusCode = 200,
                 Success = true,
@@ -165,7 +165,7 @@ namespace G1FOODWebAPI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Ok(new APIResponseDTO
+                    return Ok(new APIResponse
                     {
                         StatusCode = 400,
                         Success = false,
@@ -173,7 +173,7 @@ namespace G1FOODWebAPI.Controllers
                     });
                 }
 
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
@@ -182,7 +182,7 @@ namespace G1FOODWebAPI.Controllers
             }
             else
             {
-                return Ok(new APIResponseDTO
+                return Ok(new APIResponse
                 {
                     StatusCode = 400,
                     Success = true,
@@ -191,7 +191,7 @@ namespace G1FOODWebAPI.Controllers
             }
         }
 
-        private string CreateToken(AccountDTO account, int time)
+        private string CreateToken(AccountResponse account, int time)
         {
             List<Claim> claims = new List<Claim>
             {
