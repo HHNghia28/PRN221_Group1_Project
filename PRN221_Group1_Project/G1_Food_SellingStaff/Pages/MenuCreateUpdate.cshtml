@@ -1,0 +1,245 @@
+﻿@page
+@model G1_Food_SellingStaff.Pages.MenuCreateUpdateModel
+@{
+    ViewData["Title"] = "MenuCreteUpdate";
+}
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - G1Food_Admin</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/base.css" asp-append-version="true" />
+</head>
+
+<body id="page-top">
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div class="row mt-4">              
+                <div class="col-sm-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-8 col-lg-7">
+                                    <!--  -->
+                                    <div class="card Area Chartshadow mb-4">
+                                        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                                            <button id="sidebarToggleTop"
+                                                    class="btn btn-link d-md-none rounded-circle mr-3">
+                                                <i class="fa fa-bars"></i>
+                                            </button>
+
+                                            <!-- Topbar Search -->
+                                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                                <div class="input-group">
+                                                    <input type="text"
+                                                           class="form-control bg-light border-0 small"
+                                                           placeholder="Search for..."
+                                                           aria-label="Search"
+                                                           aria-describedby="basic-addon2" />
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-primary" type="button">
+                                                            <i class="fas fa-search fa-sm"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <!-- Topbar Navbar -->
+                                            <ul class="navbar-nav ml-auto">
+                                                <!-- Nav Item  -->
+                                                <li class="nav-item dropdown no-arrow d-sm-none">
+                                                    <a class="nav-link dropdown-toggle"
+                                                       href="#"
+                                                       id="searchDropdown"
+                                                       role="button"
+                                                       data-toggle="dropdown"
+                                                       aria-haspopup="true"
+                                                       aria-expanded="false">
+                                                        <i class="fas fa-search fa-fw"></i>
+                                                    </a>
+                                                    <!-- Dropdown - Messages -->
+                                                    <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                                         aria-labelledby="searchDropdown">
+                                                        <form class="form-inline mr-auto w-100 navbar-search">
+                                                            <div class="input-group">
+                                                                <input type="text"
+                                                                       class="form-control bg-light border-0 small"
+                                                                       placeholder="Tìm món..."
+                                                                       aria-label="Search"
+                                                                       aria-describedby="basic-addon2" />
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-primary" type="button">
+                                                                        <i class="fas fa-search fa-sm"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </li>
+
+                                               
+                                                <li class="nav-item dropdown no-arrow">
+                                                  
+                                                    <!-- Dropdown - User Information -->
+                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                                         aria-labelledby="userDropdown">
+                                                        <a class="dropdown-item fs-md" href="#">
+                                                            <i class="fas fa-user fa-sm fa-fw mr-2 main-color"></i>
+                                                            Profile
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item fs-md"
+                                                           href="#"
+                                                           data-toggle="modal"
+                                                           data-target="#logoutModal">
+                                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 main-color"></i>
+                                                            Logout
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </nav>
+
+
+
+                                        <div class="card-body">
+                                            <div class="d-flex mt-1">
+                                                <div class="col-md-6 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Cơm gà
+                                                </div>
+                                                <div class="col-md-5 text-xs text-dark font-weight-bold p-0">
+                                                    <button class="btn sm bold">-</button> <span>1</span> <button class="btn sm bold">+</button>
+                                                </div>
+                                                <div class="col-md-6 text-xs text-dark p-0">
+                                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex mt-1">
+                                                <div class="col-md-6 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Cơm sườn
+                                                </div>
+                                                <div class="col-md-5 text-xs text-dark font-weight-bold p-0">
+                                                    <button class="btn sm bold">-</button> <span>1</span> <button class="btn sm bold">+</button>
+                                                </div>
+                                                <div class="col-md-6 text-xs text-dark p-0">
+                                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex mt-1">
+                                                <div class="col-md-6 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Phở bò
+                                                </div>
+                                                <div class="col-md-5 text-xs text-dark font-weight-bold p-0">
+                                                    <button class="btn sm bold">-</button> <span>1</span> <button class="btn sm bold">+</button>
+                                                </div>
+                                                <div class="col-md-6 text-xs text-dark p-0">
+                                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>                               
+                                </div>
+                             
+                                <div class="col-xl-3 col-lg-5">
+                                    <div class="card shadow mb-4">
+                                        <!-- Card Header - Dropdown -->
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold main-color">Chi tiết món</h6>
+                                        </div>
+                                        <!-- Card Body -->
+                                        <div class="card-body">                                          
+
+                                            <div class="d-flex">
+                                                <div class="col-md-3 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Tên:
+                                                </div>
+                                                <div class="col-md-10 text-xs text-dark mb-1 p-0">
+                                                    Cơm gà
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex mt-1">
+                                                <div class="col-md-3 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Loại:
+                                                </div>
+                                                <div class="col-md-10 text-xs text-dark p-0">
+                                                    Món chính
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex mt-1">
+                                                <div class="col-md-3 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Giá:
+                                                </div>
+                                                <div class="col-md-10 text-xs text-dark p-0">
+                                                    35.000vnđ
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-center mt-1">
+                                                <div class="border d-flex justify-content-center col-md-3 text-xs font-weight-bold mb-1 p-0">
+                                                    Ảnh
+                                                </div>                                           
+                                            </div>
+
+                                            <div class="d-flex justify-content-end">
+                                                <div class="col-xl-4 col-lg-5">
+                                                    <div class="d-flex justify-content-end">
+                                                        <div class="py-1">
+                                                            <button class="btn sm bg-danger">Tạo mới</button>
+                                                        </div>                                                    
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/vendor/jquery/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js" asp-append-version="true"></script>
+    <script src="~/js/sb-admin-2.min.js" asp-append-version="true"></script>
+
+    <!-- For chart-->
+    <script src="~/vendor/chart.js/Chart.min.js" asp-append-version="true"></script>
+    <script src="~/js/demo/chart-bar-demo.js" asp-append-version="true"></script>
+    <script src="~/js/demo/chart-area-demo.js" asp-append-version="true"></script>
+    <script src="~/js/demo/chart-pie-demo.js" asp-append-version="true"></script>
+
+    <!-- For data table -->
+    <script src="~/vendor/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+    <script src="~/js/demo/datatables-demo.js" asp-append-version="true"></script>
+
+    <!-- Your custom javascript file -->
+    <script src="~/js/main.js" asp-append-version="true"></script>
+</body>
+
+
+
+
+
+
+

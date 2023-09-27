@@ -1,0 +1,143 @@
+﻿@page
+@model G1_Food_SellingStaff.Pages.MenuModel
+@{
+    ViewData["Title"] = "Menu";
+}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - G1Food_Admin</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/base.css" asp-append-version="true" />
+</head>
+
+<body id="page-top">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">   
+                <div class="row mt-4">
+                    <!-- DataTales Example -->
+                    <div class="col-sm-12">
+                        <div class="card shadow mb-4">                       
+                            <div class="card-body">
+
+                            <div class="d-flex justify-content-end mb-2">
+                                <div class="col-xl-4 col-lg-5">
+                                    <div class="d-flex justify-content-end">
+                                        <div class="py-1">
+                                            <button class="btn bg-danger">Create</button>
+                                        </div>
+                                        <div class="py-1 ml-5">
+                                            <button class="btn bg-danger">Edit</button>
+                                        </div>
+                                        <div class="py-1 ml-5">
+                                            <button class="btn  bg-danger">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>                             
+                            </div>
+
+                            <div class="table-responsive">
+                                    <table class="table table-bordered db-table table-hover"
+                                           id="dataTable"
+                                           width="100%"
+                                           cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>ID</th>
+                                                <th>Tên Món</th>
+                                                <th>Số lượng</th>
+                                                <th>Trạng thái</th>
+                                                <th>Tổng món</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="">
+                                            <tr>
+                                                <td>1</td>
+                                                <td>G1F001</td>
+                                                <td>Cơm gà</td>
+                                                <td>1</td>
+                                                <td>Đã bán</td> 
+                                                <td>Vẫn còn</td>
+                                                <td>
+                                                    <button class="btn sm bg-primary btn-table-edit">Edit</button>
+                                                    <button class="btn sm btn-table-delete">Delete</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>G1F002</td>
+                                                <td>Cơm tấm</td>
+                                                <td>3</td>
+                                                <td>Đã bán</td>
+                                                <td>Vẫn còn</td>
+                                                <td>
+                                                    <button class="btn sm bg-primary btn-table-edit">Edit</button>
+                                                    <button class="btn sm btn-table-delete">Delete</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>G1F003</td>
+                                                <td>Cơm gà</td>
+                                                <td>2</td>
+                                                <td>Đã bán</td>
+                                                <td>Vẫn còn</td>
+                                                <td>
+                                                    <button class="btn sm bg-primary btn-table-edit">Edit</button>
+                                                    <button class="btn sm btn-table-delete">Delete</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>G1F004</td>
+                                                <td>Phở bò</td>
+                                                <td>2</td>
+                                                <td>Đã bán</td>
+                                                <td>Vẫn còn</td>
+                                                <td>
+                                                    <button class="btn sm bg-primary btn-table-edit">Edit</button>
+                                                    <button class="btn sm btn-table-delete">Delete</button>
+                                                </td>
+                                            </tr>
+                                          
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/vendor/jquery/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js" asp-append-version="true"></script>
+    <script src="~/js/sb-admin-2.min.js" asp-append-version="true"></script>
+
+    <!-- For chart-->
+    <script src="~/vendor/chart.js/Chart.min.js" asp-append-version="true"></script>
+    <script src="~/js/demo/chart-bar-demo.js" asp-append-version="true"></script>
+    <script src="~/js/demo/chart-area-demo.js" asp-append-version="true"></script>
+    <script src="~/js/demo/chart-pie-demo.js" asp-append-version="true"></script>
+
+    <!-- For data table -->
+    <script src="~/vendor/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+    <script src="~/js/demo/datatables-demo.js" asp-append-version="true"></script>
+
+    <!-- Your custom javascript file -->
+    <script src="~/js/main.js" asp-append-version="true"></script>
+</body>
