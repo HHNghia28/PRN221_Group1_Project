@@ -13,7 +13,7 @@ namespace G1FOODLibrary.DTO
 
         public Guid? UserId { get; set; }
 
-        public Guid? VoucherId { get; set; } = Guid.Empty;
+        public string? VoucherCode { get; set; }
 
         public IEnumerable<OrderDetailRequest> Details { get; set; } = null;
     }

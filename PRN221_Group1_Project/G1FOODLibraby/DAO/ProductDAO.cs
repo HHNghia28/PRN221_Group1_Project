@@ -60,7 +60,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             return productDTOs;
@@ -93,7 +93,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             return productDTO;
@@ -127,7 +127,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -157,7 +157,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -183,7 +183,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -209,7 +209,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -235,7 +235,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -263,7 +263,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -293,7 +293,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -319,7 +319,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             return warehouseItemDTOs;
@@ -346,7 +346,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -371,7 +371,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -394,7 +394,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -423,7 +423,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
     }

@@ -41,8 +41,34 @@ namespace DataAccess.DAO
                 throw new ArgumentException("Order can not null!");
             }
 
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
+                var voucher = new Voucher();
+
+                if (order.VoucherCode != null)
+                {
+                    voucher = _context.Vouchers.FirstOrDefault(v => v.Code.ToLower().Equals(order.VoucherCode.ToLower()));
+
+                    if (voucher == null)
+                    {
+                        throw new Exception("Voucher not exist!");
+                    }
+
+                    if (voucher.StatusId != new Guid("DF9DC864-4ABD-4277-9ECD-751814C8763A"))
+                    {
+                        throw new Exception("Voucher expired!");
+                    }
+
+                    if (voucher.Quantity < 1)
+                    {
+                        throw new Exception("Vouchers are out of stock");
+                    }
+
+                    voucher.Quantity -= 1;
+
+                }
 
                 Guid guid = Guid.NewGuid();
 
@@ -54,7 +80,7 @@ namespace DataAccess.DAO
                     StatusId = new Guid("DE3E4850-B990-4D62-BA90-4BBB49506722"),
                     UserId = order.UserId,
                     ScheduleId = null,
-                    VoucherId = order.VoucherId == Guid.Empty ? null : order.VoucherId
+                    VoucherId = order.VoucherCode != null ? voucher.Id : null
                 };
 
                 List<OrderDetail> orderDetails = new List<OrderDetail>();
@@ -86,10 +112,13 @@ namespace DataAccess.DAO
                     _context.OrderDetails.Add(detail);
                 }
                 await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                await transaction.RollbackAsync();
+                throw new Exception(ex.Message);
             }
         }
 
@@ -114,7 +143,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             foreach(Order order in orders)
@@ -158,7 +187,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             foreach (OrderDetail detail in orderDetails)
@@ -200,7 +229,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -221,7 +250,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             foreach (Order order in orders)
@@ -282,7 +311,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -329,8 +358,9 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
+
     }
 }

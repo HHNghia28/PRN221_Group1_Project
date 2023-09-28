@@ -64,7 +64,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             return accountDTOs;
@@ -109,7 +109,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             AccountResponse accountDTO = new AccountResponse
@@ -143,7 +143,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             if (account == null)
@@ -198,7 +198,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             if (account == null)
@@ -237,7 +237,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -264,7 +264,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -290,7 +290,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -316,7 +316,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
     }

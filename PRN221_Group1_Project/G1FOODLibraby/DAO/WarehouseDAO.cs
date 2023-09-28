@@ -55,7 +55,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -153,7 +153,7 @@ namespace DataAccess.DAO
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -180,7 +180,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -207,7 +207,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
     }
