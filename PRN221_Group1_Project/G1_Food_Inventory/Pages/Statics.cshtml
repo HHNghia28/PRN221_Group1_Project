@@ -1,0 +1,109 @@
+﻿@page
+@model G1_Food_Inventory.Pages.StaticsModel
+@{
+    ViewData["Title"] = "Inventory Export";
+}
+
+<div>
+    <div class="row mt-4">
+        <!-- DataTales Example -->
+        <div class="col-sm-12">
+            <div class="card mb-4 px-4 py-2">
+
+                <div>
+                    <h3>
+                        Inventory Statics
+                    </h3>
+                    <div class="">
+
+
+                        <div class="row mt-2">
+
+
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <input type="date" class="form-control" id="exampleInputEmail1"
+                                           aria-describedby="emailHelp" placeholder="Quantity" />
+                                </div>
+
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <input type="date" class="form-control" id="exampleInputEmail1"
+                                           aria-describedby="emailHelp" placeholder="Quantity" />
+                                </div>
+
+                            </div>
+                            <div class="col-4">
+                                <button class="btn bg-success">Filter</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mb-4">
+
+                <div class="card-body">
+
+                    <div id="chart">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    var options = {
+        series: [{
+            name: 'Import',
+            data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+        }, {
+            name: 'Export',
+            data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+        }],
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        },
+        yaxis: {
+
+        },
+        fill: {
+            opacity: 1
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return "$ " + val + " thousands"
+                }
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+
+</script>
