@@ -66,8 +66,10 @@ formLogin.addEventListener("submit", (event) => {
     let isEmailValid = checkEmail(email);
     let isPasswordValid = checkPassword(password);
     if(isEmailValid && isPasswordValid) {
-       return true;
-    }else {
+        //alert("Login success!");
+        return true;
+    } else {
+        //alert("Login failed!");
         return false;
     }
 });

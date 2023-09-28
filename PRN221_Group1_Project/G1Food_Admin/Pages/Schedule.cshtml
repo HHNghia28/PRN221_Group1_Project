@@ -1,0 +1,186 @@
+﻿@page
+@model G1_Food_ChefStaff.Pages.ScheduleModel
+@{
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
+</head>
+<body id="page-top">
+    <div id="wrapper ">
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <div class="container-fluid ">
+                    <h4 class="fs-md mb-2 text-gray-800">Lịch trình chi tiết</h4>
+
+                    <div class="row mt-4 d-flex align-items-center justify-content-center">
+
+                        <div class="col-sm-12 col-md-2">
+                            <button class="btn">Thực Đơn</button>
+                        </div>
+                        <div class="col-sm-12 col-md-6 d-flex justify-content-end ">
+                            
+                            <button class="btn bg-success ml-3">Sáng</button>
+                            <button class="btn bg-primary ml-3">Tối</button>
+                            <button class="btn bg-info ml-3">Cả ngày</button>
+
+                        </div>
+                        <div class="row mt-4">
+                            <!-- DataTales Example -->
+                            <div class="col-sm-12">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered db-table table-hover"
+                                                   id="dataTable"
+                                                   width="100%"
+                                                   cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Tên</th>
+                                                        <th>Vai trò</th>
+                                                        <th>Ca</th>
+                                                        <th>Ghi chú</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="">
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Tiger Nixon</td>
+                                                        <td>Nhân viên</td>
+                                                        <td>Cả ngày</td>
+                                                        <td></td>
+
+                                                        <td>
+                                                            <button class="btn sm bg-primary btn-table-edit">Chỉnh sửa</button>
+                                                            <button class="btn sm btn-table-delete">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>Garrett Winters</td>
+                                                        <td>Đầu bếp</td>
+                                                        <td>Cả ngày</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn sm bg-primary btn-table-edit">Chỉnh sửa</button>
+                                                            <button class="btn sm btn-table-delete">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>Ashton Coxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                                        <td>Nhân viên</td>
+                                                        <td>Sáng</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn sm bg-primary btn-table-edit">Chỉnh sửa</button>
+                                                            <button class="btn sm btn-table-delete">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td>Cedric Kelly</td>
+                                                        <td>Thu ngân</td>
+                                                        <td>Sáng</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn sm bg-primary btn-table-edit">Chỉnh sửa</button>
+                                                            <button class="btn sm btn-table-delete">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td>Airi Satou</td>
+                                                        <td>Đầu bếp</td>
+                                                        <td>Cả ngày</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn sm bg-primary btn-table-edit">Chỉnh sửa</button>
+                                                            <button class="btn sm btn-table-delete">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>6</td>
+                                                        <td>Brielle Williamson</td>
+                                                        <td>Thu ngân</td>
+                                                        <td>Cả ngày</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn sm bg-primary btn-table-edit">Chỉnh sửa</button>
+                                                            <button class="btn sm btn-table-delete">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>7</td>
+                                                        <td>Herrod Chandler</td>
+                                                        <td>Đầu bếp</td>
+                                                        <td>Tối</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn sm bg-primary btn-table-edit">Chỉnh sửa</button>
+                                                            <button class="btn sm btn-table-delete">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>8</td>
+                                                        <td>Rhona Davidson</td>
+                                                        <td>Nhân viên</td>
+                                                        <td>Sáng</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn sm bg-primary btn-table-edit">Chỉnh sửa</button>
+                                                            <button class="btn sm btn-table-delete">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>9</td>
+                                                        <td>Brielle Williamson</td>
+                                                        <td>Đầu bếp</td>
+                                                        <td>Cả ngày</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn sm bg-primary btn-table-edit">Chỉnh sửa</button>
+                                                            <button class="btn sm btn-table-delete">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>10</td>
+                                                        <td>Herrod Chandler</td>
+                                                        <td>Nhân viên</td>
+                                                        <td>Tối</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn sm bg-primary btn-table-edit">Chỉnh sửa</button>
+                                                            <button class="btn sm btn-table-delete">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>11</td>
+                                                        <td>Rhona Davidson</td>
+                                                        <td>Đầu bếp</td>
+                                                        <td>Sáng</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn sm bg-primary btn-table-edit">Chỉnh sửa</button>
+                                                            <button class="btn sm btn-table-delete">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+

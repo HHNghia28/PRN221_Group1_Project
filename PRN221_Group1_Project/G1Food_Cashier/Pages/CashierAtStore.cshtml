@@ -1,26 +1,11 @@
 ﻿@page
-@model G1Food_Cashier.Pages.Shared.CashierAtSroreModel
+@model G1Food_Cashier.Pages.CashierStatisticsModel
 @{
     ViewData["Title"] = "Cashier at store";
 }
 
 
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - G1Food_Admin</title>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer" />
-    <link href="./css/sb-admin-2.min.css" rel="stylesheet" />
-    <link href="./vendor/datatables/dataTables.bootstrap4.min.css"
-          rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/base.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
 </head>
 <body>
@@ -266,27 +251,4 @@
             </div>
         </div>
     </div>
-
-<!-- Custom scripts for all pages-->
-<script src="./vendor/jquery/jquery.min.js"></script>
-<script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="./vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="./js/sb-admin-2.min.js"></script>
-
-<!-- For chart-->
-<script src="./vendor/chart.js/Chart.min.js"></script>
-<script src="./js/demo/chart-bar-demo.js"></script>
-<script src="./js/demo/chart-area-demo.js"></script>
-<script src="./js/demo/chart-pie-demo.js"></script>
-
-<!-- For data table -->
-<script src="./vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="./vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="./js/demo/datatables-demo.js"></script>
-
-<!-- Your custom javascript file -->
-<script src="./js/main.js"></script>
-@*  @await RenderSectionAsync("Scripts", required: false) *@
 </body>
-</html>
-

@@ -10,9 +10,8 @@
           crossorigin="anonymous"
           referrerpolicy="no-referrer" />
     <link href="./css/sb-admin-2.min.css" rel="stylesheet" />
-    <link href="./vendor/datatables/dataTables.bootstrap4.min.css"
-          rel="stylesheet" />
-    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./vendor/datatables/dataTables.bootstrap4.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="./css/base.css" type="text/css" asp-append-version="true"/>
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -115,7 +114,7 @@
                                aria-expanded="false">
                                 <img class="img-profile rounded-circle"
                                      src="img/undraw_profile.svg" />
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small ml-2">Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small ml-2">Chef</span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -196,24 +195,24 @@
     </div>
 
     <!-- Custom scripts for all pages-->
-    <script src="./vendor/jquery/jquery.min.js"></script>
-    <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="./vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="./js/sb-admin-2.min.js"></script>
+    <script src="~/vendor/jquery/jquery.min.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/sb-admin-2.min.js" type="text/javascript" asp-append-version="true"></script>
 
     <!-- For chart-->
-    <script src="./vendor/chart.js/Chart.min.js"></script>
-    <script src="./js/demo/chart-bar-demo.js"></script>
-    <script src="./js/demo/chart-area-demo.js"></script>
-    <script src="./js/demo/chart-pie-demo.js"></script>
+    <script src="~/vendor/chart.js/Chart.min.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/demo/chart-bar-demo.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/demo/chart-area-demo.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/demo/chart-pie-demo.js" type="text/javascript" asp-append-version="true"></script>
 
     <!-- For data table -->
-    <script src="./vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="./vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <script src="./js/demo/datatables-demo.js"></script>
+    <script src="~/vendor/datatables/jquery.dataTables.min.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/demo/datatables-demo.js" type="text/javascript" asp-append-version="true"></script>
 
     <!-- Your custom javascript file -->
-    <script src="./js/main.js"></script>
+    <script src="~/js/main.js" type="text/javascript" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

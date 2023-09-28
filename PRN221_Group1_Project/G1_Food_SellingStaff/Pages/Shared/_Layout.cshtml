@@ -11,8 +11,8 @@
           referrerpolicy="no-referrer" />
     <link href="./css/sb-admin-2.min.css" rel="stylesheet" />
     <link href="./vendor/datatables/dataTables.bootstrap4.min.css"
-          rel="stylesheet" />
-    <link rel="stylesheet" href="./css/base.css" />
+          rel="stylesheet" type="text/css" asp-append-version="true"/>
+    <link rel="stylesheet" href="./css/base.css" type="text/css" asp-append-version="true"/>
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -211,7 +211,7 @@
     <script src="./js/demo/datatables-demo.js"></script>
 
     <!-- Your custom javascript file -->
-    <script src="./js/main.js"></script>
+    <script src="./js/main.js" type="text/javascript" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -9,10 +9,10 @@
           integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
           crossorigin="anonymous"
           referrerpolicy="no-referrer" />
-    <link href="./css/sb-admin-2.min.css" rel="stylesheet" />
-    <link href="./vendor/datatables/dataTables.bootstrap4.min.css"
-          rel="stylesheet" />
-    <link rel="stylesheet" href="./css/base.css" />
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css"
+          rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/base.css" type="text/css" asp-append-version="true"/>
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -27,7 +27,6 @@
                 <div class="sidebar-brand-text mx-3">G1-Food</div>
             </a>
 
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item mt-4 active">
                 <a class="nav-link " href="../Index">
                     <i class="fas fa-fw fa-tachometer-alt main-color"></i>
@@ -35,8 +34,6 @@
                 </a>
             </li>
 
-            <!-- Heading -->
-            <!-- <div class="sidebar-heading main-color">All components</div> -->
             <li class="nav-item">
                 <a class="nav-link" href="../CashierAtStore">
                     <i class="fas fa-fw fa-chart-area main-color"></i>
@@ -44,9 +41,14 @@
                 </a>
             </li>
 
-            <!-- Divider -->
-            <!-- <hr class="sidebar-divider d-none d-md-block divider-color" /> -->
-            <!-- Sidebar Toggler (Sidebar) -->
+
+            <li class="nav-item">
+                <a class="nav-link" href="../CashierStatistics">
+                    <i class="fas fa-fw fa-chart-area main-color"></i>
+                    <span class="text-dark">Cashier Statistics</span>
+                </a>
+            </li>
+
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0 background-main"
                         id="sidebarToggle"></button>
@@ -202,24 +204,25 @@
         </div>
     </div>
     <!-- Custom scripts for all pages-->
-    <script src="./vendor/jquery/jquery.min.js"></script>
-    <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="./vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="./js/sb-admin-2.min.js"></script>
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/js/sb-admin-2.min.js"></script>
 
     <!-- For chart-->
-    <script src="./vendor/chart.js/Chart.min.js"></script>
-    <script src="./js/demo/chart-bar-demo.js"></script>
-    <script src="./js/demo/chart-area-demo.js"></script>
-    <script src="./js/demo/chart-pie-demo.js"></script>
+    <script src="~/vendor/chart.js/Chart.min.js"></script>
+    <script src="~/js/demo/chart-bar-demo.js"></script>
+    <script src="~/js/demo/chart-area-demo.js"></script>
+    <script src="~/js/demo/chart-pie-demo.js"></script>
 
     <!-- For data table -->
-    <script src="./vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="./vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <script src="./js/demo/datatables-demo.js"></script>
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/demo/datatables-demo.js"></script>
+    <script src="~/js/demo/datatables-demo.js"></script>
 
     <!-- Your custom javascript file -->
-    <script src="./js/main.js"></script>
+    <script src="./js/main.js" type="text/javascript" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
