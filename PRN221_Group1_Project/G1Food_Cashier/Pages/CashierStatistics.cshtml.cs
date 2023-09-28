@@ -1,0 +1,12 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace G1Food_Cashier.Pages
+{
+    public class CashierStatisticsModel : PageModel
+    {
+        public void OnGet()
+        {
+        }
+    }
+}
