@@ -41,8 +41,34 @@ namespace DataAccess.DAO
                 throw new ArgumentException("Order can not null!");
             }
 
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
+                var voucher = new Voucher();
+
+                if (order.VoucherCode != null)
+                {
+                    voucher = _context.Vouchers.FirstOrDefault(v => v.Code.ToLower().Equals(order.VoucherCode.ToLower()));
+
+                    if (voucher == null)
+                    {
+                        throw new Exception("Voucher not exist!");
+                    }
+
+                    if (voucher.StatusId != new Guid("DF9DC864-4ABD-4277-9ECD-751814C8763A"))
+                    {
+                        throw new Exception("Voucher expired!");
+                    }
+
+                    if (voucher.Quantity < 1)
+                    {
+                        throw new Exception("Vouchers are out of stock");
+                    }
+
+                    voucher.Quantity -= 1;
+
+                }
 
                 Guid guid = Guid.NewGuid();
 
@@ -54,10 +80,21 @@ namespace DataAccess.DAO
                     StatusId = new Guid("DE3E4850-B990-4D62-BA90-4BBB49506722"),
                     UserId = order.UserId,
                     ScheduleId = null,
-                    VoucherId = order.VoucherId == Guid.Empty ? null : order.VoucherId
+                    VoucherId = order.VoucherCode != null ? voucher.Id : null
                 };
 
                 List<OrderDetail> orderDetails = new List<OrderDetail>();
+
+                DateTime date = DateTime.Now;
+
+                var schedule = await _context.Schedules.FirstOrDefaultAsync(s => s.Date.Day == date.Date.Day
+                                                                            && s.Date.Month == date.Date.Month
+                                                                            && s.Date.Year == date.Date.Year);
+
+                if (schedule == null)
+                {
+                    throw new Exception("No products available today!");
+                }
 
                 foreach (OrderDetailRequest detail in order.Details)
                 {
@@ -67,6 +104,20 @@ namespace DataAccess.DAO
                     {
                         throw new Exception("Product not exist!");
                     }
+
+                    var menu = _context.Menus.FirstOrDefault(p => p.ProductId == detail.ProductId && p.ScheduleId == schedule.Id);
+
+                    if (menu == null)
+                    {
+                        throw new Exception("Product not exist!");
+                    }
+
+                    if (menu.Quantity < detail.Quantity)
+                    {
+                        throw new Exception("The quantity of product left is not enough!");
+                    }
+
+                    menu.Quantity -= detail.Quantity;
 
                     orderDetails.Add(new OrderDetail
                     {
@@ -85,11 +136,15 @@ namespace DataAccess.DAO
                 {
                     _context.OrderDetails.Add(detail);
                 }
+
                 await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                await transaction.RollbackAsync();
+                throw new Exception(ex.Message);
             }
         }
 
@@ -114,7 +169,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             foreach(Order order in orders)
@@ -158,7 +213,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             foreach (OrderDetail detail in orderDetails)
@@ -200,7 +255,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -221,7 +276,7 @@ namespace DataAccess.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while querying the database!", ex);
+                throw new Exception(ex.Message);
             }
 
             foreach (Order order in orders)
@@ -245,5 +300,93 @@ namespace DataAccess.DAO
 
             return orderDTOs;
         }
+
+        public async Task<IEnumerable<OrderResponse>> GetOrderHistoryAsync(Guid accountId)
+        {
+            if (accountId == Guid.Empty)
+            {
+                throw new ArgumentNullException("Account ID can not null!");
+            }
+
+            try
+            {
+                List<OrderResponse> orderResponses = new List<OrderResponse>();
+
+                var users = _context.Users.Where(u => u.AccountId == accountId).ToList();
+
+                foreach (var item in users)
+                {
+                    var orders = _context.Orders
+                        .Include(o => o.User)
+                        .Where(o => o.UserId == item.Id)
+                        .ToList();
+
+                    foreach (var item1 in orders)
+                    {
+                        orderResponses.Add(new OrderResponse
+                        {
+                            Id = item1.Id,
+                            Date = item1.Date,
+                            Note = item1.Note,
+                            Username = item1.User.Name
+                        });
+                    }
+                }
+
+                return orderResponses;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<OrderResponse> GetOrderDetailAsync(Guid orderId)
+        {
+            if (orderId == Guid.Empty)
+            {
+                throw new ArgumentNullException("Order ID can not null!");
+            }
+
+            try
+            {
+                List<OrderDetailResponse> orderDetailResponses = new List<OrderDetailResponse>();
+
+                var order = _context.Orders.Include(o => o.Status).Include(o => o.User).FirstOrDefault(o => o.Id == orderId);
+                var orderDetails = _context.OrderDetails.Include(o => o.Product).Where(o => o.OrderId == order.Id).ToList();
+
+                foreach (var item in orderDetails)
+                {
+                    orderDetailResponses.Add(new OrderDetailResponse
+                    {
+                        Id = item.Id,
+                        Image = item.Product.Image,
+                        ProductName = item.Product.Name,
+                        Price = item.Price,
+                        Note = item.Note,
+                        Quantity = item.Quantity,
+                        SalePercent = item.SalePercent
+                    });
+                }
+
+                OrderResponse orderResponse = new OrderResponse
+                {
+                    Id = order.Id,
+                    Note = order.Note,
+                    Date = order.Date,
+                    Status = order.Status.Name,
+                    Username = order.User.Name,
+                    Details = orderDetailResponses
+                };
+
+                return orderResponse;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

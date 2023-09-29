@@ -29,5 +29,9 @@ namespace DataAccess.Repository
         public Task UpdateOrderStatusToDeliveringAsync(Guid orderId) => OrderDAO.Instance.UpdateStatusOrderAsync(orderId, new Guid("ECDB311C-0C0B-46AB-91D3-9F44F0C86FA5"));
 
         public Task<IEnumerable<OrderResponse>> GetOrdersAsync() => OrderDAO.Instance.GetOrdersAsync();
+
+        public Task<OrderResponse> GetOrderDetailAsync(Guid orderId) => OrderDAO.Instance.GetOrderDetailAsync(orderId);
+
+        public Task<IEnumerable<OrderResponse>> GetOrderHistoryAsync(Guid accountId) => OrderDAO.Instance.GetOrderHistoryAsync(accountId);
     }
 }

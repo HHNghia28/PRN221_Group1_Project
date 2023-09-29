@@ -6,15 +6,10 @@ using System.Threading.Tasks;
 
 namespace G1FOODLibrary.DTO
 {
-    public class OrderRequest
+    public class ScheduleRequest
     {
+        public DateTime Date { get; set; }
 
         public string? Note { get; set; }
-
-        public Guid? UserId { get; set; }
-
-        public string? VoucherCode { get; set; }
-
-        public IEnumerable<OrderDetailRequest> Details { get; set; } = null;
     }
 }

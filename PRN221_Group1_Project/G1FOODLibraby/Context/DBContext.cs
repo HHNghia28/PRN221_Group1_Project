@@ -53,8 +53,6 @@ public partial class DBContext : DbContext
 
     public virtual DbSet<ScheduleDetail> ScheduleDetails { get; set; }
 
-    public virtual DbSet<Shift> Shifts { get; set; }
-
     public virtual DbSet<Unit> Units { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -485,11 +483,6 @@ public partial class DBContext : DbContext
             entity.Property(e => e.Note)
                 .HasMaxLength(255)
                 .HasColumnName("note");
-            entity.Property(e => e.ShiftId).HasColumnName("shiftId");
-
-            entity.HasOne(d => d.Shift).WithMany(p => p.Schedules)
-                .HasForeignKey(d => d.ShiftId)
-                .HasConstraintName("FK__Schedule__shiftI__693CA210");
         });
 
         modelBuilder.Entity<ScheduleDetail>(entity =>
@@ -511,22 +504,6 @@ public partial class DBContext : DbContext
             entity.HasOne(d => d.Schedule).WithMany(p => p.ScheduleDetails)
                 .HasForeignKey(d => d.ScheduleId)
                 .HasConstraintName("FK__Schedule___sched__6D0D32F4");
-        });
-
-        modelBuilder.Entity<Shift>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Shift__3213E83FED9F5DB1");
-
-            entity.ToTable("Shift");
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
-            entity.Property(e => e.EndTime).HasColumnName("endTime");
-            entity.Property(e => e.Name)
-                .HasMaxLength(255)
-                .HasColumnName("name");
-            entity.Property(e => e.StartTime).HasColumnName("startTime");
         });
 
         modelBuilder.Entity<Unit>(entity =>

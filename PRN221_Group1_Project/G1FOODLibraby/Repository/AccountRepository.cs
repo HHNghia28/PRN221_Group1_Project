@@ -13,10 +13,18 @@ namespace DataAccess.Repository
     {
         public Task<bool> ActiveAccountAsync(string email) => AccountDAO.Instance.ActiveAccountAsync(email);
 
+        public Task AddUser(UserRequest userRequest) => AccountDAO.Instance.AddUser(userRequest);
+
+        public Task DeleteAccount(Guid id) => AccountDAO.Instance.DeleteAccount(id);
+
         public IEnumerable<AccountResponse> GetAllAccounts() => AccountDAO.Instance.GetAllAccounts();
+
+        public Task<IEnumerable<UserResponse>> GetUsersByAccountId(Guid accountId) => AccountDAO.Instance.GetUsersByAccountId(accountId);
 
         public Task<AccountResponse> LoginAsync(LoginRequest login) => AccountDAO.Instance.LoginAsync(login);
 
         public Task<AccountResponse> RegisterAsync(RegisterRequest register) => AccountDAO.Instance.ResgiterAsync(register);
+
+        public Task UpdatePassword(Guid id, string password) => AccountDAO.Instance.UpdatePassword(id, password);
     }
 }

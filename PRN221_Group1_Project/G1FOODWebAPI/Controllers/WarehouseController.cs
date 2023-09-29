@@ -1,33 +1,31 @@
-﻿using G1FOODLibrary.Entities;
-using DataAccess.Repository;
+﻿using DataAccess.Repository;
+using G1FOODLibrary.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using G1FOODLibrary.DTO;
-using Microsoft.Win32;
 
 namespace G1FOODWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class WarehouseController : ControllerBase
     {
-        IAccountRepository _accountRepository;
+        IWarehouseRepository _warehouseRepository;
 
-        public AccountController() => _accountRepository = new AccountRepository();
+        public WarehouseController() => _warehouseRepository = new WarehouseRepository();
 
-        // GET: api/<AccountController>
-        [HttpGet("getAllAccounts")]
-        public IActionResult GetAllAccounts()
+        [HttpGet("getWarehouses")]
+        public async Task<IActionResult> GetWarehouses()
         {
             try
             {
-                var accounts = _accountRepository.GetAllAccounts();
+                var warehouses = await _warehouseRepository.GetWarehousesAsync();
+
                 return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Get all accounts successful!",
-                    Data = accounts
+                    Message = "Get warehouses successful!",
+                    Data = warehouses
                 });
             }
             catch (Exception ex)
@@ -41,18 +39,19 @@ namespace G1FOODWebAPI.Controllers
             }
         }
 
-        [HttpGet("getUserByAccountId")]
-        public async Task<IActionResult> GetUserByAccountId(string id)
+        [HttpGet("getWarehousesImportStatistics")]
+        public async Task<IActionResult> GetWarehousesImportStatistics()
         {
             try
             {
-                var accounts = await _accountRepository.GetUsersByAccountId(new Guid(id));
+                var warehouses = await _warehouseRepository.WarehouseImportStatisticAsync();
+
                 return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Get user successful!",
-                    Data = accounts
+                    Message = "Get warehouses import statistic successful!",
+                    Data = warehouses
                 });
             }
             catch (Exception ex)
@@ -66,17 +65,19 @@ namespace G1FOODWebAPI.Controllers
             }
         }
 
-        [HttpPost("addUser")]
-        public async Task<IActionResult> AddUser(UserRequest userRequest)
+        [HttpGet("getWarehousesExportStatistics")]
+        public async Task<IActionResult> GetWarehousesExportStatistics()
         {
             try
             {
-                await _accountRepository.AddUser(userRequest);
+                var warehouses = await _warehouseRepository.WarehouseExportStatisticAsync();
+
                 return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Add user successful!"
+                    Message = "Get warehouses statistics export successful!",
+                    Data = warehouses
                 });
             }
             catch (Exception ex)
@@ -90,18 +91,18 @@ namespace G1FOODWebAPI.Controllers
             }
         }
 
-        [HttpDelete("deleteAccount")]
-        public async Task<IActionResult> DeleteAccount(string id)
+        [HttpPost("ImportWarehouse")]
+        public async Task<IActionResult> ImportWarehouse([FromBody] List<WarehouseImportRequest> warehouseImportRequests)
         {
             try
             {
-                await _accountRepository.DeleteAccount(new Guid(id));
+                await _warehouseRepository.WarehouseImportAsync(warehouseImportRequests);
 
                 return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Delete account successful!"
+                    Message = "Import warehouse successful!"
                 });
             }
             catch (Exception ex)
@@ -115,18 +116,18 @@ namespace G1FOODWebAPI.Controllers
             }
         }
 
-        [HttpPut("updatePassword")]
-        public async Task<IActionResult> UpdatePassword(string id, [FromBody] string password)
+        [HttpPost("ExportWarehouse")]
+        public async Task<IActionResult> ExportWarehouse([FromBody] List<WarehouseExportRequest> warehouseExportRequests)
         {
             try
             {
-                await _accountRepository.UpdatePassword(new Guid(id), password);
+                await _warehouseRepository.WarehouseExportAsync(warehouseExportRequests);
 
                 return Ok(new APIResponse
                 {
                     StatusCode = 200,
                     Success = true,
-                    Message = "Update password successful!"
+                    Message = "Export warehouse successful!"
                 });
             }
             catch (Exception ex)
