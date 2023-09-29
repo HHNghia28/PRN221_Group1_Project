@@ -85,6 +85,17 @@ namespace DataAccess.DAO
 
                 List<OrderDetail> orderDetails = new List<OrderDetail>();
 
+                DateTime date = DateTime.Now;
+
+                var schedule = await _context.Schedules.FirstOrDefaultAsync(s => s.Date.Day == date.Date.Day
+                                                                            && s.Date.Month == date.Date.Month
+                                                                            && s.Date.Year == date.Date.Year);
+
+                if (schedule == null)
+                {
+                    throw new Exception("No products available today!");
+                }
+
                 foreach (OrderDetailRequest detail in order.Details)
                 {
                     var product = _context.Products.FirstOrDefault(p => p.Id == detail.ProductId);
@@ -93,6 +104,20 @@ namespace DataAccess.DAO
                     {
                         throw new Exception("Product not exist!");
                     }
+
+                    var menu = _context.Menus.FirstOrDefault(p => p.ProductId == detail.ProductId && p.ScheduleId == schedule.Id);
+
+                    if (menu == null)
+                    {
+                        throw new Exception("Product not exist!");
+                    }
+
+                    if (menu.Quantity < detail.Quantity)
+                    {
+                        throw new Exception("The quantity of product left is not enough!");
+                    }
+
+                    menu.Quantity -= detail.Quantity;
 
                     orderDetails.Add(new OrderDetail
                     {
@@ -111,6 +136,7 @@ namespace DataAccess.DAO
                 {
                     _context.OrderDetails.Add(detail);
                 }
+
                 await _context.SaveChangesAsync();
 
                 await transaction.CommitAsync();

@@ -120,5 +120,112 @@ namespace G1FOODWebAPI.Controllers
                 });
             }
         }
+
+        [HttpPost("addMenu")]
+        public async Task<IActionResult> AddMenu([FromBody] List<MenuRequest> menus)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+            try
+            {
+
+                await _scheduleRepository.AddMenuAsync(menus);
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Add menu successful!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("getMenu")]
+        public async Task<IActionResult> GetMenu(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+            try
+            {
+
+                var menu = await _scheduleRepository.GetMenusAsync(new Guid(id));
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get menu successful!",
+                    Data = menu
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("getMenuNow")]
+        public async Task<IActionResult> GetMenuNow()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+            try
+            {
+
+                var menu = await _scheduleRepository.GetMenusNowAsync();
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get menu successful!",
+                    Data = menu
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
     }
 }

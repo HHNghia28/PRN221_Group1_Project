@@ -12,5 +12,8 @@ namespace DataAccess.Repository
         public Task<IEnumerable<ScheduleResponse>> GetSchedulesAsync();
         public Task AddScheduleAsync(ScheduleRequest scheduleRequest);
         public Task UpdateScheduleAsync(ScheduleRequest scheduleRequest, Guid id);
+        public Task<IEnumerable<MenuResponse>> GetMenusNowAsync();
+        public Task<IEnumerable<MenuResponse>> GetMenusAsync(Guid id);
+        public Task AddMenuAsync(List<MenuRequest> menuRequests);
     }
 }

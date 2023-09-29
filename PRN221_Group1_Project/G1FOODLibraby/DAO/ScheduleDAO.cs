@@ -142,5 +142,99 @@ namespace DataAccess.DAO
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task AddMenuAsync(List<MenuRequest> menuRequests)
+        {
+            try
+            {
+                if (!menuRequests.Any())
+                {
+                    throw new ArgumentException("Menu cannot be empty!");
+                }
+
+                var menus = menuRequests.Select(item => new Menu
+                {
+                    Id = Guid.NewGuid(),
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    ScheduleId = item.ScheduleId
+                }).ToList();
+
+                await _context.Menus.AddRangeAsync(menus);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<MenuResponse>> GetMenusAsync(Guid id)
+        {
+            try
+            {
+                if (id == Guid.Empty)
+                {
+                    throw new ArgumentException("Menu ID cannot be empty!");
+                }
+
+                var menus = await _context.Menus.Where(m => m.ScheduleId == id).ToListAsync();
+                List<MenuResponse> menuResponses = new List<MenuResponse>();
+
+                foreach (var item in menus)
+                {
+                    menuResponses.Add(new MenuResponse
+                    {
+                        Id = item.Id,
+                        ScheduleId = item.ScheduleId,
+                        ProductId = item.ProductId,
+                        Quantity = item.Quantity
+                    });
+                }
+
+                return menuResponses;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<MenuResponse>> GetMenusNowAsync()
+        {
+            try
+            {
+                DateTime date = DateTime.Now;
+
+                var schedule = await _context.Schedules.FirstOrDefaultAsync(s => s.Date.Day == date.Date.Day
+                                                                            && s.Date.Month == date.Date.Month
+                                                                            && s.Date.Year == date.Date.Year);
+
+                if(schedule == null)
+                {
+                    throw new Exception("No products available today!");
+                }
+
+                var menus = await _context.Menus.Where(m => m.ScheduleId == schedule.Id).ToListAsync();
+                List<MenuResponse> menuResponses = new List<MenuResponse>();
+
+                foreach (var item in menus)
+                {
+                    menuResponses.Add(new MenuResponse
+                    {
+                        Id = item.Id,
+                        ScheduleId = item.ScheduleId,
+                        ProductId = item.ProductId,
+                        Quantity = item.Quantity
+                    });
+                }
+
+                return menuResponses;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

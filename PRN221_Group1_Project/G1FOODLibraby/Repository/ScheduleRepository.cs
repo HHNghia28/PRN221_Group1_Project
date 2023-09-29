@@ -10,7 +10,13 @@ namespace DataAccess.Repository
 {
     public class ScheduleRepository : IScheduleRepository
     {
+        public Task AddMenuAsync(List<MenuRequest> menuRequests) => ScheduleDAO.Instance.AddMenuAsync(menuRequests);
+
         public Task AddScheduleAsync(ScheduleRequest scheduleRequest) => ScheduleDAO.Instance.AddScheduleAsync(scheduleRequest);
+
+        public Task<IEnumerable<MenuResponse>> GetMenusAsync(Guid id) => ScheduleDAO.Instance.GetMenusAsync(id);
+
+        public Task<IEnumerable<MenuResponse>> GetMenusNowAsync() => ScheduleDAO.Instance.GetMenusNowAsync();
 
         public Task<IEnumerable<ScheduleResponse>> GetSchedulesAsync() => ScheduleDAO.Instance.GetSchedulesAsync();
 
