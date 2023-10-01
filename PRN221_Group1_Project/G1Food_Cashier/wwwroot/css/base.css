@@ -17,6 +17,8 @@
     --font-size-md: 16px;
     --font-size-lg: 24px;
     --font-size-xl: 32px;
+    --font-size-ml: 20px;
+    --font-size-mml: 18px;
     /* Border radius */
     --rounded-xs: 4px;
     --rounded-sm: 6px;
@@ -44,7 +46,8 @@ ul > li {
     list-style: none;
 }
 
-a, a:hover {
+a,
+a:hover {
     text-decoration: none;
     color: var(--black-color);
 }
@@ -69,8 +72,10 @@ a, a:hover {
     z-index: 100;
     opacity: 0.6;
 }
+
 /* Button Components */
-.btn {
+.btn,
+a.btn {
     border: none;
     font-size: var(--font-size-md);
     border-radius: var(--rounded-sm);
@@ -97,7 +102,7 @@ a, a:hover {
     width: 100%;
 }
 
-.btn > i {
+.btn > i, .btn a {
     font-size: var(--font-size-md);
     margin-right: 4px;
 }
@@ -127,32 +132,116 @@ a, a:hover {
     right: var(--position);
 }
 
+.wrapper-login {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    overflow-y: scroll;
+    z-index: 1999;
+}
+
+.container.login {
+    padding: 0 !important;
+}
+
+.bg-main-color {
+    background-color: var(--main-color);
+}
+
+.bg-primary-color {
+    background-color: var(--primary-color) !important;
+}
+/* More code here */
+.fit-img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+/* Font size */
+.fs-sm {
+    font-size: var(--font-size-sm);
+}
+
+.fs-md {
+    font-size: var(--font-size-md);
+}
+
+.fs-lg {
+    font-size: var(--font-size-lg);
+}
+
+.fs-xl {
+    font-size: var(--font-size-xl);
+}
+
+.fs-ml {
+    font-size: var(--font-size-ml);
+}
+
+.fs-mml {
+    font-size: var(--font-size-mml);
+}
+
+/* End more code here */
 /* Form component */
+.wrapper {
+    overflow-y: scroll;
+    top: 0;
+    overflow-y: scroll;
+    z-index: 1999;
+}
+
 .form-wrapper {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 16px 32px;
-    border-radius: var(--rounded-sm);
-    width: max-content;
+    margin: 4% auto;
     box-shadow: 2px 2px 4px #b1aeae;
-    z-index: 200;
-    background-color: var(--bg-main-color);
-    transition: all 0.3s linear;
+    border-radius: var(--rounded-md);
+    background-color: var(--white-color);
+    height: max-content;
+    display: grid;
+    place-items: center;
+}
+
+.form-img {
+    padding: 0;
+}
+
+    .form-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        object-position: center;
+        border-top-left-radius: var(--rounded-md);
+        border-bottom-left-radius: var(--rounded-md);
+    }
+
+.form-container {
+    width: 100%;
+    height: 100%;
+    padding: 16% 24px;
+    box-sizing: border-box;
 }
 
 .form-body {
     margin-top: 24px;
 }
 
+.form-group {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
 .form-input {
     font-size: var(--font-size-md);
-    padding: 8px 12px;
-    border: 1px solid var(--main-color);
+    padding: 10px 12px;
+    border: 2px solid #ddd;
     border-radius: var(--rounded-xs);
-    min-width: 300px;
+    width: 100%;
+    transition: all 0.3s linear;
 }
+
+    .form-input:focus {
+        border-color: var(--primary-color);
+    }
 
 .form-error {
     font-size: var(--font-size-md);
@@ -213,7 +302,7 @@ a, a:hover {
 }
 
 .wrapper-icon {
-    --box-size: 42px;
+    --box-size: 32px;
     width: var(--box-size);
     height: var(--box-size);
     background-color: var(--white-color);
@@ -223,6 +312,11 @@ a, a:hover {
     line-height: var(--box-size);
     padding: 0;
 }
+
+    .wrapper-icon i {
+        font-size: var(--font-size-md);
+        color: var(--main-color);
+    }
 
 .header-list li.active,
 .header-list li:hover {
@@ -308,6 +402,7 @@ a, a:hover {
     margin-top: 10%;
     background-color: var(--bg-main-color);
 }
+
 /* Footer */
 .footer {
     /* position: relative; */
@@ -356,6 +451,15 @@ a, a:hover {
     justify-content: center;
     align-items: center;
 }
+
+.mt-content {
+    margin-top: 133px;
+}
+
+.z-100 {
+    z-index: 2000 !important;
+}
+
 /* Width - height */
 .w-0 {
     width: 0;
@@ -393,7 +497,13 @@ a, a:hover {
     transition: all 0.3s ease-in;
 }
 
+.fs-md {
+    font-size: var(--font-size-md);
+}
+
 .max-line-1 {
+    display: block;
+    overflow: hidden;
     --line: 1;
     line-height: 40px;
     height: calc(var(--line) * var(--line-height));
@@ -402,6 +512,16 @@ a, a:hover {
     -webkit-line-clamp: var(--line);
 }
 
+.max-line-2 {
+    display: block;
+    overflow: hidden;
+    --line: 2;
+    line-height: 26px;
+    height: calc(var(--line) * var(--line-height));
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--line);
+}
 /* Animation menu, slider */
 @keyframes menuSlip {
     from {
@@ -419,6 +539,24 @@ a, a:hover {
     animation: menuSlip 0.3s linear;
 }
 
+@keyframes scaleAnimation {
+    0% {
+        transform: scale(0.2);
+        transform-origin: -50% -50%;
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(0.5);
+        transform-origin: -50% -50%;
+    }
+}
+
+.animation-scale {
+    animation: scaleAnimation 0.3s linear;
+}
+
+
 /* Animation slider menu */
 @keyframes slipForm {
     from {
@@ -435,7 +573,7 @@ a, a:hover {
 }
 
 .animation-form {
-    animation: slipForm 0.3s linear;
+    animation: slipForm 0.4s linear;
 }
 
 /* Dashboard */
@@ -483,12 +621,24 @@ a, a:hover {
 .fs-md {
     font-size: var(--font-size-md);
 }
+
 /* Table */
 .db-table tbody tr td,
 .db-table thead tr th {
     font-size: var(--font-size-md);
 }
 
+.diliver {
+    width: 76px;
+    height: 2px;
+    background-color: var(--main-color);
+}
+
+    .diliver.full {
+        width: 100%;
+        height: 2px;
+        background-color: var(--main-color);
+    }
 
 /* Toast message css */
 .toast-wrapper {
@@ -528,6 +678,46 @@ a, a:hover {
     bottom: 0px;
     left: 0px;
     animation: countDownBorder 5s ease-out 1.5s;
+}
+
+/* Quantity handle */
+.quantity-group {
+    display: flex;
+    align-items: center;
+}
+
+    .quantity-group button {
+        padding: 20px;
+        font-size: var(--font-size-lg);
+        line-height: 4px;
+        border-radius: var(--rounded-sm);
+        background-color: var(--main-color);
+        color: var(--white-color);
+        font-weight: bold;
+        border: none;
+        outline: none;
+    }
+
+    .quantity-group input {
+        width: 52px;
+        height: 44px;
+        text-align: center;
+        font-weight: 500;
+        margin: 0 4px;
+        background-color: var(--primary-color);
+        border-radius: var(--rounded-sm);
+        font-size: var(--font-size-md);
+    }
+
+/* Hide input arrow default */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
 }
 
 @keyframes countDownBorder {
@@ -608,8 +798,68 @@ a, a:hover {
 
 /* Tablet */
 @media only screen and (min-width: 576px) and (max-width: 992px) {
+    .form-img {
+        display: none;
+    }
+
+    .content-nav {
+        background-color: transparent;
+    }
+
+        .content-nav .row .item {
+            margin-bottom: 12px;
+            padding: 0;
+        }
+
+            .content-nav .row .item:nth-child(2)::before {
+                display: none !important;
+            }
+
+    .mt-m-md {
+        margin-top: 24px;
+    }
+
+    .form-container {
+        padding: 10% 0px;
+        width: 100%;
+    }
 }
 
 /* Mobile */
 @media only screen and (max-width: 576px) {
+    .form-img {
+        display: none;
+    }
+
+    .content-nav {
+        background-color: transparent;
+    }
+
+        .content-nav .row .item:nth-child(1)::before,
+        .content-nav .row .item:nth-child(2)::before,
+        .content-nav .row .item:nth-child(3)::before {
+            display: none !important;
+        }
+
+        .content-nav .row .item {
+            margin-bottom: 12px;
+            border-radius: var(--rounded-md);
+        }
+
+    .mt-m-md {
+        margin-top: 24px;
+    }
+}
+
+
+img.img-table {
+    width: 84px !important;
+    height: 64px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    border-radius: var(--rounded-sm);
+}
+
+.mw-150 {
+    max-width: 150px;
 }

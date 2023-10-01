@@ -1,0 +1,74 @@
+﻿/*Your css here*/
+
+.pop-up-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--white-color);
+    z-index: 2000 !important;
+    box-shadow: 2px 2px 4px #b1aeae;
+    border-radius: var(--rounded-md);
+}
+
+.form-img {
+    padding: 0;
+}
+
+    .form-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        object-position: center;
+        border-top-left-radius: var(--rounded-md);
+        border-bottom-left-radius: var(--rounded-md);
+    }
+
+.form-container {
+    max-width: 394px;
+    height: 100%;
+    padding: 24px 28px;
+    box-sizing: border-box;
+}
+
+.form-body {
+    margin-top: 24px;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.form-input {
+    width: 100%;
+    font-size: var(--font-size-md);
+    padding: 10px 12px;
+    border: 2px solid #ddd;
+    border-radius: var(--rounded-xs);
+    transition: all 0.3s linear;
+}
+
+    .form-input:focus {
+        border-color: var(--primary-color);
+    }
+
+.form-error {
+    font-size: var(--font-size-md);
+    color: var(--main-color);
+    margin-top: 4px;
+}
+
+.form-logo img {
+    --logo-form-size: 52px;
+    width: var(--logo-form-size);
+    height: var(--logo-form-size);
+}
+
+.form-heading {
+    margin-top: 12px;
+}
+
+.form-text {
+    font-size: var(--font-size-md);
+}

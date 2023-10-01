@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="~/css/base.css" type="text/css" asp-append-version="true"/>
 </head>
 <body id="page-top">
+    <div class="overplay d-none"></div>
     <div id="wrapper">
         <!-- Sidebar -->
         <ul class="navbar-nav background-primary bg-sidebar sidebar sidebar-dark accordion"
@@ -29,7 +30,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item mt-4 active">
-                <a class="nav-link " href="">
+                <a class="nav-link " href="../Index">
                     <i class="fas fa-fw fa-tachometer-alt main-color"></i>
                     <span class="text-dark">Dashboard</span>
                 </a>
@@ -50,7 +51,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link " href="">
+                <a class="nav-link " href="../ManageProduct">
                     <i class="fas fa-fw fa-tachometer-alt main-color"></i>
                     <span class="text-dark">Manage Product</span>
                 </a>
@@ -88,13 +89,6 @@
                 <a class="nav-link " href="">
                     <i class="fas fa-fw fa-tachometer-alt main-color"></i>
                     <span class="text-dark">Manage Inventory</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link " href="">
-                    <i class="fas fa-fw fa-tachometer-alt main-color"></i>
-                    <span class="text-dark">Statistic</span>
                 </a>
             </li>
 
@@ -146,7 +140,7 @@
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                            <div class="dropdown-menu dropdown-menu-rigt p-3 shadow animated--grow-in"
                                  aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
@@ -165,6 +159,10 @@
                             </div>
                         </li>
 
+
+                        <li class="nav-item text-black">
+                            <a class="nav-link" href="../Login">Login</a>
+                        </li>
                         <!-- <div class="topbar-divider d-none d-sm-block"></div> -->
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
@@ -267,19 +265,19 @@
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="~/js/sb-admin-2.min.js"></script>
 
-    <!-- For chart-->
+@*     <!-- For chart-->
     <script src="~/vendor/chart.js/Chart.min.js"></script>
     <script src="~/js/demo/chart-bar-demo.js"></script>
     <script src="~/js/demo/chart-area-demo.js"></script>
     <script src="~/js/demo/chart-pie-demo.js"></script>
-
+ *@
     <!-- For data table -->
     <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/demo/datatables-demo.js"></script>
 
     <!-- Your custom javascript file -->
-    <script src="~/js/main.js" type="text/javascript" asp-append-version="true"></script>
+    @* <script src="~/js/main.js" type="text/javascript" asp-append-version="true"></script> *@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

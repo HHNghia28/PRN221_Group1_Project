@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace G1_Food_SellingStaff.Pages
+namespace G1Food_Admin.Pages
 {
-    public class DashboardModel : PageModel
+    public class loginModel : PageModel
     {
         public void OnGet()
         {

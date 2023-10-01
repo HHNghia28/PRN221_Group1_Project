@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "G1_Food_Inventory", "G1_Foo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "G1_Food_SellingStaff", "G1_Food_SellingStaff\G1_Food_SellingStaff.csproj", "{AAAE74D8-A1FE-4BCE-BF93-19D654F1BB71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Source_Model", "Source_Model\Source_Model.csproj", "{3AC07DE4-3C8A-447E-A5BF-C38AEF1E0BBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Source_Model", "Source_Model\Source_Model.csproj", "{3AC07DE4-3C8A-447E-A5BF-C38AEF1E0BBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
