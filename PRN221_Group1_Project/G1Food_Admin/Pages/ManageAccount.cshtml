@@ -1,0 +1,301 @@
+﻿@page
+@model G1Food_Admin.Pages.ManageAccountModel
+@{
+    ViewData["Title"] = "Manage Account";
+}
+<head>
+    <link rel="stylesheet" href="~/css/formDetail.css" type="text/css" asp-append-version="true"></link>
+</head>
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold main-color">
+                        Manage Account
+                    </h6>
+                    <div class=" d-flex justify-content-between align-items-center">
+                        <div>
+                            <span>Total account: </span>
+                            <span class="btn bg-primary">10000</span>
+                        </div>
+                        <button class="btn bg-success btn-add ml-4">
+                            <i class="fa-solid fa-plus"></i>
+                            Add new
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="">
+                        <table class="table text-center table-bordered db-table table-hover"
+                               id="dataTable"
+                               width="100%"
+                               cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Image</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Discount</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="align-middle id">1</td>
+                                    <td class="align-middle name">Gà sốt cay</td>
+                                    <td class="align-middle img">
+                                        <img class="img-table"
+                                             src="./img/card_1.jpg"
+                                             alt="" />
+                                    </td>
+                                    <td class="align-middle mw-150 description">Gà có sốt chua cay + nước ngọt Gà có sốt chua cay</td>
+                                    <td class="align-middle category">Gà rán</td>
+                                    <td class="align-middle discount">10</td>
+                                    <td class="align-middle price">42,000đ</td>
+                                    <td class="align-middle">
+                                        <button class="btn sm bg-primary btn-table-edit">Edit</button>
+                                        <button class="btn sm btn-table-delete">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle id">2</td>
+                                    <td class="align-middle name">Gà sốt cay</td>
+                                    <td class="align-middle img">
+                                        <img class="img-table"
+                                             src="./img/card_1.jpg"
+                                             alt="" />
+                                    </td>
+                                    <td class="align-middle mw-150 description">Gà có sốt chua cay + nước ngọt Gà có sốt chua cay</td>
+                                    <td class="align-middle category">Gà rán</td>
+                                    <td class="align-middle discount">10</td>
+                                    <td class="align-middle price">42,000đ</td>
+                                    <td class="align-middle">
+                                        <button class="btn sm bg-primary btn-table-edit">Edit</button>
+                                        <button class="btn sm btn-table-delete">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle id">3</td>
+                                    <td class="align-middle name">Gà sốt cay</td>
+                                    <td class="align-middle img">
+                                        <img class="img-table"
+                                             src="./img/card_1.jpg"
+                                             alt="" />
+                                    </td>
+                                    <td class="align-middle mw-150 description">Gà có sốt chua cay + nước ngọt Gà có sốt chua cay</td>
+                                    <td class="align-middle category">Gà rán</td>
+                                    <td class="align-middle discount">10</td>
+                                    <td class="align-middle price">42,000đ</td>
+                                    <td class="align-middle">
+                                        <button class="btn sm bg-primary btn-table-edit">Edit</button>
+                                        <button class="btn sm btn-table-delete">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle id">4</td>
+                                    <td class="align-middle name">Gà sốt cay</td>
+                                    <td class="align-middle img">
+                                        <img class="img-table"
+                                             src="./img/card_1.jpg"
+                                             alt="" />
+                                    </td>
+                                    <td class="align-middle mw-150 description">Gà có sốt chua cay + nước ngọt Gà có sốt chua cay</td>
+                                    <td class="align-middle category">Gà rán</td>
+                                    <td class="align-middle discount">10</td>
+                                    <td class="align-middle price">42,000đ</td>
+                                    <td class="align-middle">
+                                        <button class="btn sm bg-primary btn-table-edit">Edit</button>
+                                        <button class="btn sm btn-table-delete">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="pop-up-form add-form animation-scale d-none">
+                            <div class="form-container">
+                                <form id="register-form" action="" method="GET">
+                                    <div class="form-heading d-flex justify-content-between align-items-center">
+                                        <h5 class="form-heading text-success">
+                                            <i class="fa-solid fa-plus"></i>
+                                            Add product
+                                        </h5>
+                                        <div class="d-flex align-items-center">
+                                            <span>
+                                                ID:
+                                            </span>
+                                            <span class="ml-1" id="id">
+                                                #ABC123
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <input class="form-input"
+                                                   name="name"
+                                                   id="name"
+                                                   type="text"
+                                                   required
+                                                   placeholder="Tên sản phẩm" />
+                                            <div class="form-error"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-input"
+                                                   name="description"
+                                                   id="description"
+                                                   type="text"
+                                                   required
+                                                   placeholder="Mô tả sản phẩm" />
+                                            <div class="form-error"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-input"
+                                                   name="image"
+                                                   id="image"
+                                                   type="file"
+                                                   required
+                                                   placeholder="Hình ảnh" />
+                                            <div class="form-error"></div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="form-group">
+                                                <input class="form-input"
+                                                       name="discount"
+                                                       id="discount"
+                                                       required
+                                                       type="number"
+                                                       placeholder="Giảm giá" />
+                                                <div class="form-error"></div>
+                                            </div>
+                                            <div class="form-group ml-1">
+                                                <input class="form-input"
+                                                       name="price"
+                                                       id="price"
+                                                       required
+                                                       type="number"
+                                                       placeholder="Giá" />
+                                                <div class="form-error"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <select name="category" id="category" class="form-input">
+                                                <option class="flex justify-content-between" value="1">
+                                                    Category 1
+                                                    <span>-Cơm gà</span>
+                                                </option>
+                                                <option class="flex justify-content-between" value="1">
+                                                    Category 2
+                                                    <span>-Cơm gà</span>
+                                                </option>
+                                                <option class="flex justify-content-between" value="1">
+                                                    Category 3
+                                                    <span>-Cơm gà</span>
+                                                </option>
+                                            </select>
+                                            <div class="form-error"></div>
+                                        </div>
+                                        <button type="submit" class="btn mt-3 full bg-success">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="pop-up-form update-form animation-scale d-none">
+                            <div class="form-container">
+                                <form id="register-form" action="" method="GET">
+                                    <div class="form-heading d-flex justify-content-between align-items-center">
+                                        <h5 class="form-heading text-success">
+                                            <i class="fa-solid fa-plus"></i>
+                                            Update product
+                                        </h5>
+                                        <div class="d-flex align-items-center">
+                                            <span>
+                                                ID:
+                                            </span>
+                                            <span class="ml-1" id="id-update">
+                                                #ABC123
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <input class="form-input"
+                                                   name="name"
+                                                   id="name-update"
+                                                   type="text"
+                                                   required
+                                                   placeholder="Tên sản phẩm" />
+                                            <div class="form-error"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-input"
+                                                   name="description"
+                                                   id="description-update"
+                                                   type="text"
+                                                   required
+                                                   placeholder="Mô tả sản phẩm" />
+                                            <div class="form-error"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-input"
+                                                   name="image"
+                                                   id="image-update"
+                                                   type="file"
+                                                   required
+                                                   placeholder="Hình ảnh" />
+                                            <div class="form-error"></div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="form-group">
+                                                <input class="form-input"
+                                                       name="discount"
+                                                       id="discount-update"
+                                                       required
+                                                       type="number"
+                                                       placeholder="Giảm giá" />
+                                                <div class="form-error"></div>
+                                            </div>
+                                            <div class="form-group ml-1">
+                                                <input class="form-input"
+                                                       name="price"
+                                                       id="price-update"
+                                                       required
+                                                       type="number"
+                                                       placeholder="Giá" />
+                                                <div class="form-error"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <select name="category" id="category-update" class="form-input">
+                                                <option class="flex justify-content-between" value="1">
+                                                    Category 1
+                                                    <span>-Cơm gà</span>
+                                                </option>
+                                                <option class="flex justify-content-between" value="1">
+                                                    Category 2
+                                                    <span>-Cơm gà</span>
+                                                </option>
+                                                <option class="flex justify-content-between" value="1">
+                                                    Category 3
+                                                    <span>-Cơm gà</span>
+                                                </option>
+                                            </select>
+                                            <div class="form-error"></div>
+                                        </div>
+                                        <button type="submit" class="btn mt-3 full bg-success">
+                                            Update
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/handleShowFormDetial.js" type="text/javascript" asp-append-version="true"></script>
+</div>
