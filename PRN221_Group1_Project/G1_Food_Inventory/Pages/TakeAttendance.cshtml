@@ -1,0 +1,67 @@
+﻿@page
+@model G1_Food_Inventory.Pages.TakeAttendanceModel
+@{
+    ViewData["Title"] = "Take Attendance";
+}
+
+<body>
+    <div class="container-fluid bg-primary-color position-fixed h-100 wrapper-login animation-form z-1000">
+        <div class="container form-wrapper login">
+            <div class="row">
+                <div class="col-sm-12 col-lg-7 form-img ">
+                    <img class="" src="./img/login_img.jpg" alt="" />
+                </div>
+                <div class="col-sm-12 col-lg-5">
+                    <div class="form-container">
+                        <form id="login-form" action="" method="GET">
+                            <div class="form-heading text-center">
+                                <div class="form-logo">
+                                    <img src="https://www.lotteria.vn/grs-static/images/lotteria_logo.svg"
+                                         alt="logo" />
+                                </div>
+                                <h5 class="form-heading">Điểm danh</h5>
+                                <p class="form-text text-black-50">
+                                    Nhập thông tin tài khoản để điểm danh
+                                </p>
+                            </div>
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <input class="form-input"
+                                           name="email"
+                                           id="email"
+                                           type="text"
+                                           required
+                                           placeholder="Nhập địa chỉ email" />
+                                    <div class="form-error"></div>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-input"
+                                           name="password"
+                                           id="password"
+                                           required
+                                           type="password"
+                                           placeholder="Nhập mật khẩu" />
+                                    <div class="form-error"></div>
+                                </div>
+                                <a class="form-text" href="">Bạn đã quên mật khẩu?</a>
+                                <div class="form-group">
+                                    <button type="submit" class="btn mt-4 full">
+                                        Điểm danh
+                                    </button>
+                                </div>
+                                <div class="form-group d-flex justify-content-between align-items-center">
+                                    @* <span class="fs-md">
+                                    hoặc
+                                    <a href="./Register" class="fs-md bold main-color">đăng kí</a> tài khoản?
+                                    </span> *@
+                                    <a href="../Index" class="fs-md main-color"><i class="fa-solid fa-left-long"></i> Trở về</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/login.js" type="text/javascript" asp-append-version="true"></script>
+</body>
