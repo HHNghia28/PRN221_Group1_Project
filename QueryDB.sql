@@ -240,12 +240,12 @@ VALUES
 
 INSERT INTO [User](id,name,phone,addressDetail,defaultUser,accountId,statusId)
 VALUES
-	(NEWID(),N'Lê Văn Admin',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','E131105E-AA33-4701-BAF7-57C9CDD863F3','750301CE-21B9-444E-A0D3-53824614CA40'),
-	(NEWID(),N'Lê Văn Staff',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','E0DF3ED1-F541-4FBD-9663-6A3379CFA101','750301CE-21B9-444E-A0D3-53824614CA40'),
-	(NEWID(),N'Lê Văn Cashier',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','3B90CCA6-7729-4D02-BB57-C293B53E65AC','750301CE-21B9-444E-A0D3-53824614CA40'),
-	(NEWID(),N'Lê Văn Inventory',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','B0A826E5-4265-4E0A-B5DB-D41A2BCEFBF4','750301CE-21B9-444E-A0D3-53824614CA40'),
-	(NEWID(),N'Lê Văn Chef',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','A8A76F57-A441-4E23-B749-D603497708AE','750301CE-21B9-444E-A0D3-53824614CA40'),
-	(NEWID(),N'Lê Văn User',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','D5CAC6E2-1456-47E1-8EAD-E082A5B047FA','750301CE-21B9-444E-A0D3-53824614CA40');
+	('B0FAE6F0-EE75-41B2-8645-0F240F920CC4',N'Lê Văn Admin',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','E131105E-AA33-4701-BAF7-57C9CDD863F3','750301CE-21B9-444E-A0D3-53824614CA40'),
+	('9DDCC327-972D-48F2-AD87-D3FD4634BC83',N'Lê Văn Staff',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','E0DF3ED1-F541-4FBD-9663-6A3379CFA101','750301CE-21B9-444E-A0D3-53824614CA40'),
+	('CE37A48F-23DA-4D69-A9B8-583086F92E1D',N'Lê Văn Cashier',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','3B90CCA6-7729-4D02-BB57-C293B53E65AC','750301CE-21B9-444E-A0D3-53824614CA40'),
+	('7CFB02C6-4D15-4E6E-A2EF-FA77F163219B',N'Lê Văn Inventory',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','B0A826E5-4265-4E0A-B5DB-D41A2BCEFBF4','750301CE-21B9-444E-A0D3-53824614CA40'),
+	('B3F23D58-DDB5-4EB3-9C76-C6C0CBE2A0FF',N'Lê Văn Chef',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','A8A76F57-A441-4E23-B749-D603497708AE','750301CE-21B9-444E-A0D3-53824614CA40'),
+	('762A3F1E-78DB-4EC6-87CB-644805EF4C43',N'Lê Văn User',N'0123456789',N'600, đường Nguyễn Văn Cừ (nối dài), phường An Bình, quận Ninh Kiều, TP. Cần Thơ','true','D5CAC6E2-1456-47E1-8EAD-E082A5B047FA','750301CE-21B9-444E-A0D3-53824614CA40');
 
 INSERT INTO Voucher_Status(id, name, description)
 VALUES 
