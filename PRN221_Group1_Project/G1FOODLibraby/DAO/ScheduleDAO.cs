@@ -215,7 +215,7 @@ namespace DataAccess.DAO
                     throw new Exception("No products available today!");
                 }
 
-                var menus = await _context.Menus.Where(m => m.ScheduleId == schedule.Id).ToListAsync();
+                var menus = await _context.Menus.Include(m => m.Product).Where(m => m.ScheduleId == schedule.Id).ToListAsync();
                 List<MenuResponse> menuResponses = new List<MenuResponse>();
 
                 foreach (var item in menus)
@@ -225,7 +225,12 @@ namespace DataAccess.DAO
                         Id = item.Id,
                         ScheduleId = item.ScheduleId,
                         ProductId = item.ProductId,
-                        Quantity = item.Quantity
+                        Quantity = item.Quantity,
+                        Name = item.Product.Name,
+                        Description = item.Product.Description,
+                        Image = item.Product.Image,
+                        Price = item.Product.Price,
+                        SalePercent = item.Product.SalePercent
                     });
                 }
 

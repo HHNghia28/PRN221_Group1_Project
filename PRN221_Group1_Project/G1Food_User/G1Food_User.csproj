@@ -10,4 +10,8 @@
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\G1FOODLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

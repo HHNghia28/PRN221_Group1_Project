@@ -12,6 +12,16 @@ namespace G1FOODLibrary.DTO
 
         public double Quantity { get; set; }
 
+        public string Name { get; set; } = null!;
+
+        public string? Description { get; set; }
+
+        public decimal Price { get; set; }
+
+        public int? SalePercent { get; set; }
+
+        public string? Image { get; set; }
+
         public Guid? ScheduleId { get; set; }
 
         public Guid? ProductId { get; set; }

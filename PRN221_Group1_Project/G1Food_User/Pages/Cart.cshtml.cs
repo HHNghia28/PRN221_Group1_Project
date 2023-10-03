@@ -8,5 +8,7 @@ namespace G1Food_User.Pages
         public void OnGet()
         {
         }
+
+        public void OnPost() { }
     }
 }
