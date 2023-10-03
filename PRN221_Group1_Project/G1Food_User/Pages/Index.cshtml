@@ -55,27 +55,31 @@
                     </a>
                 </div>
                 <div class="row mt-1">
-                    @foreach (var product in Model.Products)
+                    @if (Model.Products != null)
                     {
-                        <div class="col-sm-12 col-md-6 col-lg-4 mt-4">
-                            <div class="card-product">
-                                <a href="../ProductDetail"><img class="card-img" src="@product.Image" alt=""></a>
-                                <div class="card-product-body mt-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="card-name">
-                                            <a href="../ProductDetail">@product.Name</a>
-                                        </p>
-                                        <i class="fa-regular fa-heart"></i>
+                        @foreach (var product in Model.Products)
+                        {
+                            <div class="col-sm-12 col-md-6 col-lg-4 mt-4">
+                                <div class="card-product">
+                                    <a href="../ProductDetail"><img class="card-img" src="@product.Image" alt=""></a>
+                                    <div class="card-product-body mt-2">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="card-name">
+                                                <a href="../ProductDetail">@product.Name</a>
+                                            </p>
+                                            <i class="fa-regular fa-heart"></i>
+                                        </div>
+                                        <p class="card-description max-line-1">@product.Description</p>
+                                        <p class="card-price">@product.Price đ</p>
+                                        <p class="card-discount"><i class="fa-solid fa-tags"></i> @product.Price * (1 - @product.SalePercent / 100) đ</p>
+                                        <button class="btn full">Thêm vào giỏ hàng</button>
                                     </div>
-                                    <p class="card-description max-line-1">@product.Description</p>
-                                    <p class="card-price">@product.Price đ</p>
-                                    <p class="card-discount"><i class="fa-solid fa-tags"></i> @product.Price * (1 - @product.SalePercent / 100) đ</p>
-                                    <button class="btn full">Thêm vào giỏ hàng</button>
                                 </div>
                             </div>
-                        </div>
-                        
+
+                        }
                     }
+                    
                 </div>
             </div>
         </div>
