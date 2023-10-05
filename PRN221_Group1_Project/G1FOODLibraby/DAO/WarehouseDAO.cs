@@ -47,7 +47,8 @@ namespace DataAccess.DAO
                         Id = item.Id,
                         Name = item.Name,
                         Quantity = item.Quantity,
-                        ItemName = item.WarehouseItem.Name
+                        ItemName = item.WarehouseItem.Name,
+                        WarehouseItemId = item.WarehouseItemId
                     });
                 }
 
@@ -161,7 +162,7 @@ namespace DataAccess.DAO
         {
             try
             {
-                var warehouseImport = await _context.WarehouseImports.Include(w => w.Warehouse).ThenInclude(w => w.WarehouseItem).ToListAsync();
+                var warehouseImport = await _context.WarehouseImports.Include(w => w.Warehouse).ThenInclude(w => w.WarehouseItem).OrderByDescending(w => w.Date).ToListAsync();
 
                 List<WarehouseImportResponse> warehouseImportResponses = new List<WarehouseImportResponse>();
 
@@ -188,7 +189,7 @@ namespace DataAccess.DAO
         {
             try
             {
-                var warehouseExport = await _context.WarehouseExports.Include(w => w.Warehouse).ThenInclude(w => w.WarehouseItem).ToListAsync();
+                var warehouseExport = await _context.WarehouseExports.Include(w => w.Warehouse).ThenInclude(w => w.WarehouseItem).OrderByDescending(w => w.Date).ToListAsync();
 
                 List<WarehouseExportResponse> warehouseExportResponses = new List<WarehouseExportResponse>();
 

@@ -15,5 +15,6 @@ namespace G1FOODLibrary.DTO
         public double? Quantity { get; set; }
 
         public string? ItemName { get; set; }
+        public Guid? WarehouseItemId { get; set; }
     }
 }
