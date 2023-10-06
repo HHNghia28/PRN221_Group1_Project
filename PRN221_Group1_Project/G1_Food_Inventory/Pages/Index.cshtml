@@ -18,13 +18,16 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-2 d-flex flex-wrap">
-                        @foreach(var item in Model.Warehouses)
+                        @if(Model.Warehouses != null)
                         {
-                            <div class="col-4">
-                                <div class="alert alert-success" role="alert">
-                                    @item.ItemName - @item.Quantity
+                            @foreach (var item in Model.Warehouses)
+                            {
+                                <div class="col-4">
+                                    <div class="alert alert-success" role="alert">
+                                        @item.ItemName - @item.Quantity
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
                     </div>
                 </div>

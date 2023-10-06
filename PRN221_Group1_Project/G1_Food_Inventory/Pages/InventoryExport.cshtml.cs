@@ -1,4 +1,5 @@
 using G1FOODLibrary.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Http.Headers;
@@ -6,6 +7,7 @@ using System.Text.Json;
 
 namespace G1_Food_Inventory.Pages
 {
+    [Authorize]
     public class InventoryExportModel : PageModel
     {
         private readonly ILogger<InventoryExportModel> _logger;

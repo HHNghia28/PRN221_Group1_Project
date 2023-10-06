@@ -129,7 +129,7 @@ namespace G1FOODWebAPI.Controllers
                     RoleId = new Guid("C73813A0-CE6E-4F59-B281-507690B51406")
                 };
                 
-                string authentication = CreateToken(account, 5);
+                string authentication = CreateToken(account, 8);
 
                 SendEmail(authentication, email);
 
@@ -196,7 +196,7 @@ namespace G1FOODWebAPI.Controllers
             List<Claim> claims = new List<Claim>
             {
                 new Claim("Email", account.Email),
-                new Claim("RoleId", account.RoleId.ToString()),
+                new Claim(ClaimTypes.Role, account.RoleId.ToString()),
                 new Claim("TokenId", Guid.NewGuid().ToString())
             };
 
@@ -208,7 +208,7 @@ namespace G1FOODWebAPI.Controllers
                 issuer: GetIssuer(),
                 audience: GetAudience(),
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(time),
+                expires: DateTime.UtcNow.AddHours(time),
                 signingCredentials: creds
             );
 

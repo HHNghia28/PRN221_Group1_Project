@@ -1,12 +1,15 @@
-using G1FOODLibrary.DTO;
+﻿using G1FOODLibrary.DTO;
 using G1FOODLibrary.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace G1_Food_Inventory.Pages
 {
+    [Authorize]
     public class InventoryModel : PageModel
     {
         private readonly ILogger<InventoryModel> _logger;
@@ -27,6 +30,13 @@ namespace G1_Food_Inventory.Pages
         {
             try
             {
+                var tokenClaim = HttpContext.User.FindFirst("Token").Value;
+
+                if (!string.IsNullOrEmpty(tokenClaim))
+                {
+                    _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenClaim);
+                }
+
                 HttpResponseMessage response = await _client.GetAsync($"{_inventoryApiUrl}getWarehouses");
                 response.EnsureSuccessStatusCode();
 

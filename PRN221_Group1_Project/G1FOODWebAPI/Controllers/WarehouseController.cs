@@ -1,5 +1,6 @@
 ﻿using DataAccess.Repository;
 using G1FOODLibrary.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace G1FOODWebAPI.Controllers
 
         public WarehouseController() => _warehouseRepository = new WarehouseRepository();
 
+        //[Authorize(Roles = "d1ddb501-e7fa-4d50-9d1b-e2713c0a3b2d")]
         [HttpGet("getWarehouses")]
         public async Task<IActionResult> GetWarehouses()
         {
