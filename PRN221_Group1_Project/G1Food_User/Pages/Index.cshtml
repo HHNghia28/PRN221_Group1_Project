@@ -97,46 +97,23 @@
                 <div class="row mt-4">
                     <div class="col-sm-12">
                         <div class="owl-carousel owl-theme" id="slider-voucher">
-                            <div class="item voucher background-primary">
-                                <div class="d-flex justify-content-between">
-                                    <p class="voucher-name"><i class="fa-solid fa-tags main-color"></i> Bất khả chiến bại</p>
-                                    <p class="voucher-discount">- 20%</p>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <i class="fa-solid fa-money-check-dollar main-color icon-dolar"></i>
-                                    <p class="voucher-condition max-line-2">Áp dụng tất cả cho đơn có giá trị trên 300k.</p>
-                                </div>
-                            </div>
-                            <div class="item voucher background-primary">
-                                <div class="d-flex justify-content-between">
-                                    <p class="voucher-name"><i class="fa-solid fa-tags main-color"></i> Bất khả chiến bại</p>
-                                    <p class="voucher-discount">- 50%</p>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <i class="fa-solid fa-money-check-dollar main-color icon-dolar"></i>
-                                    <p class="voucher-condition max-line-2">Áp dụng tất cả cho đơn có giá trị trên 300k.</p>
-                                </div>
-                            </div>
-                            <div class="item voucher background-primary">
-                                <div class="d-flex justify-content-between">
-                                    <p class="voucher-name"><i class="fa-solid fa-tags main-color"></i> Bất khả chiến bại</p>
-                                    <p class="voucher-discount">- 10%</p>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <i class="fa-solid fa-money-check-dollar main-color icon-dolar"></i>
-                                    <p class="voucher-condition max-line-2">Áp dụng tất cả cho đơn có giá trị trên 300k.</p>
-                                </div>
-                            </div>
-                            <div class="item voucher background-primary">
-                                <div class="d-flex justify-content-between">
-                                    <p class="voucher-name"><i class="fa-solid fa-tags main-color"></i> Bất khả chiến bại</p>
-                                    <p class="voucher-discount">- 40%</p>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <i class="fa-solid fa-money-check-dollar main-color icon-dolar"></i>
-                                    <p class="voucher-condition max-line-2">Áp dụng tất cả cho đơn có giá trị trên 300k.</p>
-                                </div>
-                            </div>
+                            @if (Model.Vouchers != null)
+                            {
+                                @foreach (var voucher in Model.Vouchers)
+                                {
+                                    <div class="item voucher background-primary">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="voucher-name"><i class="fa-solid fa-tags main-color"></i> @voucher.Code</p>
+                                            <p class="voucher-discount">- @voucher.SalePercent%</p>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <i class="fa-solid fa-money-check-dollar main-color icon-dolar"></i>
+                                            <p class="voucher-condition max-line-2">Giảm gía cho tất cả các đơn từ ngày @voucher.Description</p>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
                         </div>
                     </div>
                 </div>
@@ -147,5 +124,6 @@
             integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
             crossorigin="anonymous"
             referrerpolicy="no-referrer"></script>
+    <script src="~/lib/js/owl.carousel.min.js" type="text/javascript"></script>
     <script src="~/js/handleSlider.js" type="text/javascript" asp-append-version="true"></script>
 </body>

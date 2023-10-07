@@ -16,9 +16,10 @@ namespace G1Food_User.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly HttpClient _client;
-        private readonly string _scheduleApiUrl;
+        private readonly string _voucherApiUrl;
 
         public IEnumerable<MenuResponse> Products { get; private set; }
+        public IEnumerable<VoucherResponse> Vouchers { get; private set; }
 
         public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration)
         {
@@ -26,14 +27,46 @@ namespace G1Food_User.Pages
             _client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             _client.DefaultRequestHeaders.Accept.Add(contentType);
-            _scheduleApiUrl = configuration.GetValue<string>("APIEndpoint:Schedule");
+            _voucherApiUrl = configuration.GetValue<string>("APIEndpoint:Voucher");
+            //_scheduleApiUrl = configuration.GetValue<string>("APIEndpoint:Schedule");
         }
 
         public async Task OnGet()
         {
+            //try
+            //{
+            //    HttpResponseMessage response = await _client.GetAsync($"{_scheduleApiUrl}getMenuNow");
+            //    response.EnsureSuccessStatusCode();
+
+            //    string stringData = await response.Content.ReadAsStringAsync();
+            //    var options = new JsonSerializerOptions
+            //    {
+            //        PropertyNameCaseInsensitive = true
+            //    };
+
+            //    APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
+
+            //    if (apiResponse.Success)
+            //    {
+            //        Products = JsonSerializer.Deserialize<List<MenuResponse>>(apiResponse.Data.ToString(), options);
+            //    }
+            //    else
+            //    {
+            //        _logger.LogError($"API call failed with message: {apiResponse.Message}");
+            //    }
+            //}
+            //catch (HttpRequestException ex)
+            //{
+            //    _logger.LogError($"HTTP request failed with error: {ex.Message}");
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError($"An error occurred: {ex.Message}");
+            //}
+
             try
             {
-                HttpResponseMessage response = await _client.GetAsync($"{_scheduleApiUrl}getMenuNow");
+                HttpResponseMessage response = await _client.GetAsync($"{_voucherApiUrl}getVouchers");
                 response.EnsureSuccessStatusCode();
 
                 string stringData = await response.Content.ReadAsStringAsync();
@@ -46,7 +79,8 @@ namespace G1Food_User.Pages
 
                 if (apiResponse.Success)
                 {
-                    Products = JsonSerializer.Deserialize<List<MenuResponse>>(apiResponse.Data.ToString(), options);
+                    Vouchers = JsonSerializer.Deserialize<List<VoucherResponse>>(apiResponse.Data.ToString(), options);
+                     
                 }
                 else
                 {

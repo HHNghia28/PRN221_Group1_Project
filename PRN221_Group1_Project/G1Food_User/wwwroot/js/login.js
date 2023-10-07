@@ -43,8 +43,8 @@ const checkEmail = function (input) {
 }
 
 const checkPassword = function (input) {
-    const passwordPattern = /^[A-Za-z]\w{7,14}$/;
-    if (passwordPattern.test(input.value.trim())) {
+    //const passwordPattern = /^[A-Za-z@]\w{4,14}$/;
+    if (input.value.trim().length > 0) {
         showSuccess(input);
         return true;
     } else {
@@ -66,10 +66,10 @@ formLogin.addEventListener("submit", (event) => {
     let isEmailValid = checkEmail(email);
     let isPasswordValid = checkPassword(password);
     if(isEmailValid && isPasswordValid) {
-        //alert("Login success!");
+        alert("login success!");
         return true;
     } else {
-        //alert("Login failed!");
+        alert("Login failed!");
         return false;
     }
 });
