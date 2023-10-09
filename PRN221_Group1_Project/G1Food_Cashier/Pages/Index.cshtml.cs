@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.SignalR.Client;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using G1FOODLibrary.DTO;
+using System.Net.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace G1Food_Cashier.Pages
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
@@ -89,6 +93,54 @@ namespace G1Food_Cashier.Pages
             {
                 _logger.LogError($"An error occurred: {ex.Message}");
             }
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            string formType = Request.Form["formType"];
+            string orderID = Request.Form["orderID"];
+
+            try
+            {
+                HttpResponseMessage response;
+
+                if (formType == "confirm")
+                {
+                    response = await _client.PutAsync($"{_orderApiUrl}orderUpdateCooking?id={orderID}", null);
+                }
+                else
+                {
+                    response = await _client.PutAsync($"{_orderApiUrl}orderUpdateDelivering?id={orderID}", null);
+                }
+                response.EnsureSuccessStatusCode();
+
+                string stringData = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
+
+                if (apiResponse.Success)
+                {
+                    return RedirectToPage("/index");
+                }
+                else
+                {
+                    _logger.LogError($"API call failed with message: {apiResponse.Message}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError($"HTTP request failed with error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An error occurred: {ex.Message}");
+            }
+
+            return RedirectToPage("/index");
         }
 
     }

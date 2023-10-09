@@ -9,17 +9,17 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
 
-namespace G1Food_Admin.Pages
+namespace G1_Food_Inventory.Pages
 {
-    public class loginModel : PageModel
+    public class LoginModel : PageModel
     {
-        private readonly ILogger<InventoryExportModel> _logger;
+        private readonly ILogger<LoginModel> _logger;
         private readonly HttpClient _client;
         private readonly string _authApiUrl;
 
         [BindProperty]
         public LoginRequest LoginRequest { get; set; }
-        public loginModel(ILogger<InventoryExportModel> logger, IConfiguration configuration)
+        public LoginModel(ILogger<LoginModel> logger, IConfiguration configuration)
         {
 
             _logger = logger;

@@ -21,9 +21,6 @@ namespace G1FOODWebAPI.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            SendOrderPendingAsync();
-            SendOrderCookingAsync();
-            SendOrderDeliveringingAsync();
         }
 
         public async Task SendOrderPendingAsync()
