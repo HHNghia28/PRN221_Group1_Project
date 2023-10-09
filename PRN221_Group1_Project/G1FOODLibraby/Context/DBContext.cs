@@ -295,6 +295,8 @@ public partial class DBContext : DbContext
 
             entity.ToTable("Order");
 
+            entity.ToTable("Order", tb => tb.HasTrigger("MyTable_Insert"));
+
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id");

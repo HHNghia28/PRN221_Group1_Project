@@ -1,5 +1,5 @@
 ﻿@page
-@model G1Food_Cashier.Pages.CashierStatisticsModel
+@model G1Food_Cashier.Pages.IndexModel
 @{
     ViewData["Title"] = "Dashboard";
 }
@@ -10,597 +10,125 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xl-4 col-md-12 mb-4">
-                <div class="card border-left-main shadow h-100 py-2">
-                    <div class="card-body-cashier">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="px-2 py-1">
-                                    <div class="d-flex">
-                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            ID:
-                                        </div>
-                                        <div class="col-md-10 text-xs text-dark p-0">
-                                            ID-G1FOODDDDDDDDDDDDDDDD
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Tên:
-                                        </div>
-                                        <div class="col-md-10 text-xs text-dark mb-1 p-0">
-                                            ID-G1FOODDDDDDDDDDDDDDDD
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-3 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Ghi chú:
-                                        </div>
-                                        <div class="col-md-9 text-xs text-dark mb-1 p-0">
-                                            Không cần dụng cụ ăn uống
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Mã giảm giá:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0">
-                                            99%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="background-primary border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Cơm gà
+            @if(Model.Orders != null)
+            {
+                @foreach(var item in Model.Orders)
+                {
+                    <div class="col-xl-4 col-md-12 mb-4">
+                        <div class="card border-left-main shadow h-100 py-2">
+                            <div class="card-body-cashier">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="px-2 py-1">
+                                            <div class="d-flex">
+                                                <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    ID:
+                                                </div>
+                                                <div class="col-md-10 text-xs text-dark p-0">
+                                                    @item.Id
+                                                </div>
                                             </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                2
+                                            <div class="d-flex">
+                                                <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Tên:
+                                                </div>
+                                                <div class="col-md-10 text-xs text-dark mb-1 p-0">
+                                                    @item.Username
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="col-md-3 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Ghi chú:
+                                                </div>
+                                                <div class="col-md-9 text-xs text-dark mb-1 p-0">
+                                                    @item.Note
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Mã giảm giá:
+                                                </div>
+                                                <div class="col-md-8 text-xs text-dark mb-1 p-0">
+                                                    @item.SalePercent %
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
-                                            </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Không để rau
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                             33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Gà chiên
-                                            </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                5
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
-                                            </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Xin thêm 1 cái được hông ^^
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                            33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="background-primary border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Combo gà G1
-                                            </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                1
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
-                                            </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Sốt cay
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                            33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="px-2 py-1">
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Tổng giá gốc:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
-                                            100.000vnd
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Giá giảm:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
-                                            99.000vnd
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Thành tiền:
-                                        </div>
-                                        <div class="col-md-8 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                            1.000vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <div class="py-1">
-                                        <button class="btn sm">Từ chối</button>
-                                    </div>
-                                    <div class="py-1">
-                                        <button class="btn sm bg-success">Xác nhận</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                        @{
+                                            int itemCount = 0;
+                                        }
 
-            <div class="col-xl-4 col-md-12 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body-cashier">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="px-2 py-1">
-                                    <div class="d-flex">
-                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            ID:
-                                        </div>
-                                        <div class="col-md-10 text-xs text-dark p-0">
-                                            ID-G1FOODDDDDDDDDDDDDDDD
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Tên:
-                                        </div>
-                                        <div class="col-md-10 text-xs text-dark mb-1 p-0">
-                                            ID-G1FOODDDDDDDDDDDDDDDD
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-3 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Ghi chú:
-                                        </div>
-                                        <div class="col-md-9 text-xs text-dark mb-1 p-0">
-                                            Không cần dụng cụ ăn uống
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Mã giảm giá:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0">
-                                            99%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="background-primary border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Cơm gà
-                                            </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                2
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
-                                            </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Không để rau
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                            33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Gà chiên
-                                            </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                5
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
-                                            </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Xin thêm 1 cái được hông ^^
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                            33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="background-primary border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Combo gà G1
-                                            </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                1
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
-                                            </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Sốt cay
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                            33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="px-2 py-1">
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Tổng giá gốc:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
-                                            100.000vnd
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Giá giảm:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
-                                            99.000vnd
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Thành tiền:
-                                        </div>
-                                        <div class="col-md-8 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                            1.000vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <div class="py-1">
-                                        <button class="btn sm">Từ chối</button>
-                                    </div>
-                                    <div class="py-1">
-                                        <button class="btn sm bg-success">Xác nhận</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                        @foreach (var detail in item.Details)
+                                        {
+                                            itemCount++;
+                                            bool isOdd = itemCount % 2 != 0; 
 
-            <div class="col-xl-4 col-md-12 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <div class="card-body-cashier">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="px-2 py-1">
-                                    <div class="d-flex">
-                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            ID:
-                                        </div>
-                                        <div class="col-md-10 text-xs text-dark p-0">
-                                            ID-G1FOODDDDDDDDDDDDDDDD
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Tên:
-                                        </div>
-                                        <div class="col-md-10 text-xs text-dark mb-1 p-0">
-                                            ID-G1FOODDDDDDDDDDDDDDDD
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-3 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Ghi chú:
-                                        </div>
-                                        <div class="col-md-9 text-xs text-dark mb-1 p-0">
-                                            Không cần dụng cụ ăn uống
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Mã giảm giá:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0">
-                                            99%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="background-primary border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Cơm gà
+                                            <div class="@(isOdd ? "background-primary" : "") border-radius-1">
+                                                <div class="px-2 py-1">
+                                                    <div class="d-flex">
+                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                            @detail.ProductName
+                                                        </div>
+                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
+                                                            @detail.Quantity
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
+                                                            Ghi chú:
+                                                        </div>
+                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
+                                                            @detail.Note
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
+                                                        @detail.Price VND
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                2
+                                        }
+                                        
+                                        <div class="px-2 py-1">
+                                            <div class="d-flex">
+                                                <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Tổng giá gốc:
+                                                </div>
+                                                <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
+                                                    100.000vnd
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
+                                            <div class="d-flex">
+                                                <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Giá giảm:
+                                                </div>
+                                                <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
+                                                    99.000vnd
+                                                </div>
                                             </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Không để rau
+                                            <div class="d-flex">
+                                                <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                    Thành tiền:
+                                                </div>
+                                                <div class="col-md-8 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
+                                                    1.000vnd
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                            33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Gà chiên
+                                        <div class="d-flex justify-content-center">
+                                            <div class="py-1">
+                                                <button class="btn sm">Từ chối</button>
                                             </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                5
+                                            <div class="py-1">
+                                                <button class="btn sm bg-success">Xác nhận</button>
                                             </div>
                                         </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
-                                            </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Xin thêm 1 cái được hông ^^
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                            33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="background-primary border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Combo gà G1
-                                            </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                1
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
-                                            </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Sốt cay
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                            33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="px-2 py-1">
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Tổng giá gốc:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
-                                            100.000vnd
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Giá giảm:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
-                                            99.000vnd
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Thành tiền:
-                                        </div>
-                                        <div class="col-md-8 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                            1.000vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <div class="py-1">
-                                        <button class="btn sm">Từ chối</button>
-                                    </div>
-                                    <div class="py-1">
-                                        <button class="btn sm bg-success">Xác nhận</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-xl-4 col-md-12 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <div class="card-body-cashier">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="px-2 py-1">
-                                    <div class="d-flex">
-                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            ID:
-                                        </div>
-                                        <div class="col-md-10 text-xs text-dark p-0">
-                                            ID-G1FOODDDDDDDDDDDDDDDD
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Tên:
-                                        </div>
-                                        <div class="col-md-10 text-xs text-dark mb-1 p-0">
-                                            ID-G1FOODDDDDDDDDDDDDDDD
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-3 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Ghi chú:
-                                        </div>
-                                        <div class="col-md-9 text-xs text-dark mb-1 p-0">
-                                            Không cần dụng cụ ăn uống
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Mã giảm giá:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0">
-                                            99%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="background-primary border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Cơm gà
-                                            </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                2
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
-                                            </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Không để rau
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                            33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Gà chiên
-                                            </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                5
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
-                                            </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Xin thêm 1 cái được hông ^^
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                            33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="background-primary border-radius-1">
-                                    <div class="px-2 py-1">
-                                        <div class="d-flex">
-                                            <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                Combo gà G1
-                                            </div>
-                                            <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                1
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                Ghi chú:
-                                            </div>
-                                            <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                Sốt cay
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                            33,333vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="px-2 py-1">
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Tổng giá gốc:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
-                                            100.000vnd
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Giá giảm:
-                                        </div>
-                                        <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
-                                            99.000vnd
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
-                                            Thành tiền:
-                                        </div>
-                                        <div class="col-md-8 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                            1.000vnd
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <div class="py-1">
-                                        <button class="btn sm">Từ chối</button>
-                                    </div>
-                                    <div class="py-1">
-                                        <button class="btn sm bg-success">Xác nhận</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                }
+            }
         </div>
     </div>
+
 </body>

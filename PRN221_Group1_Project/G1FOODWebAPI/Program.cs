@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using G1FOODWebAPI.Hubs;
+using G1FOODWebAPI.MiddlewareExtensions;
+using G1FOODWebAPI.SqlDependencies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -37,6 +41,21 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddSingleton<OrderHub>();
+builder.Services.AddSingleton<OrderDependency>();
+
+builder.Services.AddSignalR();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader();
+                      });
+});
 
 var app = builder.Build();
 
@@ -49,9 +68,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<OrderHub>("/orderHub");
+
+app.UseOrderPendingDependency();
 
 app.Run();

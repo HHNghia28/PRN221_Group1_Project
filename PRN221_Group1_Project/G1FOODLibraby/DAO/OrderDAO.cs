@@ -233,31 +233,37 @@ namespace DataAccess.DAO
             return orderDetailDTOs;
         }
 
-        public async Task UpdateStatusOrderAsync(Guid guid, Guid stutusId)
+        public async Task UpdateStatusOrderAsync(Guid orderId, Guid statusId)
         {
-            if (guid == Guid.Empty)
+            if (orderId == Guid.Empty)
             {
-                throw new ArgumentNullException("Order ID can not null!");
+                throw new ArgumentNullException(nameof(orderId), "Order ID cannot be empty!");
+            }
+
+            if (statusId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(statusId), "Status ID cannot be empty!");
             }
 
             try
             {
-                var order = _context.Orders.FirstOrDefault(o => o.Id == guid);
+                var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
 
                 if (order == null)
                 {
                     throw new Exception("Order not found!");
                 }
 
-                order.StatusId = stutusId;
+                order.StatusId = statusId;
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
 
         public async Task<IEnumerable<OrderResponse>> GetOrdersAsync()
         {
