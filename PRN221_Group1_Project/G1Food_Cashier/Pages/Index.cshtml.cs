@@ -29,40 +29,8 @@ namespace G1Food_Cashier.Pages
             _orderApiUrl = configuration.GetValue<string>("APIEndpoint:Order");
         }
 
-        public void ConnectionHub()
-        {
-
-            var connection = new HubConnectionBuilder()
-              .WithUrl("https://localhost:44303/orderHub")
-              .Build();
-
-            connection.StartAsync().ContinueWith(task =>
-            {
-                if (task.IsFaulted)
-                {
-                    _logger.LogError("Error connecting to orderHub: " + task.Exception.GetBaseException());
-                }
-                else
-                {
-                    _logger.LogInformation("Connected to orderHub");
-                }
-            });
-
-            connection.On<string>("ReceiveMessage", (message) =>
-            {
-                _logger.LogInformation("Received message: " + message);
-
-                if (message == "Pending")
-                {
-                    _logger.LogInformation("Hi");
-                }
-            });
-
-        }
-
         public async Task OnGetAsync()
         {
-            ConnectionHub();
 
             try
             {

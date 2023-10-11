@@ -14,7 +14,7 @@ connection.start().then(function () {
 connection.on("ReceiveMessage", function (message) {
     console.log("ReceiveMessage" + message);
 
-    if (message === "Pending") {
+    if (message === "Delivering") {
         window.location.reload();
     }
 });
