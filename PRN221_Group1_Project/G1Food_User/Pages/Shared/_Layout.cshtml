@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@{
+    // public AccountResponse Account { get; set; }
+    //   if (Request.Cookies.ContainsKey("AccountCookie"))
+    // {
+    //     string accountJson = Request.Cookies["AccountCookie"];
+    //     var options = new JsonSerializerOptions
+    //     {
+    //         PropertyNameCaseInsensitive = true
+    //     };
+    //     Account = JsonSerializer.Deserialize<AccountResponse>(accountJson, options);
+    // }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -57,7 +69,12 @@
                             <div class="wrapper-icon mr-2">
                                 <i class="fa-regular fa-user"></i>
                             </div>
-                            <span class="bold">Nhu Y</span>
+                            <span class="bold">
+@*                                 @if (Account != null)
+                               {
+                                    Account.Name
+                                } *@
+                            </span>
                         </div>
                         <div class="user-info position-absolute d-none">
                             <ul>
@@ -170,5 +187,6 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"></script>
     <script src="~/js/main.js" type="text/javascript"></script>
+    @RenderSection("customScripts", required: false)
 </body>
 </html>

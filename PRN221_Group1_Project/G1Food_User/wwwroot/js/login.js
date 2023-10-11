@@ -62,14 +62,12 @@ password.addEventListener('blur', (e) => {
 })
 
 formLogin.addEventListener("submit", (event) => {
-    event.preventDefault(); // prevent load page
-    let isEmailValid = checkEmail(email);
+/*    event.preventDefault(); // prevent load page*/
+    let isEmailValid = checkPassword(email);
     let isPasswordValid = checkPassword(password);
-    if(isEmailValid && isPasswordValid) {
-        alert("login success!");
+    if (isEmailValid && isPasswordValid) {
         return true;
     } else {
-        alert("Login failed!");
         return false;
     }
 });
