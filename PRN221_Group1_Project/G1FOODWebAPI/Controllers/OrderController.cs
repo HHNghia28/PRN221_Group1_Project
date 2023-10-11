@@ -1,5 +1,6 @@
 ﻿using DataAccess.Repository;
 using G1FOODLibrary.DTO;
+using G1FOODWebAPI.Hubs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +10,14 @@ namespace G1FOODWebAPI.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+
+        private readonly OrderHub orderHub;
         IOrderRepository _orderRepository;
 
-        public OrderController() => _orderRepository = new OrderRepository();
+        public OrderController(OrderHub orderHub) {
+            _orderRepository = new OrderRepository();
+            this.orderHub = orderHub;
+        }
 
         [HttpPost("addOrder")]
         public async Task<IActionResult> AddOrder([FromBody] OrderRequest order)
@@ -30,6 +36,7 @@ namespace G1FOODWebAPI.Controllers
             {
 
                 await _orderRepository.AddOrderAsync(order);
+                await orderHub.SendOrderPendingAsync();
 
             }
             catch (Exception ex)
@@ -288,6 +295,7 @@ namespace G1FOODWebAPI.Controllers
             try
             {
                 await _orderRepository.UpdateOrderStatusToCookingAsync(new Guid(id));
+                await orderHub.SendOrderCookingAsync();
 
                 return Ok(new APIResponse
                 {
@@ -393,6 +401,7 @@ namespace G1FOODWebAPI.Controllers
             try
             {
                 await _orderRepository.UpdateOrderStatusToDeliveringAsync(new Guid(id));
+                await orderHub.SendOrderDeliveringingAsync();
 
                 return Ok(new APIResponse
                 {

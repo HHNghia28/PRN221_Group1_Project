@@ -77,6 +77,6 @@ app.MapControllers();
 
 app.MapHub<OrderHub>("/orderHub");
 
-app.UseOrderPendingDependency();
+//app.UseOrderPendingDependency();
 
 app.Run();
