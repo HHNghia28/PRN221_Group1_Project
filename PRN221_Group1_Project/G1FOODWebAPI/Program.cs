@@ -41,23 +41,25 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddSingleton<OrderHub>();
-builder.Services.AddSingleton<OrderDependency>();
-
-builder.Services.AddSignalR();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.AllowAnyOrigin()
-                                .AllowAnyMethod()
-                                .AllowAnyHeader();
+                          policy.WithOrigins("http://localhost:5149");
+                          policy.AllowCredentials();
+                          policy.AllowAnyHeader();
                       });
 });
 
+builder.Services.AddSingleton<OrderHub>();
+builder.Services.AddSingleton<OrderDependency>();
+
+builder.Services.AddSignalR();
+
 var app = builder.Build();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -67,8 +69,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();

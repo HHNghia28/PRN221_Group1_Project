@@ -7,6 +7,7 @@ using G1FOODLibrary.DTO;
 using System.Net.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.JSInterop;
 
 namespace G1Food_Cashier.Pages
 {
@@ -32,7 +33,7 @@ namespace G1Food_Cashier.Pages
         {
 
             var connection = new HubConnectionBuilder()
-              .WithUrl("wss://localhost:44303/orderHub")
+              .WithUrl("https://localhost:44303/orderHub")
               .Build();
 
             connection.StartAsync().ContinueWith(task =>

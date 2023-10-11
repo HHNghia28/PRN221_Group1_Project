@@ -1,5 +1,6 @@
 ﻿@page
-@model G1Food_Cashier.Pages.CashierStatisticsModel
+@model G1Food_Cashier.Pages.CashierAtSroreModel
+@using G1FOODLibrary.DTO
 @{
     ViewData["Title"] = "Cashier at store";
 }
@@ -19,7 +20,7 @@
                                 <div class="col mr-2">
                                     <div class="d-flex">
                                         <div class="col-xl-8 h5 mb-0 font-weight-bold text-gray-800">
-                                            Gà chiên
+                                            Gà chiên @Model.Products.Count
                                         </div>
                                         <div class="d-flex">
                                             <div class="col-auto">
@@ -200,19 +201,24 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2 mt-3">
                                     <div class="d-flex">
+                                        <select id="selectedProduct" asp-for="SelectedProduct" asp-items="Model.Products.Select(w => new SelectListItem { Text = w.Name, Value = w.Id.ToString() })">
+                                        </select>
+
+                                    </div>
+                                    <div class="d-flex">
                                         <div class="col-md-2 font-weight-bold text-dark mb-1 p-0">
                                             Tên:
                                         </div>
-                                        <div class="col-md-10 text-dark p-0">
-                                            Cánh gà
+                                        <div class="col-md-10 text-dark p-0" id="productName">
+                                            
                                         </div>
                                     </div>
                                     <div class="d-flex">
                                         <div class="col-md-2 font-weight-bold text-dark mb-1 p-0">
-                                            Loại:
+                                            Giảm:
                                         </div>
                                         <div class="col-md-10 text-dark p-0">
-                                            Cánh
+                                            
                                         </div>
                                     </div>
                                     <div class="d-flex">
@@ -251,4 +257,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+
+        console.log("hi" + products);
+        var products = @Model.Products;
+        var hi = @Model.SelectedProduct;
+
+        console.log("hi" + products);
+
+        // Lắng nghe sự kiện change trên phần tử select
+        document.getElementById('selectedProduct').addEventListener('change', function () {
+            // Lấy giá trị đã chọn
+            var selectedProductId = this.value;
+
+            // Tìm sản phẩm tương ứng trong danh sách sản phẩm
+            var selectedProduct = products.find(function (product) {
+                return product.Id == selectedProductId;
+            });
+
+            // Cập nhật các vị trí khác với thông tin sản phẩm đã chọn
+            document.getElementById('productName').textContent = selectedProduct.Name;
+            // document.getElementById('productType').textContent = selectedProduct.Type;
+            // document.getElementById('productQuantity').textContent = selectedProduct.Quantity;
+            // document.getElementById('productPrice').textContent = selectedProduct.Price;
+            // document.getElementById('productImage').src = selectedProduct.ImageUrl;
+        });
+
+    </script>
 </body>
