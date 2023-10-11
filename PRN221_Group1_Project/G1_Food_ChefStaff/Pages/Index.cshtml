@@ -11,567 +11,122 @@
                 <div class="container-fluid">
                     <div class="row">
                         <!-- Order item -->
-                        <div class="col-sm-12 col-md-6 col-xl-4 col-md-12 mb-4">
-                            <div class="card border-left-main shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="col-md-2 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                ID:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                TÊN:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                GHI CHÚ:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
+                        @if(Model.Orders != null)
+                        {
+                        @foreach(var item in Model.Orders)
+                            {
+                                <div class="col-sm-12 col-md-6 col-xl-4 col-md-12 mb-4">
+                                    <div class="card border-left-main shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="col-md-2 text-xs font-weight-bold main-color text-uppercase mb-1">
+                                                        ID:
+                                                    </div>
+                                                    <div class="col-md-10 font-weight-bold text-gray-800">
+                                                        @{
+                                                            var id = new string(item.Id.ToString().Skip(Math.Max(0, item.Id.ToString().Length - 12)).ToArray()).ToUpper();
+                                                        }
+                                                        @id
+                                                    </div>
+                                                    <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
+                                                        TÊN:
+                                                    </div>
+                                                    <div class="col-md-10 font-weight-bold text-gray-800">
+                                                        @item.Username
+                                                    </div>
+                                                    <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
+                                                        GHI CHÚ:
+                                                    </div>
+                                                    <div class="col-md-10 font-weight-bold text-gray-800">
+                                                        @item.Note
+                                                    </div>
+                                                    @{
+                                                        int itemCount = 0;
+                                                        decimal price_after_discount = 0;
+                                                        decimal price_before_discount = 0;
+                                                        decimal discount = 0;
+                                                    }
+
+                                                    @foreach (var detail in item.Details)
+                                                    {
+                                                        price_before_discount += (detail.Price * (decimal)detail.Quantity);
+                                                        discount += (decimal)(detail.Price * (detail.SalePercent / 100) * (decimal)detail.Quantity);
+                                                        itemCount++;
+                                                        bool isOdd = itemCount % 2 != 0;
+
+                                                        <div class="@(isOdd ? "background-primary" : "") rounded">
+                                                            <div class="px-2 py-1">
+                                                                <div class="d-flex">
+                                                                    <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                                        @detail.ProductName
+                                                                    </div>
+                                                                    <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
+                                                                        @detail.Quantity
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex">
+                                                                    <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
+                                                                        Ghi chú:
+                                                                    </div>
+                                                                    <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
+                                                                        @detail.Note
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
+                                                        
+                                                    }
+                                                    <div class="px-2 py-1">
+                                                        <div class="d-flex">
+                                                            <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                                Tổng giá gốc:
+                                                            </div>
+                                                            <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
+                                                                @string.Format("{0:N0} VND", price_before_discount)
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex">
+                                                            <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                                Giá giảm:
+                                                            </div>
+                                                            <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
+                                                                @string.Format("{0:N0} VND", discount)
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex">
+                                                            <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
+                                                                Thành tiền:
+                                                            </div>
+                                                            <div class="col-md-8 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
+                                                                @{
+                                                                    price_after_discount = price_before_discount - discount;
+                                                                }
+                                                                @string.Format("{0:N0} VND", price_after_discount)
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
+                                                    <div class="d-flex justify-content-lg-center mt-3">
+                                                        <form method="post">
+                                                            <div class="py-1">
+                                                                <input type="hidden" name="orderID" value="@item.Id">
+                                                                <button class="btn sm bg-success">Xong</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-lg-center mt-3">
-                                                <div class="py-1">
-                                                    <button class="btn sm bg-success">Xong</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-xl-4 col-md-12 mb-4">
-                            <div class="card border-left-main shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="col-md-2 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                ID:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                TÊN:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                GHI CHÚ:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-lg-center mt-3">
-                                                <div class="py-1">
-                                                    <button class="btn sm bg-success">Xong</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-xl-4 col-md-12 mb-4">
-                            <div class="card border-left-main shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="col-md-2 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                ID:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                TÊN:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                GHI CHÚ:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-lg-center mt-3">
-                                                <div class="py-1">
-                                                    <button class="btn sm bg-success">Xong</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-xl-4 col-md-12 mb-4">
-                            <div class="card border-left-main shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="col-md-2 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                ID:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                TÊN:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                GHI CHÚ:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-lg-center mt-3">
-                                                <div class="py-1">
-                                                    <button class="btn sm bg-success">Xong</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-xl-4 col-md-12 mb-4">
-                            <div class="card border-left-main shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="col-md-2 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                ID:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                TÊN:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                GHI CHÚ:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-lg-center mt-3">
-                                                <div class="py-1">
-                                                    <button class="btn sm bg-success">Xong</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-xl-4 col-md-12 mb-4">
-                            <div class="card border-left-main shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="col-md-2 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                ID:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                TÊN:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="col-md-4 text-xs font-weight-bold main-color text-uppercase mb-1">
-                                                GHI CHÚ:
-                                            </div>
-                                            <div class="col-md-10 font-weight-bold text-gray-800">
-                                                SE1605_00000000000
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="background-primary rounded">
-                                                <div class="px-2 py-1">
-                                                    <div class="d-flex">
-                                                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
-                                                            Bánh bao
-                                                        </div>
-                                                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                            2
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
-                                                            Ghi chú:
-                                                        </div>
-                                                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
-                                                            Nhiều thịt ít cơm
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-lg-center mt-3">
-                                                <div class="py-1">
-                                                    <button class="btn sm bg-success">Xong</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            
+                            }
+                        } 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="./js/orderHub.js?v=1.3"></script>
 </body>

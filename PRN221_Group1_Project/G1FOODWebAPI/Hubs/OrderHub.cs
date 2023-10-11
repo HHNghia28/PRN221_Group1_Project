@@ -21,8 +21,6 @@ namespace G1FOODWebAPI.Hubs
 
         public override async Task OnConnectedAsync()
         {
-
-            await Clients.All.SendAsync("ReceiveMessage", "New user connect");
         }
 
         public async Task SendOrderPendingAsync()

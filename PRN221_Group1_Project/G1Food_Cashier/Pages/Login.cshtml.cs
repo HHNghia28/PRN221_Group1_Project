@@ -1,4 +1,4 @@
-﻿using G1_Food_Inventory.Pages;
+﻿using G1Food_Cashier.Pages;
 using G1FOODLibrary.DTO;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;

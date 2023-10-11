@@ -8,7 +8,6 @@ using System.Text.Json;
 
 namespace G1_Food_SellingStaff.Pages
 {
-    [Authorize]
     public class DashboardModel : PageModel
     {
         private readonly ILogger<DashboardModel> _logger;

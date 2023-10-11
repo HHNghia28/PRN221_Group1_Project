@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\G1FOODLibrary.csproj" />
+    <ProjectReference Include="..\G1FOODLibraby\DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

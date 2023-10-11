@@ -11,7 +11,6 @@ using Microsoft.JSInterop;
 
 namespace G1Food_Cashier.Pages
 {
-    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
@@ -79,7 +78,7 @@ namespace G1Food_Cashier.Pages
                 }
                 else
                 {
-                    response = await _client.PutAsync($"{_orderApiUrl}orderUpdateDelivering?id={orderID}", null);
+                    response = await _client.PutAsync($"{_orderApiUrl}orderUpdateBlock?id={orderID}", null);
                 }
                 response.EnsureSuccessStatusCode();
 

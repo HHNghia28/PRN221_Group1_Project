@@ -1,5 +1,5 @@
 ﻿@page
-@model G1Food_Admin.Pages.loginModel
+@model G1_Food_ChefStaff.Pages.LoginModel
 @{
     ViewData["Title"] = "Login";
 }
@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-12 col-lg-5">
                     <div class="form-container">
-                        <form id="login-form" action="" method="GET">
+                        <form method="post">
                             <div class="form-heading text-center">
                                 <div class="form-logo">
                                     <img src="https://www.lotteria.vn/grs-static/images/lotteria_logo.svg"
@@ -26,7 +26,8 @@
                             </div>
                             <div class="form-body">
                                 <div class="form-group">
-                                    <input class="form-input"
+                                    <input asp-for="LoginRequest.Email"
+                                           class="form-input"
                                            name="email"
                                            id="email"
                                            type="text"
@@ -35,9 +36,9 @@
                                     <div class="form-error"></div>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-input"
+                                    <input asp-for="LoginRequest.Password"
+                                           class="form-input"
                                            name="password"
-                                           id="password"
                                            required
                                            type="password"
                                            placeholder="Nhập mật khẩu" />
