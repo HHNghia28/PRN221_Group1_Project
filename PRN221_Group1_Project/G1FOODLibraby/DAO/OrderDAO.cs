@@ -165,7 +165,9 @@ namespace DataAccess.DAO
                     .Include(o => o.User)
                     .Include(o => o.Status)
                     .Include(o => o.Voucher)
-                    .Where(o => o.StatusId == statusId).ToList();
+                    .Where(o => o.StatusId == statusId)
+                    .OrderBy(o => o.Date)
+                    .ToList();
             }
             catch (Exception ex)
             {

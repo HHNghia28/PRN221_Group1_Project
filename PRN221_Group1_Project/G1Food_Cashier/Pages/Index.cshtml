@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row order-pending">
             @if(Model.Orders != null)
             {
                 @foreach(var item in Model.Orders)
@@ -25,7 +25,10 @@
                                                     ID:
                                                 </div>
                                                 <div class="col-md-10 text-xs text-dark p-0">
-                                                    @item.Id
+                                                    @{
+                                                        var id = new string(item.Id.ToString().Skip(Math.Max(0, item.Id.ToString().Length - 12)).ToArray()).ToUpper();
+                                                    }
+                                                    @id
                                                 </div>
                                             </div>
                                             <div class="d-flex">
@@ -55,10 +58,15 @@
                                         </div>
                                         @{
                                             int itemCount = 0;
+                                            decimal price_after_discount = 0;
+                                            decimal price_before_discount = 0;
+                                            decimal discount = 0;
                                         }
 
                                         @foreach (var detail in item.Details)
                                         {
+                                            price_before_discount += (detail.Price * (decimal)detail.Quantity);
+                                            discount += (decimal)(detail.Price * (detail.SalePercent / 100) * (decimal)detail.Quantity);
                                             itemCount++;
                                             bool isOdd = itemCount % 2 != 0; 
 
@@ -81,7 +89,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
-                                                        @detail.Price VND
+                                                        @string.Format("{0:N0} VND", detail.Price)
                                                     </div>
                                                 </div>
                                             </div>
@@ -93,7 +101,7 @@
                                                     Tổng giá gốc:
                                                 </div>
                                                 <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
-                                                    100.000vnd
+                                                    @string.Format("{0:N0} VND", price_before_discount)
                                                 </div>
                                             </div>
                                             <div class="d-flex">
@@ -101,7 +109,7 @@
                                                     Giá giảm:
                                                 </div>
                                                 <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
-                                                    99.000vnd
+                                                    @string.Format("{0:N0} VND", discount)
                                                 </div>
                                             </div>
                                             <div class="d-flex">
@@ -109,7 +117,10 @@
                                                     Thành tiền:
                                                 </div>
                                                 <div class="col-md-8 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
-                                                    1.000vnd
+                                                    @{
+                                                        price_after_discount = price_before_discount - discount;
+                                                    }
+                                                    @string.Format("{0:N0} VND", price_after_discount)
                                                 </div>
                                             </div>
                                         </div>
