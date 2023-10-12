@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -44,12 +45,18 @@
             </div>
             <div class="header-group">
                 <ul class="center-items header-list-left">
-                    <li class="d-none d-md-block nav-link btn-register"><a href="../Register">Đăng ký</a></li>
-                    <li class="d-none d-md-block nav-link btn-login"><a href="../Login">Đăng nhập</a></li>
+                    @{
+                        var tokenClaim = ViewContext.HttpContext.User?.FindFirst("Name")?.Value;
+                        @if (tokenClaim == null)
+                        {
+                            <li class="d-none d-md-block nav-link btn-register"><a href="../Register">Đăng ký</a></li>
+                            <li class="d-none d-md-block nav-link btn-login"><a href="../Login">Đăng nhập</a></li>
+                        }
+                    } 
                     <li class="wrapper-icon position-relative">
                         <a href="../Cart" class="">
                             <i class="fa-solid fa-cart-plus"></i>
-                            <div class="cart-quantiy position-absolute">4</div>
+                            <div class="cart-quantiy position-absolute">0</div>
                         </a>
                     </li>
                     <li class="position-relative user-name d-sm-none d-lg-block">
@@ -57,9 +64,13 @@
                             <div class="wrapper-icon mr-2">
                                 <i class="fa-regular fa-user"></i>
                             </div>
-                            <span class="bold">Nhu Y</span>
+                            <span class="bold">
+                               
+                                    @tokenClaim
+                            </span>
                         </div>
-                        <div class="user-info position-absolute d-none">
+                       <form method="post" asp-page="Logout">
+                            <div class="user-info position-absolute d-none">
                             <ul>
                                 <li>
                                     <a href="../UserProfile">
@@ -67,12 +78,13 @@
                                         Tài khoản
                                     </a>
                                 </li>
-                                <li>
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                    Đăng xuất
-                                </li>
-                            </ul>
-                        </div>
+                                    <li class="d-flex align-items-center">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                        <div type="submit">Đăng xuất</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
                     </li>
                     <li class="btn-menu wrapper-icon d-md-none c-pointer">
                         <i class="fa-solid fa-bars"></i>
@@ -169,7 +181,7 @@
             integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
             crossorigin="anonymous"
             referrerpolicy="no-referrer"></script>
-    <script src="~/lib/js/owl.carousel.min.js" type="text/javascript"></script>
     <script src="~/js/main.js" type="text/javascript"></script>
+    @RenderSection("customScripts", required: false)
 </body>
 </html>

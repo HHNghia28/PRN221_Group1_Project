@@ -14,36 +14,48 @@
                 Quay lại
                 <i class="fa-solid fa-left-long"></i>
             </a>
-            <div class="row mt-5">
+            @{
+                 if (@Model.Product != null)
+                        {
+                            <div class="row mt-5">
                 <div class="col-sm-12 col-md-5 overflow-hidden mb-5">
-                    <img class="product-detail-img" src="./img/card_1.jpg" alt="" />
+                            <img class="product-detail-img" src="@Model.Product.Image" alt="" />
                 </div>
                 <div class="col-sm-12 col-md-6 ml-lg-5">
-                    <p class="product-detail-name">Combo Burger Tôm</p>
-                    <p class="product-detail-description">
-                        02 Gà rán, 01 Burger Tôm 02 Gà rán, 01 Burger Tôm 02 Gà rán, 01
-                        Burger Tôm 02 Gà rán, 01 Burger Tôm
-                    </p>
-                    <p class="product-detail-price">189.000đ</p>
-                    <p class="product-detail-discount">
-                        <i class="fa-solid fa-tags"></i> 179.000đ
-                    </p>
-                    <div class="quantity-group align-items-left">
-                        <button class="btn-decrease-quantity"
-                                id="btn-decrease"
-                                onclick="decreaseQuantity(this)">
-                            -
-                        </button>
-                        <input type="number" id="quantity-input" value="1" min="1" />
-                        <button class="btn-increase-quantity"
-                                id="btn-increase"
-                                onclick="increaseQuantity(this)">
-                            +
-                        </button>
+                    
+                            <form method="get" asp-action="Cart">
+                                <p class="product-detail-name">@Model.Product.Name</p>
+                                <p class="product-detail-description">
+                                    @Model.Product.Description
+                                </p>
+                                <p class="product-detail-price">@Model.Product.Price đ</p>
+                                @{
+                                    if (@Model.Product.SalePercent != null)
+                                    {
+                                        <p class="product-detail-discount">
+                                            <i class="fa-solid fa-tags"></i> @Model.Product.SalePercent
+                                        </p>
+                                    }
+                                }
+                                <div class="quantity-group align-items-left">
+                                    <button class="btn-decrease-quantity"
+                                            id="btn-decrease"
+                                            onclick="decreaseQuantity(this)">
+                                        -
+                                    </button>
+                                    <input type="number" id="quantity-input" value="1" min="1" />
+                                    <button class="btn-increase-quantity"
+                                            id="btn-increase"
+                                            onclick="increaseQuantity(this)">
+                                        +
+                                    </button>
+                                </div>
+                                <button type="submit" class="btn full mt-4">Thêm vào giỏ hàng</button>
+                            </form>
                     </div>
-                    <a href="./Cart" class="btn full mt-4">Thêm vào giỏ hàng</a>
                 </div>
-            </div>
+                        }
+                 }
             <div class="row mt-5">
                 <div class="col-sm-12">
                     <div class="diliver"></div>
