@@ -13,7 +13,7 @@ namespace G1Food_Cashier.Pages
     {
         private readonly ILogger<CashierAtSroreModel> _logger;
         private readonly HttpClient _client;
-        private readonly string _scheduleApiUrl;
+        private readonly string _productApiUrl;
 
         public List<MenuResponse> Products { get; set; }
         [BindProperty]
@@ -25,13 +25,13 @@ namespace G1Food_Cashier.Pages
             _client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             _client.DefaultRequestHeaders.Accept.Add(contentType);
-            _scheduleApiUrl = configuration.GetValue<string>("APIEndpoint:Schedule");
+            _productApiUrl = configuration.GetValue<string>("APIEndpoint:Product");
         }
         public async Task OnGetAsync()
         {
             try
             {
-                HttpResponseMessage response = await _client.GetAsync($"{_scheduleApiUrl}getMenuNow");
+                HttpResponseMessage response = await _client.GetAsync($"{_productApiUrl}getProducts");
                 response.EnsureSuccessStatusCode();
 
                 string stringData = await response.Content.ReadAsStringAsync();

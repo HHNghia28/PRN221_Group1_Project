@@ -10,6 +10,7 @@ using Microsoft.JSInterop;
 
 namespace G1_Food_ChefStaff.Pages
 {
+    [Authorize]
     public class ChefDashboardModel : PageModel
     {
         private readonly ILogger<ChefDashboardModel> _logger;
