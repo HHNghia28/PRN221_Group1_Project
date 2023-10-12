@@ -48,14 +48,14 @@
                                     </div>
                                     @{
                                         int itemCount = 0;
+                                        decimal price = 0;
+                                        decimal price_sale = 0;
                                         decimal price_after_discount = 0;
                                         decimal price_before_discount = 0;
                                         decimal discount = 0;
                                     }
                                     @foreach(var detail in item.Details)
                                     {
-                                        price_before_discount += (detail.Price * (decimal)detail.Quantity);
-                                        discount += (decimal)(detail.Price * (detail.SalePercent / 100) * (decimal)detail.Quantity);
                                         itemCount++;
                                         bool isOdd = itemCount % 2 != 0;
 
@@ -74,7 +74,14 @@
                                                         Giá:
                                                     </div>
                                                     <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0 text-right ">
-                                                        @string.Format("{0:N0} VND", detail.Price)
+                                                        @{
+                                                            decimal temp = (decimal)((detail.Price * detail.SalePercent / 100) * (decimal)detail.Quantity);
+                                                            price_sale = (decimal)(detail.Price * (decimal)detail.Quantity);
+                                                            price = price_sale - temp;
+                                                            price_before_discount += price;
+                                                        }
+                                                        @string.Format("{0:N0} VND", price)
+                                                        @string.Format("{0:N0} VND", price_sale)
                                                     </div>
                                                 </div>
                                                 <div class="d-flex">
@@ -107,6 +114,9 @@
                                                 Giãm giá:
                                             </div>
                                             <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
+                                                @{
+                                                    discount = price_before_discount * item.SalePercent / 100;
+                                                }
                                                 @string.Format("{0:N0} VND", discount)
                                             </div>
                                         </div>

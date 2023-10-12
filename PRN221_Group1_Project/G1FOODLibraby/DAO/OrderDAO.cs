@@ -163,6 +163,7 @@ namespace DataAccess.DAO
                         Note = order.Note,
                         Status = order.Status.Name,
                         Username = order.User.Name,
+                        SalePercent = order.Voucher.SalePercent,
                         Details = details
                     });
                 }
