@@ -35,7 +35,7 @@ namespace G1Food_User.Pages
             {
                 var productId = Request.Query["productID"];
                 
-                HttpResponseMessage response = await _client.GetAsync($"{_productApiUrl}getProduct/{productId}");
+                HttpResponseMessage response = await _client.GetAsync($"{_productApiUrl}getProduct?id={productId}");
                 response.EnsureSuccessStatusCode();
 
                 string stringData = await response.Content.ReadAsStringAsync();

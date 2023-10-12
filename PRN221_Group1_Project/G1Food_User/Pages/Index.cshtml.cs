@@ -19,7 +19,7 @@ namespace G1Food_User.Pages
         private readonly string _voucherApiUrl;
         private readonly string _productApiUrl;
 
-        public AccountResponse Account { get; set; }
+        //public AccountResponse Account { get; set; }
         public IEnumerable<ProductResponse> Products { get; private set; }
         public IEnumerable<VoucherResponse> Vouchers { get; private set; }
 
@@ -46,11 +46,11 @@ namespace G1Food_User.Pages
                     PropertyNameCaseInsensitive = true
                 };
 
-                if (Request.Cookies.ContainsKey("AccountCookie"))
-                {
-                    string accountJson = Request.Cookies["AccountCookie"];
-                    Account = JsonSerializer.Deserialize<AccountResponse>(accountJson, options);
-                }
+                //if (Request.Cookies.ContainsKey("AccountCookie"))
+                //{
+                //    string accountJson = Request.Cookies["AccountCookie"];
+                //    Account = JsonSerializer.Deserialize<AccountResponse>(accountJson, options);
+                //}
                 APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
 
                 if (apiResponse.Success)
