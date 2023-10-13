@@ -22,31 +22,45 @@
                             <img class="product-detail-img" src="@Model.Product.Image" alt="" />
                 </div>
                 <div class="col-sm-12 col-md-6 ml-lg-5">
-                    
-                            <form method="get" asp-action="Cart">
+                            <form method="get" asp-page="Cart">
+                                <input type="hidden" name="productID" value="@Model.Product.Id" />
                                 <p class="product-detail-name">@Model.Product.Name</p>
                                 <p class="product-detail-description">
                                     @Model.Product.Description
                                 </p>
-                                <p class="product-detail-price">@Model.Product.Price đ</p>
+                                <p class="product-detail-price">
+                                    @{
+                                        @string.Format("{0:N0} VND", @Model.Product.Price)
+                                    }
+                                </p>
                                 @{
-                                    if (@Model.Product.SalePercent != null)
+                                    if (Model.Product.SalePercent != 0)
                                     {
                                         <p class="product-detail-discount">
-                                            <i class="fa-solid fa-tags"></i> @Model.Product.SalePercent
+                                            <i class="fa-solid fa-tags"></i>
+                                            -@Model.Product.SalePercent%
+                                        </p>
+                                        <p class="card-discount">
+                                            <i class="fa-solid fa-tags"></i>
+                                            @{
+                                                @string.Format("{0:N0} VND", @Model.Product.Price - (@Model.Product.Price * @Model.Product.SalePercent /100))
+                                            }
                                         </p>
                                     }
                                 }
                                 <div class="quantity-group align-items-left">
-                                    <button class="btn-decrease-quantity"
+                                    <button type="button"
+                                            class="btn-decrease-quantity"
                                             id="btn-decrease"
-                                            onclick="decreaseQuantity(this)">
+                                            onClick="decreaseQuantity()">
                                         -
                                     </button>
-                                    <input type="number" id="quantity-input" value="1" min="1" />
-                                    <button class="btn-increase-quantity"
-                                            id="btn-increase"
-                                            onclick="increaseQuantity(this)">
+                                    <input type="number" id="quantity-input" name="quanity" value="1" min="1" />
+                                    <button 
+                                    type="button"
+                                            class="btn-increase-quantity"
+                                            onClick="increaseQuantity()"
+                                            id="btn-increase">
                                         +
                                     </button>
                                 </div>
@@ -147,6 +161,19 @@
             </div>
         </div>
     </main>
-    <script src="~/js/handleQuantity.js" type="text/javascript" asp-append-version="true"></script>
+    <script >
+        const quantityInput = document.querySelector('#quantity-input');
+        const increaseQuantity = () => {
+            let quantity = parseInt(quantityInput.value, 10);
+            quantityInput.value = quantity + 1;
+        }
+
+        const decreaseQuantity = () => {
+            let quantity = parseInt(quantityInput.value, 10);
+            if (quantity > 1) {
+                quantityInput.value = quantity - 1;
+            }
+        }
+    </script>
 </body>
 
