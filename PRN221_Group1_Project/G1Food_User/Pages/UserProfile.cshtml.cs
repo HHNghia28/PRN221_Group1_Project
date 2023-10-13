@@ -34,7 +34,7 @@ namespace G1Food_User.Pages
             _orderApiUrl = configuration.GetValue<string>("APIEndpoint:Order");
         }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             try
             {
@@ -47,24 +47,31 @@ namespace G1Food_User.Pages
                 userEmailClaim = user.FindFirst("Email")?.Value;
                 userPhoneClaim = user.FindFirst("Phone")?.Value;
                 userAddressClaim = user.FindFirst("Address")?.Value;
-                HttpResponseMessage response = await _client.GetAsync($"{_orderApiUrl}getOrderHistory?id={userIDClaim}");
-                response.EnsureSuccessStatusCode();
 
-                string stringData = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions
+                if(userIDClaim == null) {
+                    return RedirectToPage("/Login");
+                } else
                 {
-                    PropertyNameCaseInsensitive = true
-                };
+                    HttpResponseMessage response = await _client.GetAsync($"{_orderApiUrl}getOrderHistory?id={userIDClaim}");
+                    response.EnsureSuccessStatusCode();
 
-                APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
+                    string stringData = await response.Content.ReadAsStringAsync();
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
 
-                if (apiResponse.Success)
-                {
-                    Orders = JsonSerializer.Deserialize<List<OrderResponse>>(apiResponse.Data.ToString(), options);
-                }
-                else
-                {
-                    _logger.LogError($"API call failed with message: {apiResponse.Message}");
+                    APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
+
+                    if (apiResponse.Success)
+                    {
+                        Orders = JsonSerializer.Deserialize<List<OrderResponse>>(apiResponse.Data.ToString(), options);
+                    }
+                    else
+                    {
+                        _logger.LogError($"API call failed with message: {apiResponse.Message}");
+                    }
+
                 }
             }
             catch (HttpRequestException ex)
@@ -75,6 +82,7 @@ namespace G1Food_User.Pages
             {
                 _logger.LogError($"An error occurred: {ex.Message}");
             }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()

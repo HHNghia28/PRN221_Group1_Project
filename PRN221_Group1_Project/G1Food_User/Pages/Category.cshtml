@@ -53,142 +53,34 @@
                         </a>
                     </div>
                     <div class="row mt-1">
-                        <div class="col-sm-12 col-md-6 col-lg-3 mt-4">
-                            <div class="card-product">
-                                <a href="./productDetail.html"><img class="card-img" src="./img/card_1.jpg" alt=""></a>
-                                <div class="card-product-body mt-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="card-name">
-                                            <a href="./productDetail.html">Combo Burger Tôm</a>
-                                        </p>
-                                        <i class="fa-regular fa-heart"></i>
+                        @{
+                            if(Model.Products != null)
+                            {
+                                foreach(var product in Model.Products)
+                                {
+                                    <div class="col-sm-12 col-md-6 col-lg-3 mt-4">
+                                        <div class="card-product">
+                                            <a href="./productDetail.html"><img class="card-img" src="@product.Image" alt=""></a>
+                                            <div class="card-product-body mt-2">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="card-name max-line-1">
+                                                        <a href="./productDetail.html">@product.Name</a>
+                                                    </p>
+                                                    <i class="fa-regular fa-heart"></i>
+                                                </div>
+                                                <p class="card-description max-line-1">@product.Description</p>
+                                                <p class="card-price"> @{@string.Format("{0:N0} VND", @product.Price)}</p>
+                                                <p class="card-discount"><i class="fa-solid fa-tags"></i>@{
+                                                        @string.Format("{0:N0} VND", @product.Price * (1 - @product.SalePercent / 100))
+                                                    }
+                                                </p>
+                                                <button class="btn full mt-2">Thêm vào giỏ hàng</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p class="card-description max-line-1">02 Gà rán, 01 Burger Tôm 02 Gà rán, 01 Burger Tôm</p>
-                                    <p class="card-price">189.000đ</p>
-                                    <p class="card-discount"><i class="fa-solid fa-tags"></i> 179.000đ</p>
-                                    <button class="btn full mt-2">Thêm vào giỏ hàng</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3 mt-4">
-                            <div class="card-product">
-                                <a href="./productDetail.html"><img class="card-img" src="./img/card_1.jpg" alt=""></a>
-                                <div class="card-product-body mt-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="card-name">
-                                            <a href="./productDetail.html">Combo Burger Tôm</a>
-                                        </p>
-                                        <i class="fa-regular fa-heart"></i>
-                                    </div>
-                                    <p class="card-description max-line-1">02 Gà rán, 01 Burger Tôm 02 Gà rán, 01 Burger Tôm</p>
-                                    <p class="card-price">189.000đ</p>
-                                    <p class="card-discount"><i class="fa-solid fa-tags"></i> 179.000đ</p>
-                                    <button class="btn full mt-2">Thêm vào giỏ hàng</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3 mt-4">
-                            <div class="card-product">
-                                <a href="./productDetail.html"><img class="card-img" src="./img/card_1.jpg" alt=""></a>
-                                <div class="card-product-body mt-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="card-name">
-                                            <a href="./productDetail.html">Combo Burger Tôm</a>
-                                        </p>
-                                        <i class="fa-regular fa-heart"></i>
-                                    </div>
-                                    <p class="card-description max-line-1">02 Gà rán, 01 Burger Tôm 02 Gà rán, 01 Burger Tôm</p>
-                                    <p class="card-price">189.000đ</p>
-                                    <p class="card-discount"><i class="fa-solid fa-tags"></i> 179.000đ</p>
-                                    <button class="btn full mt-2">Thêm vào giỏ hàng</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3 mt-4">
-                            <div class="card-product">
-                                <a href="./productDetail.html"><img class="card-img" src="./img/card_1.jpg" alt=""></a>
-                                <div class="card-product-body mt-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="card-name">
-                                            <a href="./productDetail.html">Combo Burger Tôm</a>
-                                        </p>
-                                        <i class="fa-regular fa-heart"></i>
-                                    </div>
-                                    <p class="card-description max-line-1">02 Gà rán, 01 Burger Tôm 02 Gà rán, 01 Burger Tôm</p>
-                                    <p class="card-price">189.000đ</p>
-                                    <p class="card-discount"><i class="fa-solid fa-tags"></i> 179.000đ</p>
-                                    <button class="btn full mt-2">Thêm vào giỏ hàng</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3 mt-4">
-                            <div class="card-product">
-                                <a href="./productDetail.html"><img class="card-img" src="./img/card_1.jpg" alt=""></a>
-                                <div class="card-product-body mt-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="card-name">
-                                            <a href="./productDetail.html">Combo Burger Tôm</a>
-                                        </p>
-                                        <i class="fa-regular fa-heart"></i>
-                                    </div>
-                                    <p class="card-description max-line-1">02 Gà rán, 01 Burger Tôm 02 Gà rán, 01 Burger Tôm</p>
-                                    <p class="card-price">189.000đ</p>
-                                    <p class="card-discount"><i class="fa-solid fa-tags"></i> 179.000đ</p>
-                                    <button class="btn full mt-2">Thêm vào giỏ hàng</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3 mt-4">
-                            <div class="card-product">
-                                <a href="./productDetail.html"><img class="card-img" src="./img/card_1.jpg" alt=""></a>
-                                <div class="card-product-body mt-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="card-name">
-                                            <a href="./productDetail.html">Combo Burger Tôm</a>
-                                        </p>
-                                        <i class="fa-regular fa-heart"></i>
-                                    </div>
-                                    <p class="card-description max-line-1">02 Gà rán, 01 Burger Tôm 02 Gà rán, 01 Burger Tôm</p>
-                                    <p class="card-price">189.000đ</p>
-                                    <p class="card-discount"><i class="fa-solid fa-tags"></i> 179.000đ</p>
-                                    <button class="btn full mt-2">Thêm vào giỏ hàng</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3 mt-4">
-                            <div class="card-product">
-                                <a href="./productDetail.html"><img class="card-img" src="./img/card_1.jpg" alt=""></a>
-                                <div class="card-product-body mt-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="card-name">
-                                            <a href="./productDetail.html">Combo Burger Tôm</a>
-                                        </p>
-                                        <i class="fa-regular fa-heart"></i>
-                                    </div>
-                                    <p class="card-description max-line-1">02 Gà rán, 01 Burger Tôm 02 Gà rán, 01 Burger Tôm</p>
-                                    <p class="card-price">189.000đ</p>
-                                    <p class="card-discount"><i class="fa-solid fa-tags"></i> 179.000đ</p>
-                                    <button class="btn full mt-2">Thêm vào giỏ hàng</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3 mt-4">
-                            <div class="card-product">
-                                <a href="./productDetail.html"><img class="card-img" src="./img/card_1.jpg" alt=""></a>
-                                <div class="card-product-body mt-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="card-name">
-                                            <a href="./productDetail.html">Combo Burger Tôm</a>
-                                        </p>
-                                        <i class="fa-regular fa-heart"></i>
-                                    </div>
-                                    <p class="card-description max-line-1">02 Gà rán, 01 Burger Tôm 02 Gà rán, 01 Burger Tôm</p>
-                                    <p class="card-price">189.000đ</p>
-                                    <p class="card-discount"><i class="fa-solid fa-tags"></i> 179.000đ</p>
-                                    <button class="btn full mt-2">Thêm vào giỏ hàng</button>
-                                </div>
-                            </div>
-                        </div>
+                                }
+                            }
+                        }
                     </div>
                 </div>
             </div>
