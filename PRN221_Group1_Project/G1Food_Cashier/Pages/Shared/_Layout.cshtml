@@ -133,7 +133,12 @@
                                aria-expanded="false">
                                 <img class="img-profile rounded-circle"
                                      src="img/undraw_profile.svg" />
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small ml-2">Cashier</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small ml-2">
+                                    @{
+                                        var nameClaim = ViewContext.HttpContext.User?.FindFirst("Name")?.Value;
+                                    }
+                                    @nameClaim
+                                </span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

@@ -51,7 +51,8 @@ namespace G1_Food_ChefStaff.Pages
                     {
                         AccountResponse account = JsonSerializer.Deserialize<AccountResponse>(apiResponse.Data.ToString(), options);
 
-                        if (account.RoleId == new Guid("d1ddb501-e7fa-4d50-9d1b-e2713c0a3b2d"))
+                        if (account.RoleId == new Guid("D1DDB501-E7FA-4D50-9D1B-E2713C0A3B2D")
+                            || account.RoleId == new Guid("CD697563-379C-468C-9D6A-1555E2D84872"))
                         {
 
                             var claims = new List<Claim>
@@ -59,7 +60,8 @@ namespace G1_Food_ChefStaff.Pages
                                 new Claim(ClaimTypes.Name, account.Email),
                                 new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
                                 new Claim(ClaimTypes.Role, account.Role),
-                                new Claim("Token", account.Token)
+                                new Claim("Token", account.Token),
+                                new Claim("Name", account.Name)
                             };
 
                             var claimsIdentity = new ClaimsIdentity(

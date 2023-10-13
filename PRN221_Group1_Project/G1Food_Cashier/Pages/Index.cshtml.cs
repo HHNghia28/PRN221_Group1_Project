@@ -31,38 +31,61 @@ namespace G1Food_Cashier.Pages
 
         public async Task OnGetAsync()
         {
+            int maxRetries = 3; // Số lần thử lại tối đa
+            int retryCount = 0;
+            bool apiCallSuccess = false;
 
-            try
+            while (retryCount < maxRetries && !apiCallSuccess)
             {
-                HttpResponseMessage response = await _client.GetAsync($"{_orderApiUrl}getOrderPending");
-                response.EnsureSuccessStatusCode();
-
-                string stringData = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions
+                try
                 {
-                    PropertyNameCaseInsensitive = true
-                };
+                    HttpResponseMessage response = await _client.GetAsync($"{_orderApiUrl}getOrderPending");
+                    response.EnsureSuccessStatusCode();
 
-                APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
+                    string stringData = await response.Content.ReadAsStringAsync();
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
 
-                if (apiResponse.Success)
-                {
-                    Orders = JsonSerializer.Deserialize<List<OrderResponse>>(apiResponse.Data.ToString(), options);
+                    APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
+
+                    if (apiResponse.Success)
+                    {
+                        Orders = JsonSerializer.Deserialize<List<OrderResponse>>(apiResponse.Data.ToString(), options);
+                        apiCallSuccess = true; // API call thành công, thoát khỏi vòng lặp
+                    }
+                    else
+                    {
+                        _logger.LogError($"API call failed with message: {apiResponse.Message}");
+                        retryCount++;
+                        if (retryCount < maxRetries)
+                        {
+                            await Task.Delay(1000); // Chờ 1 giây trước khi thử lại
+                        }
+                    }
                 }
-                else
+                catch (HttpRequestException ex)
                 {
-                    _logger.LogError($"API call failed with message: {apiResponse.Message}");
+                    _logger.LogError($"HTTP request failed with error: {ex.Message}");
+                    retryCount++;
+                    if (retryCount < maxRetries)
+                    {
+                        await Task.Delay(1000); // Chờ 1 giây trước khi thử lại
+                    }
                 }
-            }
-            catch (HttpRequestException ex)
-            {
-                _logger.LogError($"HTTP request failed with error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"An error occurred: {ex.Message}");
+                catch (Exception ex)
+                {
+                    _logger.LogError($"An error occurred: {ex.Message}");
+                    retryCount++;
+                    if (retryCount < maxRetries)
+                    {
+                        await Task.Delay(1000); // Chờ 1 giây trước khi thử lại
+                    }
+                }
             }
         }
+
 
         public async Task<IActionResult> OnPostAsync()
         {

@@ -122,9 +122,9 @@
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small ml-2">
                                     @{
-                                        var tokenClaim = ViewContext.HttpContext.User?.FindFirst("Token")?.Value;
+                                        var nameClaim = ViewContext.HttpContext.User?.FindFirst("Name")?.Value;
                                     }
-                                    @tokenClaim
+                                    @nameClaim
                                 </span>
                             </a>
                             <!-- Dropdown - User Information -->
