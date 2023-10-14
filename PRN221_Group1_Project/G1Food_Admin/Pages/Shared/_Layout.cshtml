@@ -37,7 +37,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link " href="../ManageProduct">
+                <a class="nav-link " href="../Product">
                     <i class="fas fa-fw fa-tachometer-alt main-color"></i>
                     <span class="text-dark">Manage Product</span>
                 </a>
@@ -173,7 +173,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="userDropdown">
-                                <a class="dropdown-item fs-md" href="#">
+                                @* <a class="dropdown-item fs-md" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 main-color"></i>
                                     Profile
                                 </a>
@@ -184,7 +184,13 @@
                                    data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 main-color"></i>
                                     Logout
-                                </a>
+                                </a> *@
+                                <form method="post" asp-page="Logout">
+                                    <button type="submit" class="dropdown-item fs-md">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 main-color"></i>
+                                        Logout
+                                    </button>
+                                </form>
                             </div>
                         </li>
                     </ul>

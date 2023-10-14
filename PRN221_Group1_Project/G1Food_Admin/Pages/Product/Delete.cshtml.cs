@@ -1,24 +1,26 @@
-using G1FOODLibrary.DTO;
-using G1FOODLibrary.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using G1FOODLibrary.DTO;
+using G1Food_Admin.Data;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
-namespace G1Food_Admin.Pages
+namespace G1Food_Admin.Pages.Product
 {
-    public class ManageProductModel : PageModel
+    public class DeleteModel : PageModel
     {
-        private readonly ILogger<ManageProductModel> _logger;
+        private readonly ILogger<DeleteModel> _logger;
         private readonly HttpClient _client;
         private readonly string _productApiUrl;
 
-        public List<ProductResponse> Products { get; set; }
-        public List<CategoryResponse> Categories { get; set; }
         [BindProperty]
-        public string CategogyId { get; set; }
-
-        public ManageProductModel(ILogger<ManageProductModel> logger, IConfiguration configuration)
+        public ProductResponse ProductResponse { get; set; } = default!;
+        public DeleteModel(ILogger<DeleteModel> logger, IConfiguration configuration)
         {
             _logger = logger;
             _client = new HttpClient();
@@ -27,11 +29,17 @@ namespace G1Food_Admin.Pages
             _productApiUrl = configuration.GetValue<string>("APIEndpoint:Product");
         }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(Guid? id)
         {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             try
             {
-                HttpResponseMessage response = await _client.GetAsync($"{_productApiUrl}getProducts");
+                HttpResponseMessage response = await _client.GetAsync($"{_productApiUrl}getProduct?id={id}");
                 response.EnsureSuccessStatusCode();
 
                 string stringData = await response.Content.ReadAsStringAsync();
@@ -44,27 +52,7 @@ namespace G1Food_Admin.Pages
 
                 if (apiResponse.Success)
                 {
-                    Products = JsonSerializer.Deserialize<List<ProductResponse>>(apiResponse.Data.ToString(), options);
-                }
-                else
-                {
-                    _logger.LogError($"API call failed with message: {apiResponse.Message}");
-                }
-
-                response = await _client.GetAsync($"{_productApiUrl}getProductCategories");
-                response.EnsureSuccessStatusCode();
-
-                stringData = await response.Content.ReadAsStringAsync();
-                options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-
-                apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
-
-                if (apiResponse.Success)
-                {
-                    Categories = JsonSerializer.Deserialize<List<CategoryResponse>>(apiResponse.Data.ToString(), options);
+                    ProductResponse = JsonSerializer.Deserialize<ProductResponse>(apiResponse.Data.ToString(), options);
                 }
                 else
                 {
@@ -79,6 +67,50 @@ namespace G1Food_Admin.Pages
             {
                 _logger.LogError($"An error occurred: {ex.Message}");
             }
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                HttpResponseMessage response = await _client.DeleteAsync($"{_productApiUrl}deleteProduct?id={id}");
+                response.EnsureSuccessStatusCode();
+
+                string stringData = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
+
+                if (apiResponse.Success)
+                {
+                    return RedirectToPage("./Index");
+                }
+                else
+                {
+                    _logger.LogError($"API call failed with message: {apiResponse.Message}");
+                    return NotFound();
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError($"HTTP request failed with error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An error occurred: {ex.Message}");
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }

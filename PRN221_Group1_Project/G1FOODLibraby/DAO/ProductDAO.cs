@@ -54,7 +54,8 @@ namespace DataAccess.DAO
                         Description = product.Description,
                         Category = product.Categogy.Name,
                         Status = product.Status.Name,
-                        Comments = await GetCommentByProductID(product.Id)
+                        Comments = await GetCommentByProductID(product.Id),
+                        CategogyId = product.Categogy.Id
                     });
                 }
             }
@@ -88,7 +89,9 @@ namespace DataAccess.DAO
                     Price = product.Price,
                     Description = product?.Description,
                     Category = product.Categogy.Name,
-                    Status = product.Status.Name
+                    Status = product.Status.Name,
+                    SalePercent = product.SalePercent,
+                    StatusId = product.Status.Id
                 };
             }
             catch (Exception ex)
@@ -152,6 +155,8 @@ namespace DataAccess.DAO
                 existProduct.SalePercent = productDTO.SalePercent;
                 existProduct.Description = productDTO.Description;
                 existProduct.Image = productDTO.Image;
+                existProduct.StatusId = productDTO.StatusId;
+                existProduct.CategogyId = productDTO.CategogyId;
 
                 await _context.SaveChangesAsync();
             }
@@ -420,6 +425,32 @@ namespace DataAccess.DAO
                 }
 
                 return recipeDTOs;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<StatusResponse>> GetProductStatus()
+        {
+            try
+            {
+                List<StatusResponse> statusResponses = new List<StatusResponse>();
+
+                var status = _context.ProductStatuses.ToList();
+
+                foreach (var item in status)
+                {
+                    statusResponses.Add(new StatusResponse
+                    {
+                        Id = item.Id,
+                        Description = item.Description,
+                        Name = item.Name
+                    });
+                }
+
+                return statusResponses;
             }
             catch (Exception ex)
             {

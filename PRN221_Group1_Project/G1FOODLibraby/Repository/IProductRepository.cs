@@ -22,4 +22,6 @@ namespace DataAccess.Repository
         public Task UpdateRecipe(RecipeRequest recipeDTO, Guid id);
         public Task DeleteRecipe(Guid guid);
         public Task<IEnumerable<RecipeResponse>> GetRecipeByProductId(Guid guid);
-    }}
+        public Task<IEnumerable<StatusResponse>> GetProductStatus();
+    }
+}

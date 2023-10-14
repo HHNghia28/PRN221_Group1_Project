@@ -341,5 +341,30 @@ namespace G1FOODWebAPI.Controllers
                 });
             }
         }
+
+        [HttpGet("getStatus")]
+        public async Task<IActionResult> GetStatus()
+        {
+            try
+            {
+                var products = await _productRepository.GetProductStatus();
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get all status successful!",
+                    Data = products
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponse
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
     }
 }

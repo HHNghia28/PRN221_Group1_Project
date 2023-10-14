@@ -11,7 +11,7 @@ const showFormAdd = (form) => {
     form.classList.add('d-block');
 }
 
-const showFormUpdate = (form, itemID, itemName, itemImg, itemDescrption, itemCategory = 2, itemDiscount, itemPrice = 20) => {
+const showFormUpdate = (form, itemID, itemName, itemImg, itemDescrption, itemCategory, itemDiscount, itemPrice) => {
     overplay.classList.add('d-block');
     form.classList.add('d-block');
     const formID = form.querySelector('#id-update');
@@ -29,6 +29,7 @@ const showFormUpdate = (form, itemID, itemName, itemImg, itemDescrption, itemCat
     formDiscount.value = itemDiscount;
     formImage.src = itemImg;
     formPrice.value = parseInt(itemPrice);
+    formCategory.value = itemCategory;
 }
 
 const closeForm = (form) => {

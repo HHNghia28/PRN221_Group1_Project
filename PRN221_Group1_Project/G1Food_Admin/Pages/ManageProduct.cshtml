@@ -17,7 +17,7 @@
                     <div class=" d-flex justify-content-between align-items-center">
                        <div>
                            <span>Total product: </span>
-                            <span class="btn bg-primary">2000</span>
+                            <span class="btn bg-primary">@Model.Products.Count</span>
                        </div>
                         <button class="btn bg-success btn-add ml-4">
                             <i class="fa-solid fa-plus"></i> 
@@ -44,74 +44,33 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="align-middle id">1</td>
-                                    <td class="align-middle name">Gà sốt cay</td>
-                                    <td class="align-middle img">
-                                        <img class="img-table"
-                                             src="./img/card_1.jpg"
-                                             alt="" />
-                                    </td>
-                                    <td class="align-middle mw-150 description">Gà có sốt chua cay + nước ngọt Gà có sốt chua cay</td>
-                                    <td class="align-middle category">Gà rán</td>
-                                    <td class="align-middle discount">10</td>
-                                    <td class="align-middle price">42,000đ</td>
-                                    <td class="align-middle">
-                                        <button class="btn sm bg-primary btn-table-edit">Edit</button>
-                                        <button class="btn sm btn-table-delete">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle id">2</td>
-                                    <td class="align-middle name">Gà sốt cay</td>
-                                    <td class="align-middle img">
-                                        <img class="img-table"
-                                             src="./img/card_1.jpg"
-                                             alt="" />
-                                    </td>
-                                    <td class="align-middle mw-150 description">Gà có sốt chua cay + nước ngọt Gà có sốt chua cay</td>
-                                    <td class="align-middle category">Gà rán</td>
-                                    <td class="align-middle discount">10</td>
-                                    <td class="align-middle price">42,000đ</td>
-                                    <td class="align-middle">
-                                        <button class="btn sm bg-primary btn-table-edit">Edit</button>
-                                        <button class="btn sm btn-table-delete">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle id">3</td>
-                                    <td class="align-middle name">Gà sốt cay</td>
-                                    <td class="align-middle img">
-                                        <img class="img-table"
-                                             src="./img/card_1.jpg"
-                                             alt="" />
-                                    </td>
-                                    <td class="align-middle mw-150 description">Gà có sốt chua cay + nước ngọt Gà có sốt chua cay</td>
-                                    <td class="align-middle category">Gà rán</td>
-                                    <td class="align-middle discount">10</td>
-                                    <td class="align-middle price">42,000đ</td>
-                                    <td class="align-middle">
-                                        <button class="btn sm bg-primary btn-table-edit">Edit</button>
-                                        <button class="btn sm btn-table-delete">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle id">4</td>
-                                    <td class="align-middle name">Gà sốt cay</td>
-                                    <td class="align-middle img">
-                                        <img class="img-table"
-                                             src="./img/card_1.jpg"
-                                             alt="" />
-                                    </td>
-                                    <td class="align-middle mw-150 description">Gà có sốt chua cay + nước ngọt Gà có sốt chua cay</td>
-                                    <td class="align-middle category">Gà rán</td>
-                                    <td class="align-middle discount">10</td>
-                                    <td class="align-middle price">42,000đ</td>
-                                    <td class="align-middle">
-                                        <button class="btn sm bg-primary btn-table-edit">Edit</button>
-                                        <button class="btn sm btn-table-delete">Delete</button>
-                                    </td>
-                                </tr>
+                                @{
+                                    int index = 1;
+                                }
+                                @if(Model.Products != null)
+                                {
+                                    @foreach(var item in Model.Products)
+                                    {
+                                        <tr>
+                                            <td class="align-middle id">@index</td>
+                                            <td class="align-middle name">@item.Name</td>
+                                            <td class="align-middle img">
+                                                <img class="img-table"
+                                                     src="@item.Image"
+                                                     alt="" />
+                                            </td>
+                                            <td class="align-middle mw-150 description">@item.Description</td>
+                                            <td class="align-middle category">@item.Category</td>
+                                            <td class="align-middle discount">@item.SalePercent</td>
+                                            <td class="align-middle price">@string.Format("{0:N0} VND", item.Price)</td>
+                                            <td class="align-middle">
+                                                <button class="btn sm bg-primary btn-table-edit">Edit</button>
+                                                <button class="btn sm btn-table-delete">Delete</button>
+                                            </td>
+                                        </tr>
+                                        
+                                    }
+                                }
                             </tbody>
                         </table>
                         <div class="pop-up-form add-form animation-scale d-none">
@@ -179,19 +138,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <select name="category" id="category" class="form-input">
-                                                <option class="flex justify-content-between" value="1">
-                                                    Category 1
-                                                    <span>-Cơm gà</span>
-                                                </option>
-                                                <option class="flex justify-content-between" value="1">
-                                                    Category 2
-                                                    <span>-Cơm gà</span>
-                                                </option>
-                                                <option class="flex justify-content-between" value="1">
-                                                    Category 3
-                                                    <span>-Cơm gà</span>
-                                                </option>
+                                            <select class="form-input" asp-for="CategogyId" asp-items="Model.Categories.Select(w => new SelectListItem { Text = w.Name, Value = w.Id.ToString() })">
                                             </select>
                                             <div class="form-error"></div>
                                         </div>
@@ -268,19 +215,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <select name="category" id="category-update" class="form-input">
-                                                <option class="flex justify-content-between" value="1">
-                                                    Category 1
-                                                    <span>-Cơm gà</span>
-                                                </option>
-                                                <option class="flex justify-content-between" value="1">
-                                                    Category 2
-                                                    <span>-Cơm gà</span>
-                                                </option>
-                                                <option class="flex justify-content-between" value="1">
-                                                    Category 3
-                                                    <span>-Cơm gà</span>
-                                                </option>
+                                            <select class="form-input" asp-for="CategogyId" name="category" id="category-update"
+                                                    asp-items="Model.Categories.Select(w => new SelectListItem { Text = w.Name, Value = w.Id.ToString() })">
                                             </select>
                                             <div class="form-error"></div>
                                         </div>

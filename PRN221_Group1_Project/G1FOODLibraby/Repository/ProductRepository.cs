@@ -28,6 +28,8 @@ namespace DataAccess.Repository
 
         public Task<IEnumerable<ProductResponse>> GetProducts() => ProductDAO.Instance.GetProducts();
 
+        public Task<IEnumerable<StatusResponse>> GetProductStatus() => ProductDAO.Instance.GetProductStatus();
+
         public Task<IEnumerable<RecipeResponse>> GetRecipeByProductId(Guid guid) => ProductDAO.Instance.GetRecipeByProductId(guid);
 
         public Task<IEnumerable<WarehouseItemResponse>> GetWarehouseItems() => ProductDAO.Instance.GetWarehouseItems();
