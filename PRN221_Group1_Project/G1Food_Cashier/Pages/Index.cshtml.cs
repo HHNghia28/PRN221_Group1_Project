@@ -31,7 +31,7 @@ namespace G1Food_Cashier.Pages
 
         public async Task OnGetAsync()
         {
-            int maxRetries = 3; // Số lần thử lại tối đa
+            int maxRetries = 3; 
             int retryCount = 0;
             bool apiCallSuccess = false;
 
@@ -53,7 +53,7 @@ namespace G1Food_Cashier.Pages
                     if (apiResponse.Success)
                     {
                         Orders = JsonSerializer.Deserialize<List<OrderResponse>>(apiResponse.Data.ToString(), options);
-                        apiCallSuccess = true; // API call thành công, thoát khỏi vòng lặp
+                        apiCallSuccess = true; 
                     }
                     else
                     {
@@ -61,7 +61,7 @@ namespace G1Food_Cashier.Pages
                         retryCount++;
                         if (retryCount < maxRetries)
                         {
-                            await Task.Delay(1000); // Chờ 1 giây trước khi thử lại
+                            await Task.Delay(1000); 
                         }
                     }
                 }
@@ -71,7 +71,7 @@ namespace G1Food_Cashier.Pages
                     retryCount++;
                     if (retryCount < maxRetries)
                     {
-                        await Task.Delay(1000); // Chờ 1 giây trước khi thử lại
+                        await Task.Delay(1000); 
                     }
                 }
                 catch (Exception ex)

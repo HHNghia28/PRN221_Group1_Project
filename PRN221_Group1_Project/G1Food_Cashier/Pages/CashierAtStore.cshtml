@@ -11,278 +11,54 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="d-flex">
-            <div class="row col-xl-7">
-                <div class="col-xl-12 mb-4">
-                    <div class="card border-left-main shadow h-100">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="d-flex">
-                                        <div class="col-xl-8 h5 mb-0 font-weight-bold text-gray-800">
-                                            Gà chiên @Model.Products.Count
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-auto">
-                                                <button class="bg-none">
-                                                    <i class="fa-solid fa-plus mt-1 main-color"></i>
-                                                </button>
-                                            </div>
-                                            <div class="text-lg font-weight-bold text-dark text-uppercase mb-1">
-                                                30
-                                            </div>
-                                            <div class="col-auto">
-                                                <button class="bg-none">
-                                                    <i class="fa-solid fa-minus mt-1 main-color"></i>
-                                                </button>                                      
+        <form method="post">
+            <div class="d-flex">
+                <div class="row col-xl-10">
+                    @if(Model.Products != null)
+                    {
+                        @for (int i = 0; i < Model.Products.Count; i++)
+                        {
+                            <div class="col-xl-12 mb-4">
+                                <div class="card border-left-main shadow h-100">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="d-flex">
+                                                    <img src="@Model.Products[i].Image" class="col-2" />
+                                                    <div class="d-flex flex-wrap col-10">
+                                                        <div class="d-flex col-12">
+                                                            <div class="col-10 h5 mb-0 font-weight-bold text-gray-800 d-flex align-items-center">
+                                                                Gà chiên @Model.Products[i].Name
+                                                            </div>
+                                                            <div class="col-2 d-flex align-items-center justify-content-end">
+                                                                <input asp-for="@Model.Orders[i].ProductId" value="@Model.Products[i].Id"
+                                                                       class="form-input" type="hidden" />
+                                                                <input asp-for="@Model.Orders[i].Quantity"
+                                                                       class="form-input" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex col-12">
+                                                            <input asp-for="@Model.Orders[i].Note"
+                                                                   class="form-input" />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <button class="bg-none"> 
-                                    <i class="fa-solid fa-trash main-color"></i>
-                                    </button>
-                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        }
+                    }
 
-                <div class="col-xl-12 mb-4">
-                    <div class="card border-left-main shadow h-100">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="d-flex">
-                                        <div class="col-xl-8 h5 mb-0 font-weight-bold text-gray-800">
-                                            Gà chiên
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-auto">
-                                                <button class="bg-none">
-                                                    <i class="fa-solid fa-plus mt-1 main-color"></i>
-                                                </button>
-                                            </div>
-                                            <div class="text-lg font-weight-bold text-dark text-uppercase mb-1">
-                                                30
-                                            </div>
-                                            <div class="col-auto">
-                                                <button class="bg-none">
-                                                    <i class="fa-solid fa-minus mt-1 main-color"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button class="bg-none">
-                                        <i class="fa-solid fa-trash main-color"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
-                <div class="col-xl-12 mb-4">
-                    <div class="card border-left-main shadow h-100">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="d-flex">
-                                        <div class="col-xl-8 h5 mb-0 font-weight-bold text-gray-800">
-                                            Gà chiên
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-auto">
-                                                <button class="bg-none">
-                                                    <i class="fa-solid fa-plus mt-1 main-color"></i>
-                                                </button>
-                                            </div>
-                                            <div class="text-lg font-weight-bold text-dark text-uppercase mb-1">
-                                                30
-                                            </div>
-                                            <div class="col-auto">
-                                                <button class="bg-none">
-                                                    <i class="fa-solid fa-minus mt-1 main-color"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button class="bg-none">
-                                        <i class="fa-solid fa-trash main-color"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row col-xl-2 d-flex align-items-baseline justify-content-center">
+                    <button type="submit" class="btn mt-4">
+                        Order
+                    </button>
                 </div>
-
-                <div class="col-xl-12 mb-4">
-                    <div class="card border-left-main shadow h-100">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="d-flex">
-                                        <div class="col-xl-8 h5 mb-0 font-weight-bold text-gray-800">
-                                            Gà chiên
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-auto">
-                                                <button class="bg-none">
-                                                    <i class="fa-solid fa-plus mt-1 main-color"></i>
-                                                </button>
-                                            </div>
-                                            <div class="text-lg font-weight-bold text-dark text-uppercase mb-1">
-                                                30
-                                            </div>
-                                            <div class="col-auto">
-                                                <button class="bg-none">
-                                                    <i class="fa-solid fa-minus mt-1 main-color"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button class="bg-none">
-                                        <i class="fa-solid fa-trash main-color"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-12 mb-4">
-                    <div class="card border-left-main shadow h-100">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="d-flex">
-                                        <div class="col-xl-8 h5 mb-0 font-weight-bold text-gray-800">
-                                            Gà chiên
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="col-auto">
-                                                <button class="bg-none">
-                                                    <i class="fa-solid fa-plus mt-1 main-color"></i>
-                                                </button>
-                                            </div>
-                                            <div class="text-lg font-weight-bold text-dark text-uppercase mb-1">
-                                                30
-                                            </div>
-                                            <div class="col-auto">
-                                                <button class="bg-none">
-                                                    <i class="fa-solid fa-minus mt-1 main-color"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button class="bg-none">
-                                        <i class="fa-solid fa-trash main-color"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
-
-            <div class="col-xl-5">
-                <div class="col-xl-12 mb-4 cashier">
-                    <div class="shadow h-100">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2 mt-3">
-                                    <div class="d-flex">
-                                        <select id="selectedProduct" asp-for="SelectedProduct" asp-items="Model.Products.Select(w => new SelectListItem { Text = w.Name, Value = w.Id.ToString() })">
-                                        </select>
-
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-2 font-weight-bold text-dark mb-1 p-0">
-                                            Tên:
-                                        </div>
-                                        <div class="col-md-10 text-dark p-0" id="productName">
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-2 font-weight-bold text-dark mb-1 p-0">
-                                            Giảm:
-                                        </div>
-                                        <div class="col-md-10 text-dark p-0">
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-5 font-weight-bold text-dark mb-1 p-0">
-                                            Số lượng còn:
-                                        </div>
-                                        <div class="col-md-7 text-dark p-0">
-                                            25
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="col-md-3 font-weight-bold text-dark mb-1 p-0">
-                                            Giá:
-                                        </div>
-                                        <div class="col-md-4 text-dark mb-1 p-0 text-line-through">
-                                            45.000vnd
-                                        </div>
-                                        <div class="col-md-5 text-dark mb-1 p-0">
-                                            45.000vnd
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-center">
-                                        <div class="img-cashier shadow mt-5">
-                                            <img src="" alt="" srcset="">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-11 mt-3 d-flex justify-content-end">
-                                        <button class="btn">Chọn sản phẩm</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
-
-    <script>
-
-        console.log("hi" + products);
-        var products = @Model.Products;
-        var hi = @Model.SelectedProduct;
-
-        console.log("hi" + products);
-
-        // Lắng nghe sự kiện change trên phần tử select
-        document.getElementById('selectedProduct').addEventListener('change', function () {
-            // Lấy giá trị đã chọn
-            var selectedProductId = this.value;
-
-            // Tìm sản phẩm tương ứng trong danh sách sản phẩm
-            var selectedProduct = products.find(function (product) {
-                return product.Id == selectedProductId;
-            });
-
-            // Cập nhật các vị trí khác với thông tin sản phẩm đã chọn
-            document.getElementById('productName').textContent = selectedProduct.Name;
-            // document.getElementById('productType').textContent = selectedProduct.Type;
-            // document.getElementById('productQuantity').textContent = selectedProduct.Quantity;
-            // document.getElementById('productPrice').textContent = selectedProduct.Price;
-            // document.getElementById('productImage').src = selectedProduct.ImageUrl;
-        });
-
-    </script>
 </body>

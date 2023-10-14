@@ -77,8 +77,8 @@ namespace DataAccess.DAO
                     Id = guid,
                     Date = DateTime.Now,
                     Note = order.Note,
-                    StatusId = new Guid("DE3E4850-B990-4D62-BA90-4BBB49506722"),
-                    UserId = order.UserId,
+                    StatusId = order.UserId == Guid.Empty ? new Guid("4F716054-4241-4A5C-A484-9CCF9705D3B0") : new Guid("DE3E4850-B990-4D62-BA90-4BBB49506722"),
+                    UserId = order.UserId == Guid.Empty ? null : order.UserId,
                     ScheduleId = null,
                     VoucherId = order.VoucherCode != null ? voucher.Id : null
                 };
@@ -162,8 +162,8 @@ namespace DataAccess.DAO
                         Date = order.Date,
                         Note = order.Note,
                         Status = order.Status.Name,
-                        Username = order.User.Name,
-                        SalePercent = order.Voucher.SalePercent,
+                        Username = order.User == null ? "Khách tại cửa hàng" : order.User.Name,
+                        SalePercent = order.Voucher == null ? 0 : order.Voucher.SalePercent,
                         Details = details
                     });
                 }

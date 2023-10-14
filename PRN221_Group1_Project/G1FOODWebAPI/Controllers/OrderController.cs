@@ -36,8 +36,14 @@ namespace G1FOODWebAPI.Controllers
             {
 
                 await _orderRepository.AddOrderAsync(order);
-                await orderHub.SendOrderPendingAsync();
-
+                
+                if(order.UserId == Guid.Empty)
+                {
+                    await orderHub.SendOrderCookingAsync();
+                } else
+                {
+                    await orderHub.SendOrderPendingAsync();
+                }
             }
             catch (Exception ex)
             {
