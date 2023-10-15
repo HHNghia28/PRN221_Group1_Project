@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace G1Food_Admin.Pages
 {
+    [Authorize]
     public class LogoutModel : PageModel
     {
         public async Task<IActionResult> OnPostAsync()

@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using G1FOODLibrary.Entities;
-using G1Food_Admin.Data;
 using G1FOODLibrary.DTO;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace G1Food_Admin.Pages.Order
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;

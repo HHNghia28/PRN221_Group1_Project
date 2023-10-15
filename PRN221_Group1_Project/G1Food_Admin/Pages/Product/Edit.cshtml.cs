@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using G1FOODLibrary.DTO;
-using G1Food_Admin.Data;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Net.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace G1Food_Admin.Pages.Product
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly ILogger<EditModel> _logger;

@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using G1Food_Admin.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<G1Food_AdminContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("G1Food_AdminContext") ?? throw new InvalidOperationException("Connection string 'G1Food_AdminContext' not found.")));
-
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {

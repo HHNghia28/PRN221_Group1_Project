@@ -1,4 +1,5 @@
-﻿using System;
+﻿using G1FOODLibrary.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace G1FOODLibrary.DTO
 {
-    public class AccountResponse
+    public class AccountRequest
     {
-        public Guid Id { get; set; }
-
         public string Email { get; set; } = null!;
+
+        public string Password { get; set; } = null!;
 
         public string Name { get; set; } = null!;
 
@@ -18,12 +19,8 @@ namespace G1FOODLibrary.DTO
 
         public string Phone { get; set; } = null!;
 
-        public string? Token { get; set; } 
-
-        public string? Role { get; set; }
-
-        public string? Status { get; set; }
         public Guid? RoleId { get; set; }
+
         public Guid? StatusId { get; set; }
     }
 }

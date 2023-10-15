@@ -41,6 +41,31 @@ namespace G1FOODWebAPI.Controllers
             }
         }
 
+        [HttpGet("getAccount")]
+        public IActionResult GetAccount(string id)
+        {
+            try
+            {
+                var accounts = _accountRepository.GetAccount(new Guid(id));
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get account successful!",
+                    Data = accounts
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
         [HttpGet("getUserByAccountId")]
         public async Task<IActionResult> GetUserByAccountId(string id)
         {
@@ -77,6 +102,30 @@ namespace G1FOODWebAPI.Controllers
                     StatusCode = 200,
                     Success = true,
                     Message = "Add user successful!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpPost("addAccount")]
+        public async Task<IActionResult> AddAccount(AccountRequest userRequest)
+        {
+            try
+            {
+                await _accountRepository.AddAccountAsync(userRequest);
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Add account successful!"
                 });
             }
             catch (Exception ex)
@@ -127,6 +176,80 @@ namespace G1FOODWebAPI.Controllers
                     StatusCode = 200,
                     Success = true,
                     Message = "Update password successful!"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("getRoles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            try
+            {
+                var accounts = await _accountRepository.GetRolesAsync();
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get all account role successful!",
+                    Data = accounts
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("getAccountStatus")]
+        public async Task<IActionResult> GetAccountStatus()
+        {
+            try
+            {
+                var accounts = await _accountRepository.GetAccountStatusAsync();
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get all account status successful!",
+                    Data = accounts
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpPut("updateAccount")]
+        public async Task<IActionResult> UpdateAccount(string id, AccountUpdateRequest account)
+        {
+            try
+            {
+                await _accountRepository.UpdateAccountAsync(account, new Guid(id));
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Update account successful!"
                 });
             }
             catch (Exception ex)

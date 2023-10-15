@@ -1,0 +1,65 @@
+﻿@page
+@model G1Food_Admin.Pages.Account.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Account</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Account.Email" class="control-label"></label>
+                <input asp-for="Account.Email" class="form-control" />
+                <span asp-validation-for="Account.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Password" class="control-label"></label>
+                <input asp-for="Account.Password" class="form-control" />
+                <span asp-validation-for="Account.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Name" class="control-label"></label>
+                <input asp-for="Account.Name" class="form-control" />
+                <span asp-validation-for="Account.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Phone" class="control-label"></label>
+                <input asp-for="Account.Phone" class="form-control" />
+                <span asp-validation-for="Account.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.AddressDetail" class="control-label"></label>
+                <input asp-for="Account.AddressDetail" class="form-control" />
+                <span asp-validation-for="Account.AddressDetail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.RoleId" class="control-label"></label>
+                <select class="form-input" asp-for="Account.RoleId" asp-items="Model.Role.Select(w => new SelectListItem { Text = w.Name, Value = w.Id.ToString() })">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.StatusId" class="control-label"></label>
+                <select class="form-input" asp-for="Account.StatusId" asp-items="Model.Status.Select(w => new SelectListItem { Text = w.Name, Value = w.Id.ToString() })">
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

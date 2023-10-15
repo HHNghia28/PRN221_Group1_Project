@@ -5,40 +5,41 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using G1FOODLibrary.Entities;
 using G1FOODLibrary.DTO;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using Microsoft.AspNetCore.Authorization;
 
-namespace G1Food_Admin.Pages.Product
+namespace G1Food_Admin.Pages.Account
 {
-    [Authorize]
-    public class CreateModel : PageModel
+    public class EditModel : PageModel
     {
-        private readonly ILogger<CreateModel> _logger;
+        private readonly ILogger<EditModel> _logger;
         private readonly HttpClient _client;
-        private readonly string _productApiUrl;
+        private readonly string _accountApiUrl;
 
+        public AccountResponse AccountResponse { get; set; }
         [BindProperty]
-        public ProductRequest Product { get; set; }
-
-        public List<CategoryResponse> Categories { get; set; }
+        public AccountRequest Account { get; set; }
+        public AccountUpdateRequest UpdateRequest { get; set; }
         public List<StatusResponse> Status { get; set; }
+        public List<StatusResponse> Role { get; set; }
 
-        public CreateModel(ILogger<CreateModel> logger, IConfiguration configuration)
+        public EditModel(ILogger<EditModel> logger, IConfiguration configuration)
         {
             _logger = logger;
             _client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             _client.DefaultRequestHeaders.Accept.Add(contentType);
-            _productApiUrl = configuration.GetValue<string>("APIEndpoint:Product");
+            _accountApiUrl = configuration.GetValue<string>("APIEndpoint:Account");
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task OnGetAsync(string id)
         {
             try
             {
-                HttpResponseMessage response = await _client.GetAsync($"{_productApiUrl}getProductCategories");
+                HttpResponseMessage response = await _client.GetAsync($"{_accountApiUrl}getAccount?id={id}");
                 response.EnsureSuccessStatusCode();
 
                 string stringData = await response.Content.ReadAsStringAsync();
@@ -51,14 +52,44 @@ namespace G1Food_Admin.Pages.Product
 
                 if (apiResponse.Success)
                 {
-                    Categories = JsonSerializer.Deserialize<List<CategoryResponse>>(apiResponse.Data.ToString(), options);
+                    AccountResponse = JsonSerializer.Deserialize<AccountResponse>(apiResponse.Data.ToString(), options);
+
+                    Account = new AccountRequest
+                    {
+                        AddressDetail = AccountResponse.AddressDetail,
+                        Email = AccountResponse.Email,
+                        Name = AccountResponse.Name,
+                        Phone = AccountResponse.Phone,
+                        RoleId = AccountResponse.RoleId,
+                        StatusId = AccountResponse.StatusId
+                    };
                 }
                 else
                 {
                     _logger.LogError($"API call failed with message: {apiResponse.Message}");
                 }
 
-                response = await _client.GetAsync($"{_productApiUrl}getStatus");
+                response = await _client.GetAsync($"{_accountApiUrl}getRoles");
+                response.EnsureSuccessStatusCode();
+
+                stringData = await response.Content.ReadAsStringAsync();
+                options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
+
+                if (apiResponse.Success)
+                {
+                    Role = JsonSerializer.Deserialize<List<StatusResponse>>(apiResponse.Data.ToString(), options);
+                }
+                else
+                {
+                    _logger.LogError($"API call failed with message: {apiResponse.Message}");
+                }
+
+                response = await _client.GetAsync($"{_accountApiUrl}getAccountStatus");
                 response.EnsureSuccessStatusCode();
 
                 stringData = await response.Content.ReadAsStringAsync();
@@ -86,16 +117,27 @@ namespace G1Food_Admin.Pages.Product
             {
                 _logger.LogError($"An error occurred: {ex.Message}");
             }
-
-            return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
             try
             {
-                HttpResponseMessage response = await _client.PostAsJsonAsync($"{_productApiUrl}addProduct", Product);
+                UpdateRequest = new AccountUpdateRequest
+                {
+                    AddressDetail = Account.AddressDetail,
+                    Name = Account.Name,
+                    Phone = Account.Phone,
+                    RoleId = Account.RoleId,
+                    StatusId = Account.StatusId
+                };
+
+                HttpResponseMessage response = await _client.PutAsJsonAsync($"{_accountApiUrl}updateAccount?id={id}", UpdateRequest);
                 response.EnsureSuccessStatusCode();
 
                 string stringData = await response.Content.ReadAsStringAsync();

@@ -18,5 +18,10 @@ namespace DataAccess.Repository
         public Task<IEnumerable<UserResponse>> GetUsersByAccountId(Guid accountId);
         public Task UpdatePassword(Guid id, string password);
         public Task DeleteAccount(Guid id);
+        public AccountResponse GetAccount(Guid id);
+        public Task AddAccountAsync(AccountRequest register);
+        public Task<IEnumerable<StatusResponse>> GetAccountStatusAsync();
+        public Task<IEnumerable<StatusResponse>> GetRolesAsync();
+        public Task UpdateAccountAsync(AccountUpdateRequest account, Guid id);
     }
 }

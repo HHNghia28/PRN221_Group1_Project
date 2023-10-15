@@ -5,41 +5,37 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using G1FOODLibrary.Entities;
 using G1FOODLibrary.DTO;
 using System.Net.Http.Headers;
-using G1FOODLibrary.Entities;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 
-namespace G1Food_Admin.Pages.Product
+namespace G1Food_Admin.Pages.Account
 {
     [Authorize]
-    public class DetailsModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly HttpClient _client;
-        private readonly string _productApiUrl;
-        public ProductResponse ProductResponse { get; set; } = default!;
-        public DetailsModel(ILogger<IndexModel> logger, IConfiguration configuration)
+        private readonly string _accountApiUrl;
+
+        public List<AccountResponse> Accounts { get; set; }
+
+        public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration)
         {
             _logger = logger;
             _client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             _client.DefaultRequestHeaders.Accept.Add(contentType);
-            _productApiUrl = configuration.GetValue<string>("APIEndpoint:Product");
+            _accountApiUrl = configuration.GetValue<string>("APIEndpoint:Account");
         }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public async Task OnGetAsync()
         {
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             try
             {
-                HttpResponseMessage response = await _client.GetAsync($"{_productApiUrl}getProduct?id={id}");
+                HttpResponseMessage response = await _client.GetAsync($"{_accountApiUrl}getAllAccounts");
                 response.EnsureSuccessStatusCode();
 
                 string stringData = await response.Content.ReadAsStringAsync();
@@ -52,7 +48,7 @@ namespace G1Food_Admin.Pages.Product
 
                 if (apiResponse.Success)
                 {
-                    ProductResponse = JsonSerializer.Deserialize<ProductResponse>(apiResponse.Data.ToString(), options);
+                    Accounts = JsonSerializer.Deserialize<List<AccountResponse>>(apiResponse.Data.ToString(), options);
                 }
                 else
                 {
@@ -67,8 +63,6 @@ namespace G1Food_Admin.Pages.Product
             {
                 _logger.LogError($"An error occurred: {ex.Message}");
             }
-
-            return Page();
         }
     }
 }

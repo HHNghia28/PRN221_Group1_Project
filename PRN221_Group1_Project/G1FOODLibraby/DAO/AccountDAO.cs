@@ -10,6 +10,7 @@ using System.Security.Authentication;
 using G1FOODLibrary.DTO;
 using Microsoft.Identity.Client;
 using Microsoft.Win32;
+using System.Security.Principal;
 
 namespace DataAccess.DAO
 {
@@ -68,6 +69,35 @@ namespace DataAccess.DAO
             }
 
             return accountDTOs;
+        }
+
+        public AccountResponse GetAccount(Guid id)
+        {
+            try
+            {
+                var account = _context.Accounts
+                .Include(a => a.Role)
+                .Include(a => a.Status)
+                .Include(ac => ac.Users)
+                .FirstOrDefault(a => a.Id == id);
+
+                return new AccountResponse
+                {
+                    Id = account.Id,
+                    Email = account.Email,
+                    Name = account.Users.First().Name,
+                    Phone = account.Users.First().Phone,
+                    AddressDetail = account.Users.First().AddressDetail,
+                    Role = account.Role.Name,
+                    Status = account.Status.Name,
+                    StatusId = account.StatusId,
+                    RoleId = account.RoleId
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<AccountResponse> ResgiterAsync(RegisterRequest register)
@@ -218,7 +248,7 @@ namespace DataAccess.DAO
 
             try
             {
-                var users = _context.Users.Where(u => u.AccountId == accountId).ToList();
+                var users = _context.Users.Where(u => u.AccountId == accountId).Include(a => a.Status).ToList();
 
                 List<UserResponse> userResponses = new List<UserResponse>();
 
@@ -311,6 +341,136 @@ namespace DataAccess.DAO
                 }
 
                 account.EncryptedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task AddAccountAsync(AccountRequest register)
+        {
+            if (string.IsNullOrEmpty(register.Email) || string.IsNullOrEmpty(register.Password))
+            {
+                throw new ArgumentException("Email or Password can not be empty!");
+            }
+
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(register.Password);
+
+            Guid newId = Guid.NewGuid();
+
+            Account account = new Account
+            {
+                Id = newId,
+                Email = register.Email,
+                EncryptedPassword = passwordHash,
+                RoleId = register.RoleId,
+                StatusId = register.StatusId
+            };
+
+            User user = new User
+            {
+                Id = Guid.NewGuid(),
+                Name = register.Name,
+                Phone = register.Phone,
+                DefaultUser = true,
+                AccountId = newId,
+                AddressDetail = register.AddressDetail,
+                StatusId = new Guid("750301CE-21B9-444E-A0D3-53824614CA40")
+            };
+
+            try
+            {
+                _context.Accounts.Add(account);
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<StatusResponse>> GetAccountStatusAsync()
+        {
+            try
+            {
+                var status = await _context.AccountStatuses.ToListAsync();
+
+                List<StatusResponse> result = new List<StatusResponse>();
+
+                foreach (var item in status)
+                {
+                    result.Add(new StatusResponse
+                    {
+                        Id = item.Id,
+                        Description = item.Description,
+                        Name = item.Name
+                    });
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<StatusResponse>> GetRolesAsync()
+        {
+            try
+            {
+                var status = await _context.Roles.ToListAsync();
+
+                List<StatusResponse> result = new List<StatusResponse>();
+
+                foreach (var item in status)
+                {
+                    result.Add(new StatusResponse
+                    {
+                        Id = item.Id,
+                        Description = item.Description,
+                        Name = item.Name
+                    });
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task UpdateAccountAsync(AccountUpdateRequest account, Guid id)
+        {
+            if(account == null) throw new ArgumentNullException(nameof(account));
+            if(id == Guid.Empty) throw new ArgumentNullException(nameof(id));
+
+            try
+            {
+                var existAccount = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == id);
+                if (existAccount == null)
+                {
+                    throw new Exception("Account not found!");
+                }
+
+                existAccount.StatusId = account.StatusId;
+                existAccount.RoleId = account.RoleId;
+                
+                var existUser = await _context.Users.FirstOrDefaultAsync(y => y.AccountId == id);
+
+                if (existUser == null)
+                {
+                    throw new Exception("Account not found!");
+                }
+
+                existUser.Name = account.Name;
+                existUser.AddressDetail = account.AddressDetail;
+                existUser.Phone = account.Phone;
 
                 await _context.SaveChangesAsync();
             }
