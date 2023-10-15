@@ -88,11 +88,9 @@
                                         <p class="card-description max-line-1">@product.Description</p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p class="card-price">
-
                                                 @{
-                                                    @string.Format("{0:N0} VND", @product.Price)
+                                                    @string.Format("{0:N0} VND", @product.Price - (@product.Price * @product.SalePercent /100))
                                                 }
-
                                             </p>
                                             <p class="">
                                                 - @product.SalePercent%
@@ -101,14 +99,13 @@
                                         <p class="card-discount">
                                             <i class="fa-solid fa-tags"></i>
                                             @{
-                                                @string.Format("{0:N0} VND", @product.Price - (@product.Price * @product.SalePercent /100))
+                                                @string.Format("{0:N0} VND", @product.Price)
                                             }
                                             </p>
-                                        <button class="btn full">Thêm vào giỏ hàng</button>
+                                        <a href="../ProductDetail?productID=@product.Id" class="btn full">Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>
-
                         }
                     }
                 </div>

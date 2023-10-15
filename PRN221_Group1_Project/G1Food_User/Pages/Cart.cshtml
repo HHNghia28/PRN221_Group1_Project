@@ -20,42 +20,71 @@
                                 <th>Số lượng</th>
                                 <th>Giảm</th>
                                 <th>Gía</th>
+                                <th>Xóa</th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
-                                    int cartTotal = 0;
-                                if(@Model.Carts != null) {
-                                    foreach(var cart in Model.Carts)
+                                double cartTotal = 0;
+                                int no = 1;
+                                if(Model.Carts != null)
+                                {
+                                    if (@Model.Carts.Count() > 0)
                                     {
-                                        // cartTotal = cartTotal + cart.Price;
+                                        foreach (var cart in Model.Carts)
+                                        {
+                                            <tr>
+                                                <td class="align-middle product-no bold">@no</td>
+                                                <td class="align-middle product-name">
+                                                    <a href="/ProductDetail?productID={@cart.ProductId}">@cart.Name</a>
+                                                </td>
+                                                <td class="align-middle product-img">
+                                                    <img src="@cart.Image" alt="">
+                                                </td>
+                                                <td class="align-middle product-quanity">
+                                                   <form asp-page="UpdateCart" method="get">
+                                                    <div class="quantity-group justify-content-center">
+                                                        <button  
+                                                                type="submit"
+                                                                class="btn-decrease-quantity"
+                                                                id="btn-decrease"
+                                                                onclick="decreaseQuantity(this)">
+                                                            -
+                                                        </button>
+                                                            <input name="quantity" type="number" id="quantity-input" value="@cart.Quantity" min="1" />
+                                                            <input class="d-none" name="productID" type="text" value="@cart.ProductId" min="1" />
+                                                        <button type="submit"
+                                                                class="btn-increase-quantity"
+                                                                id="btn-increase"
+                                                                onclick="increaseQuantity(this)">
+                                                            +
+                                                        </button>
+                                                    </div>
+                                                   </form>
+                                                </td>
+                                                <td class="align-middle product-discount">- @cart.SalePercent%</td>
+                                                <td class="align-middle product-total bold main-color">
+                                                    @{
+                                                        var price = (cart.Price - (cart.Price * (decimal)cart.SalePercent / 100)) * (decimal)cart.Quantity;
+                                                        @string.Format("{0:N0} VND", price);
+                                                        cartTotal += (double)price;
+                                                        no += 1;
+                                                    }
+                                                </td>
+                                                <td class="align-middle product-total bold main-color">
+                                                    <a asp-page="DeleteCart" asp-route-cartID="@cart.Id"><i class="fa-solid fa-trash-can main-color"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
                                         <tr>
-                                            <td class="align-middle product-no">1</td>
-                                            <td class="align-middle product-name">
-                                                <a href="">@cart.Name</a>
+                                            <td colspan="7" class="text-center product-img p-4">
+                                                <img src="~/img/no_product.png" alt="no-product">
+                                                <div class="bold fs-md">Chưa có sản phẩm</div>
                                             </td>
-                                            <td class="align-middle product-img">
-                                                <img src="@cart.Image" alt="">
-                                            </td>
-                                            <td class="align-middle product-quanity">
-                                                <div class="quantity-group justify-content-center">
-                                                    <button class="btn-decrease-quantity"
-                                                            id="btn-decrease"
-                                                            onclick="decreaseQuantity(this)">
-                                                        -
-                                                    </button>
-                                                    <input type="number" id="quantity-input" value="@cart.Quantity" min="1" />
-                                                    <button class="btn-increase-quantity"
-                                                            id="btn-increase"
-                                                            onclick="increaseQuantity(this)">
-                                                        +
-                                                    </button>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle product-discount">@cart.SalePercent</td>
-                                            <td class="align-middle product-total bold main-color">@cart.Price</td>
                                         </tr>
-                                        
                                     }
                                 }
                             }
@@ -74,7 +103,11 @@
                 <div class="col-sm-12 col-lg-4 mt-4">
                     <div class="d-flex justify-content-between">
                         <span class="bold">Tạm tính:</span>
-                        <span>@{@cartTotal}</span>
+                        <span>
+                            @{
+                                @string.Format("{0:N0} VND", @cartTotal) 
+                            }
+                        </span>
                     </div>
                     <div class="d-flex justify-content-between mt-2">
                         <span class="bold">Thuế:</span>
@@ -82,11 +115,13 @@
                     </div>
                     <div class="d-flex justify-content-between mt-2">
                         <span class="bold">Tổng cộng:</span>
-                        <span class="main-color bold total-money">@{
-                                @cartTotal
-                            }</span>
+                        <span class="main-color bold total-money">
+                            @{
+                                @string.Format("{0:N0} VND", @cartTotal)
+                            }
+                        </span>
                     </div>
-                    <a href="../Paying" class="btn full mt-4">Thanh toán</a>
+                    <a asp-page="/Paying" class="btn full mt-4">Thanh toán</a>
                 </div>
             </div>
         </div>

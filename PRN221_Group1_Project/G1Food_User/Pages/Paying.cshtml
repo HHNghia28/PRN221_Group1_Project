@@ -13,7 +13,7 @@
             <div class="row mt-5">
                 <div class="col-sm-12 col-md-6 col-lg-7">
                     <div class="d-flex justify-content-between mt-5">
-                        <h6 class="bold">GIỎ HÀNG CỦA BẠN (2 Sản phẩm)</h6>
+                        <h6 class="bold">GIỎ HÀNG CỦA BẠN (0 Sản phẩm)</h6>
                         <a class="btn sm" href="./Index">
                             <i class="fa-solid fa-plus"></i>
                             Thêm món ăn
@@ -26,6 +26,7 @@
                     <table class="table table-hover table-bordered text-center mt-5">
                         <thead class="align-middle">
                             <tr>
+                                <th>No.</th>
                                 <th>Tên sản phẩm</th>
                                 <th>Ảnh</th>
                                 <th>Số lượng</th>
@@ -33,48 +34,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="align-middle product-name">
-                                    <a href="">Combo Burger Tôm</a>
-                                </td>
-                                <td class="align-middle product-img">
-                                    <img src="./img/card_1.jpg" alt="">
-                                </td>
-                                <td class="align-middle product-quanity">
-                                    <div class="quantity-group justify-content-center">
-                                        <input type="number" id="quantity-input" value="1" min="1" />
-                                    </div>
-                                </td>
-                                <td class="align-middle product-total bold main-color">120.000vnd</td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle product-name">
-                                    <a href="">Combo Burger Tôm</a>
-                                </td>
-                                <td class="align-middle product-img">
-                                    <img src="./img/card_1.jpg" alt="">
-                                </td>
-                                <td class="align-middle product-quanity">
-                                    <div class="quantity-group justify-content-center">
-                                        <input type="number" id="quantity-input" value="1" min="1" />
-                                    </div>
-                                </td>
-                                <td class="align-middle product-total bold main-color">120.000vnd</td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle product-name">
-                                    <a href="">Combo Burger Tôm</a>
-                                </td>
-                                <td class="align-middle product-img">
-                                    <img src="./img/card_1.jpg" alt="">
-                                </td>
-                                <td class="align-middle product-quanity">
-                                    <div class="quantity-group justify-content-center">
-                                        <input type="number" id="quantity-input" value="1" min="1" />
-                                    </div>
-                                </td>
-                                <td class="align-middle product-total bold main-color">120.000vnd</td>
-                            </tr>
+                            @{
+                                int no = 1;
+                                double cartTotal = 0;
+                                if(Model.ListCarts != null)
+                                {
+                                    foreach(var cart in Model.ListCarts)
+                                    {
+                                        <tr>
+                                            <td class="align-middle bold">@no</td>
+                                            <td class="align-middle product-name">
+                                                <a href="../ProductDetail?productID=@cart.ProductId">@cart.Name</a>
+                                            </td>
+                                            <td class="align-middle product-img">
+                                                <img src="@cart.Image" alt="">
+                                            </td>
+                                            <td class="align-middle product-quanity">
+                                                <div class="quantity-group justify-content-center">
+                                                    <input type="number" id="quantity-input" value="@cart.Quantity" min="1" />
+                                                </div>
+                                            </td>
+                                            <td class="align-middle product-total bold main-color">
+                                                @{
+                                                    var price = (cart.Price - (cart.Price * (decimal)cart.SalePercent / 100)) * (decimal)cart.Quantity;
+                                                    @string.Format("{0:N0} VND", price);
+                                                    cartTotal += (double)price;
+                                                    no += 1;
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
                         </tbody>
                     </table>
                     <div class="paying-note mt-3">
@@ -93,15 +84,17 @@
                         </div>
                         <div class="d-flex mt-4">
                             <span class="bold mr-2">Tên:</span>
-                            <span>Nguyễn Ngọc Như Ý</span>
+                            <span>@{@Model.userNameClaim}</span>
                         </div>
                         <div class="d-flex mt-2">
                             <span class="bold mr-2">Phone:</span>
-                            <span>05866812890</span>
+                            <span>@{@Model.userPhoneClaim}</span>
                         </div>
                         <div class="d-flex mt-2">
                             <div class="bold mr-2 ">Địa chỉ:</div>
-                            <span>600 Nguyễn Văn Cừ nối dài, An Bình, Ninh Kiều, Cần Thơ 900000, Việt Nam</span>
+                            <span>@{
+                                    @Model.userAddressClaim
+                                }</span>
                         </div>
                         <div class="d-flex mt-2">
                             <span class="bold mr-2">Cửa hàng:</span>
@@ -121,19 +114,20 @@
                         </div>
                         <div class="d-flex mt-2 align-items-lg-center">
                             <span class="bold mr-2">Voucher:</span>
-                            <select name="" id="" class="paying-voucher">
-                                <option class="flex justify-content-between" value="1">
-                                    voucher 1
-                                    <span>-20%</span>
-                                </option>
-                                <option value="2">
-                                    voucher 2
-                                    <span>-20%</span>
-                                </option>
-                                <option value="3">
-                                    voucher 3
-                                    <span>-20%</span>
-                                </option>
+                            <select name="" id="" class="paying-voucher fs-md">
+                                @{
+                                    if(Model.Vouchers != null)
+                                    {
+                                        foreach (var voucher in Model.Vouchers)
+                                        {
+                                            <option class="flex justify-content-between fs-md pd-1" value="@voucher.Id">
+                                                @voucher.Code
+                                                <span class="fs-md"> - @voucher.SalePercent%</span>
+                                                <span class="fs-md">(@voucher.Description)</span>
+                                            </option>
+                                        }
+                                    }
+                                }
                             </select>
                         </div>
                         <div class="d-flex mt-2 justify-content-between">

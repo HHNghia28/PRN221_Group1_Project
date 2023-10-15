@@ -22,7 +22,7 @@
                             <img class="product-detail-img" src="@Model.Product.Image" alt="" />
                 </div>
                 <div class="col-sm-12 col-md-6 ml-lg-5">
-                            <form method="get" asp-page="Cart">
+                            <form method="post" asp-page="Cart">
                                 <input type="hidden" name="productID" value="@Model.Product.Id" />
                                 <p class="product-detail-name">@Model.Product.Name</p>
                                 <p class="product-detail-description">
@@ -33,12 +33,9 @@
                                         @string.Format("{0:N0} VND", @Model.Product.Price)
                                     }
                                 </p>
-                                @{
-                                    if (Model.Product.SalePercent != 0)
-                                    {
-                                        <p class="product-detail-discount">
+                                        <p class="">
                                             <i class="fa-solid fa-tags"></i>
-                                            -@Model.Product.SalePercent%
+                                    - @Model.Product.SalePercent %
                                         </p>
                                         <p class="card-discount">
                                             <i class="fa-solid fa-tags"></i>
@@ -46,8 +43,7 @@
                                                 @string.Format("{0:N0} VND", @Model.Product.Price - (@Model.Product.Price * @Model.Product.SalePercent /100))
                                             }
                                         </p>
-                                    }
-                                }
+
                                 <div class="quantity-group align-items-left">
                                     <button type="button"
                                             class="btn-decrease-quantity"
@@ -55,7 +51,7 @@
                                             onClick="decreaseQuantity()">
                                         -
                                     </button>
-                                    <input type="number" id="quantity-input" name="quanity" value="1" min="1" />
+                                    <input type="number" id="quantity-input" name="quantity" value="1" min="1" />
                                     <button 
                                     type="button"
                                             class="btn-increase-quantity"
