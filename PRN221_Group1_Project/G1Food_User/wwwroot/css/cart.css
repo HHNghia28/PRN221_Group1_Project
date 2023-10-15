@@ -6,7 +6,9 @@
     border-radius: 4px;
     overflow: hidden;
 }
-
+.product-name {
+    max-width: 260px;
+}
 .product-name a {
     font-weight: 500;
     color: #333;

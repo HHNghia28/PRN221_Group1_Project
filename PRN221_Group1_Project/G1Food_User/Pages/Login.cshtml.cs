@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
+using G1FOODLibrary.Entities;
+using Azure;
 
 namespace G1Food_User.Pages
 {
@@ -15,7 +17,11 @@ namespace G1Food_User.Pages
         private readonly ILogger<LoginModel> _logger;
         private readonly HttpClient _client;
         private readonly string _authApiUrl;
+        private readonly string _cartApiUrl;
 
+        public IEnumerable<CartResponse> Carts { get; private set; }
+        public int cartQuantity;
+   
         [BindProperty]
         public LoginRequest LoginRequest { get; set; }
         public LoginModel(ILogger<LoginModel> logger, IConfiguration configuration)
@@ -32,7 +38,7 @@ namespace G1Food_User.Pages
         {
             if (ModelState.IsValid)
             {
-
+                AccountResponse account = null;
                 try
                 {
                     HttpResponseMessage response = await _client.PostAsJsonAsync($"{_authApiUrl}login", LoginRequest);
@@ -48,7 +54,7 @@ namespace G1Food_User.Pages
 
                     if (apiResponse.Success)
                     {
-                        AccountResponse account = JsonSerializer.Deserialize<AccountResponse>(apiResponse.Data.ToString(), options);
+                        account = JsonSerializer.Deserialize<AccountResponse>(apiResponse.Data.ToString(), options);
 
                         //if (account.RoleId == new Guid("d1ddb501-e7fa-4d50-9d1b-e2713c0a3b2d"))
                         //{
@@ -80,15 +86,6 @@ namespace G1Food_User.Pages
                             return RedirectToPage("/Index");
 
                         }
-                        else
-                        {
-                            //return RedirectToPage("/401");
-                        }
-                    //}
-                    //else
-                    //{
-                    //    _logger.LogError($"API call failed with message: {apiResponse.Message}");
-                    //}
                 }
                 catch (HttpRequestException ex)
                 {

@@ -56,7 +56,12 @@
                     <li class="wrapper-icon position-relative">
                         <a href="../Cart" class="">
                             <i class="fa-solid fa-cart-plus"></i>
-                            <div class="cart-quantiy position-absolute">0</div>
+                            <div class="cart-quantiy position-absolute">
+                              @{
+                                    var cartQuantity = Context.Request.Cookies["cartQuantity"];
+                              }
+                                @cartQuantity
+                            </div>
                         </a>
                     </li>
                     <li class="position-relative user-name d-sm-none d-lg-block">
@@ -65,7 +70,6 @@
                                 <i class="fa-regular fa-user"></i>
                             </div>
                             <span class="bold">
-                               
                                     @tokenClaim
                             </span>
                         </div>

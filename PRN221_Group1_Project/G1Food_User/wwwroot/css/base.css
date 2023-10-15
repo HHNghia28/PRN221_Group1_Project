@@ -665,7 +665,8 @@ a.btn {
     align-items: center;
 }
   
-.quantity-group button {
+.quantity-group button, 
+.quantity-group a {
     padding: 20px;
     font-size: var(--font-size-lg);
     line-height: 4px;
