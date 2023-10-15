@@ -13,6 +13,7 @@ namespace DataAccess.Repository
         public Task<IEnumerable<VoucherResponse>> GetVouchers();
         public Task AddVoucher(VoucherRequest voucher);
         public Task UpdateVoucher(VoucherRequest voucher, Guid id);
+        public Task<VoucherResponse> GetVoucher(Guid id);
         public Task<IEnumerable<VoucherStatusResponse>> GetVoucherStatus();
     }
 }

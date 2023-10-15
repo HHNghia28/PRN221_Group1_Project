@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using G1FOODLibrary.DTO;
+using G1FOODLibrary.Entities;
 
 namespace G1Food_Admin.Data
 {
@@ -15,5 +16,9 @@ namespace G1Food_Admin.Data
         }
 
         public DbSet<G1FOODLibrary.DTO.ProductResponse> ProductResponse { get; set; } = default!;
+
+        public DbSet<G1FOODLibrary.Entities.Warehouse> Warehouse { get; set; } = default!;
+
+        public DbSet<G1FOODLibrary.Entities.Voucher> Voucher { get; set; } = default!;
     }
 }

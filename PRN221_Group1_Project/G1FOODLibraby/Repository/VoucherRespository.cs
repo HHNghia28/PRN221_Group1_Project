@@ -14,6 +14,8 @@ namespace DataAccess.Repository
 
         public Task<double> GetPercentVoucher(string voucherCode) => VoucherDAO.Instance.GetPercentVoucher(voucherCode);
 
+        public Task<VoucherResponse> GetVoucher(Guid id) => VoucherDAO.Instance.GetVoucher(id);
+
         public Task<IEnumerable<VoucherResponse>> GetVouchers() => VoucherDAO.Instance.GetVouchers();
 
         public Task<IEnumerable<VoucherStatusResponse>> GetVoucherStatus() => VoucherDAO.Instance.GetVoucherStatus();

@@ -92,6 +92,37 @@ namespace DataAccess.DAO
             }
         }
 
+        public async Task<VoucherResponse> GetVoucher(Guid id)
+        {
+            if(id == Guid.Empty)
+            {
+                throw new ArgumentNullException("id");
+            }
+
+            try
+            {
+                var voucher = await _context.Vouchers.Include(v => v.Status).FirstOrDefaultAsync(v => v.Id == id);
+
+                VoucherResponse voucherResponse = new VoucherResponse
+                {
+                    Id = voucher.Id,
+                    Code = voucher.Code,
+                    Description = voucher.Description,
+                    Quantity = voucher.Quantity,
+                    SalePercent = voucher.SalePercent,
+                    Status = voucher.Status.Name,
+                    StatusId = voucher.StatusId
+                };
+
+                return voucherResponse;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task AddVoucher(VoucherRequest voucher)
         {
             try

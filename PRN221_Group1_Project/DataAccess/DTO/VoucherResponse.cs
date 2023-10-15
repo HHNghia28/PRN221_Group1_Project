@@ -19,5 +19,6 @@ namespace G1FOODLibrary.DTO
         public string? Description { get; set; }
 
         public string? Status { get; set; }
+        public Guid? StatusId { get; set; }
     }
 }

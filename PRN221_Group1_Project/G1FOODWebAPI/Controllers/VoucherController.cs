@@ -75,6 +75,32 @@ namespace G1FOODWebAPI.Controllers
             }
         }
 
+        [HttpGet("getVoucher")]
+        public async Task<IActionResult> GetVoucher(string id)
+        {
+            try
+            {
+                var voucher = await _voucherRespository.GetVoucher(new Guid(id));
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get voucher successful!",
+                    Data = voucher
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponse
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
         [HttpGet("getVouchersStatus")]
         public async Task<IActionResult> GetVouchersStatus()
         {
