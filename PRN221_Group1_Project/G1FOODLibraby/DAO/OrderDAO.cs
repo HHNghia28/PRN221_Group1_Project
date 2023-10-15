@@ -242,6 +242,39 @@ namespace DataAccess.DAO
             }
         }
 
+        public async Task<OrderResponse> GetOrderAsync(Guid id)
+        {
+
+
+            try
+            {
+                var order = _context.Orders
+                     .Include(o => o.OrderDetails)
+                     .Include(o => o.User)
+                     .Include(o => o.Status)
+                     .Include(o => o.Voucher)
+                     .FirstOrDefault(o => o.Id == id);
+
+                IEnumerable<OrderDetailResponse> details = await GetOrderDetailByOrderIDAsync(id);
+
+                OrderResponse orderResponse = new OrderResponse
+                {
+                    Id = id,
+                    Date = order.Date,
+                    Details = details,
+                    Note = order.Note,
+                    SalePercent = order.Voucher == null ? 0 : order.Voucher.SalePercent,
+                    Status = order.Status.Name,
+                    Username = order.User == null ? "Khách tại cửa hàng" : order.User.Name
+                };
+
+                return orderResponse;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
         public async Task<IEnumerable<OrderResponse>> GetOrdersAsync()
         {
@@ -256,6 +289,7 @@ namespace DataAccess.DAO
                      .Include(o => o.User)
                      .Include(o => o.Status)
                      .Include(o => o.Voucher)
+                     .OrderByDescending(o => o.Date)
                      .ToList();
             }
             catch (Exception ex)
@@ -276,7 +310,7 @@ namespace DataAccess.DAO
                         Date = order.Date,
                         Note = order.Note,
                         Status = order.Status.Name,
-                        Username = order.User.Name,
+                        Username = order.User == null ? "Khách tại cửa hàng" : order.User.Name,
                         Details = details
                     });
                 }

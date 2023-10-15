@@ -20,5 +20,7 @@ namespace G1Food_Admin.Data
         public DbSet<G1FOODLibrary.Entities.Warehouse> Warehouse { get; set; } = default!;
 
         public DbSet<G1FOODLibrary.Entities.Voucher> Voucher { get; set; } = default!;
+
+        public DbSet<G1FOODLibrary.Entities.Order> Order { get; set; } = default!;
     }
 }

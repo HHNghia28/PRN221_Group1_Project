@@ -33,5 +33,7 @@ namespace DataAccess.Repository
         public Task<OrderResponse> GetOrderDetailAsync(Guid orderId) => OrderDAO.Instance.GetOrderDetailAsync(orderId);
 
         public Task<IEnumerable<OrderResponse>> GetOrderHistoryAsync(Guid accountId) => OrderDAO.Instance.GetOrderHistoryAsync(accountId);
+
+        public Task<OrderResponse> GetOrderAsync(Guid id) => OrderDAO.Instance.GetOrderAsync(id);
     }
 }

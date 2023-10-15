@@ -211,6 +211,43 @@ namespace G1FOODWebAPI.Controllers
             }
         }
 
+        [HttpGet("getOrder")]
+        public async Task<IActionResult> GetOrder(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new APIResponse
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Data = ModelState
+                });
+            }
+
+            try
+            {
+
+                var order = await _orderRepository.GetOrderAsync(new Guid(id));
+
+                return Ok(new APIResponse
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Get order successful!",
+                    Data = order
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new APIResponse
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
         [HttpGet("getOrderHistory")]
         public async Task<IActionResult> GetOrderHistory(string id)
         {

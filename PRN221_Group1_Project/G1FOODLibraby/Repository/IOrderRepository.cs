@@ -21,5 +21,6 @@ namespace DataAccess.Repository
         public Task UpdateOrderStatusToBlockAsync(Guid orderId);
         public Task<OrderResponse> GetOrderDetailAsync(Guid orderId);
         public Task<IEnumerable<OrderResponse>> GetOrderHistoryAsync(Guid accountId);
+        public Task<OrderResponse> GetOrderAsync(Guid id);
     }
 }

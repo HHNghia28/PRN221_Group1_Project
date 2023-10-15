@@ -1,0 +1,120 @@
+﻿@page
+@model G1Food_Admin.Pages.Order.DetailsModel
+@{
+}
+<div class="row no-gutters align-items-center">
+    <div class="col mr-2">
+        <div class="px-2 py-1">
+            <div class="d-flex">
+                <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
+                    ID:
+                </div>
+                <div class="col-md-10 text-xs text-dark p-0">
+                    @Model.Order.Id
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0">
+                    Tên:
+                </div>
+                <div class="col-md-10 text-xs text-dark mb-1 p-0">
+                    @Model.Order.Username
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="col-md-3 text-xs font-weight-bold text-dark mb-1 p-0">
+                    Ghi chú:
+                </div>
+                <div class="col-md-9 text-xs text-dark mb-1 p-0">
+                    @Model.Order.Note
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
+                    Mã giảm giá:
+                </div>
+                <div class="col-md-8 text-xs text-dark mb-1 p-0">
+                    @Model.Order.SalePercent %
+                </div>
+            </div>
+        </div>
+        @{
+            int itemCount = 0;
+            decimal price = 0;
+            decimal price_sale = 0;
+            decimal price_after_discount = 0;
+            decimal price_before_discount = 0;
+            decimal discount = 0;
+        }
+
+        @foreach (var detail in Model.Order.Details)
+        {
+            itemCount++;
+            bool isOdd = itemCount % 2 != 0;
+
+            <div class="@(isOdd ? "background-primary" : "") border-radius-1">
+                <div class="px-2 py-1">
+                    <div class="d-flex">
+                        <div class="col-md-10 text-xs font-weight-bold text-dark mb-1 p-0">
+                            @detail.ProductName
+                        </div>
+                        <div class="col-md-2 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
+                            @detail.Quantity
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="col-md-3 text-xs text-dark mt-note mb-1 p-0">
+                            Ghi chú:
+                        </div>
+                        <div class="col-md-9 text-xs text-dark font-italic mt-note mb-1 p-0">
+                            @detail.Note
+                        </div>
+                    </div>
+                    <div class="text-xs text-dark font-weight-bold mb-1 p-0 mt-note text-right">
+                        @{
+                            decimal temp = (decimal)((detail.Price * detail.SalePercent / 100) * (decimal)detail.Quantity);
+                            price_sale = (decimal)(detail.Price * (decimal)detail.Quantity);
+                            price = price_sale - temp;
+                            price_before_discount += price;
+                        }
+                        @string.Format("{0:N0} VND", price)
+                        @string.Format("{0:N0} VND", price_sale)
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="px-2 py-1">
+            <div class="d-flex">
+                <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
+                    Tổng giá gốc:
+                </div>
+                <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
+                    @string.Format("{0:N0} VND", price_before_discount)
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
+                    Giá giảm:
+                </div>
+                <div class="col-md-8 text-xs text-dark mb-1 p-0 text-right">
+                    @{
+                        discount = price_before_discount * Model.Order.SalePercent / 100;
+                    }
+                    @string.Format("{0:N0} VND", discount)
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="col-md-4 text-xs font-weight-bold text-dark mb-1 p-0">
+                    Thành tiền:
+                </div>
+                <div class="col-md-8 text-xs font-weight-bold text-dark mb-1 p-0 text-right">
+                    @{
+                        price_after_discount = price_before_discount - discount;
+                    }
+                    @string.Format("{0:N0} VND", price_after_discount)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
