@@ -13,6 +13,7 @@ namespace G1Food_User.Pages
         private readonly HttpClient _client;
         private readonly string _voucherApiUrl;
         private readonly string _cartApiUrl;
+        private readonly string _orderApiUrl;
 
         public string userIDClaim;
         public string userNameClaim;
@@ -22,6 +23,11 @@ namespace G1Food_User.Pages
 
         public List<CartResponse> ListCarts { get; set; }
         public IEnumerable<VoucherResponse> Vouchers { get; private set; }
+        
+        [BindProperty]
+        public string Note { get; set; }
+
+        public List<OrderDetailRequest> Orders { get; set; } = new List<OrderDetailRequest>();
 
         public PayingModel(ILogger<PayingModel> logger, IConfiguration configuration)
         {
@@ -109,6 +115,18 @@ namespace G1Food_User.Pages
                     if (apiResponse.Success)
                     {
                         ListCarts = JsonSerializer.Deserialize<List<CartResponse>>(apiResponse.Data.ToString(), options);
+                        if (ListCarts != null && ListCarts.Count() > 0)
+                        {
+                            foreach (var item in ListCarts)
+                            {
+                                Orders.Add(new OrderDetailRequest
+                                {
+                                    Quantity = item.Quantity,
+                                    Note = null,
+                                    ProductId = item.ProductId,
+                                });
+                            }
+                        }
                     }
                     else
                     {
@@ -123,6 +141,55 @@ namespace G1Food_User.Pages
             {
                 _logger.LogError($"An error occurred: {ex.Message}");
             }
+
+
+        }
+
+        public async Task<IActionResult> OnPostAsync(String note) {
+            if (Orders != null)
+            {
+                try
+                {
+                    List<OrderDetailRequest> newOrderDetail = Orders.Where(item => item.Quantity != 0).ToList();
+
+                    OrderRequest orderRequest = new OrderRequest
+                    {
+                        Note = note,
+                        UserId = Guid.Parse(userIDClaim),
+                        VoucherCode = null,
+                        Details = newOrderDetail
+                    };
+
+                    HttpResponseMessage response = await _client.PostAsJsonAsync($"{_orderApiUrl}addOrder", orderRequest);
+                    response.EnsureSuccessStatusCode();
+
+                    string stringData = await response.Content.ReadAsStringAsync();
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
+
+                    if (apiResponse.Success)
+                    {
+                        return RedirectToPage("UserProfile");
+                    }
+                    else
+                    {
+                        _logger.LogError($"API call failed with message: {apiResponse.Message}");
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    _logger.LogError($"HTTP request failed with error: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"An error occurred: {ex.Message}");
+                }
+            }
+            return RedirectToPage("Index");
         }
     }
 }
