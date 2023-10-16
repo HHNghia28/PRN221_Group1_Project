@@ -23,11 +23,11 @@ namespace G1Food_User.Pages
             _cartApiUrl = configuration.GetValue<string>("APIEndpoint:Cart");
         }
 
-        public async Task<IActionResult> OnGet(string productID, int quantity)
-        {
-            HttpResponseMessage response = await _client.PutAsJsonAsync($"{_cartApiUrl}updateProduct?id={id}", Product);
-            response.EnsureSuccessStatusCode();
-            return;
-        }
+        //public async Task<IActionResult> OnGet(string productID, int quantity)
+        //{
+        //    HttpResponseMessage response = await _client.PutAsJsonAsync($"{_cartApiUrl}updateProduct?id={productID", Product);
+        //    response.EnsureSuccessStatusCode();
+        //    return;
+        //}
     }
 }
