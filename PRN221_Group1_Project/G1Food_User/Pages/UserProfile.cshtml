@@ -14,7 +14,15 @@
             <div class="row mt-5">
                 <div class="col-sm-12 col-md-8">
                     <div class="d-flex justify-content-between mt-5">
-                        <h6 class="bold">Tất cả đơn hàng (0)</h6>
+                        <h6 class="bold">Tất cả đơn hàng 
+                            @{
+                                int orderQuanity = 0;
+                                if (@Model.Orders != null)
+                                {
+                                    orderQuanity = @Model.Orders.Count();
+                                }
+                            } (@orderQuanity)
+                        </h6>
                         <a class="btn sm" href="./index.html">
                             <i class="fa-solid fa-left-long"></i>
                             Trở về
@@ -38,8 +46,8 @@
                                     foreach (var order in @Model.Orders)
                                     {
                                         <tr>
-                                            <td class="align-middle product-name bold">#ABC123</td>
-                                            <td class="align-middle">23/09/2023</td>
+                                            <td class="align-middle product-name bold">@order.Id</td>
+                                            <td class="align-middle">@order.Date</td>
                                             <td class="align-middle">25/09/2023</td>
                                             <td class="align-middle product-quanity">
                                                 <div class="quantity-group justify-content-center">
@@ -51,7 +59,7 @@
                                             </td>
                                             <td class="align-middle">@order.Note</td>
                                             <td class="align-middle product-total bold main-color">
-                                                120.000vnd
+                                                120k
                                             </td>
                                         </tr>
                                     }
@@ -202,34 +210,37 @@
                 </div>
                 <div class="col-sm-12 col-md-4 mt-5">
                     <div class="paying-info">
-                        <form action="">
+                        <form method="get" asp-page="UpdateProfile">
                             <div class="d-flex justify-content-center align-items-center">
                                 <h6 class="bold">
                                     <i class="fa-regular fa-user main-color mr-2 mb-2"></i>
                                     Thông tin của bạn
                                 </h6>
                             </div>
+                            <input type="text" name="id" value="@Model.userIDClaim" hidden/>
+                            <input type="text" name="token" value="@Model.userTokenClaim" hidden />
                             <div class="form-group">
                                 <div class="fs-md bold">Họ và tên:</div>
-                                <input type="text" value="@Model.userNameClaim" required />
+                                <input type="text" name="userName" value="@Model.userNameClaim" required />
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div class="form-group">
                                     <div class="fs-md bold">Số điện thoại:</div>
-                                    <input type="text" value="@Model.userPhoneClaim" required />
+                                    <input type="text" name="phone" value="@Model.userPhoneClaim" required />
                                 </div>
                                 <div class="form-group ml-1">
                                     <div class="fs-md bold">Email:</div>
-                                    <input type="email" value="@Model.userEmailClaim" required />
+                                    <input type="email" name="email" value="@Model.userEmailClaim" required  readonly/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="fs-md bold">Địa chỉ:</div>
-                                <input type="text"
+                                <input name="address"
+                                        type="text"
                                        value="@Model.userAddressClaim"
                                        required />
                             </div>
-                            <button class="btn full mt-1">
+                            <button type="submit" class="btn full mt-1">
                                 <i class="fa-solid fa-pen"></i> Cập nhật
                             </button>
                         </form>

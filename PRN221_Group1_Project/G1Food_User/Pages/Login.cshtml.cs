@@ -17,16 +17,17 @@ namespace G1Food_User.Pages
         private readonly ILogger<LoginModel> _logger;
         private readonly HttpClient _client;
         private readonly string _authApiUrl;
-        private readonly string _cartApiUrl;
 
         public IEnumerable<CartResponse> Carts { get; private set; }
         public int cartQuantity;
-   
+
+        [BindProperty]
+        public string ResponseMessage { get; set; }
+
         [BindProperty]
         public LoginRequest LoginRequest { get; set; }
         public LoginModel(ILogger<LoginModel> logger, IConfiguration configuration)
         {
-
             _logger = logger;
             _client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
@@ -36,8 +37,8 @@ namespace G1Food_User.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 AccountResponse account = null;
                 try
                 {
@@ -51,41 +52,44 @@ namespace G1Food_User.Pages
                     };
 
                     APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
-
                     if (apiResponse.Success)
                     {
+
+                        ResponseMessage = "Login successfully!";
+                        
                         account = JsonSerializer.Deserialize<AccountResponse>(apiResponse.Data.ToString(), options);
 
-                        //if (account.RoleId == new Guid("d1ddb501-e7fa-4d50-9d1b-e2713c0a3b2d"))
-                        //{
+                    //if (account.RoleId == new Guid("d1ddb501-e7fa-4d50-9d1b-e2713c0a3b2d"))
+                    //{
 
-                            var claims = new List<Claim>
-                            {
-                                new Claim("ID", account.Id.ToString()),
-                                new Claim("Name", account.Name),
-                                new Claim("Email", account.Email),
-                                new Claim("Phone", account.Phone),
-                                new Claim("Address", account.AddressDetail),
-                                new Claim("Role", account.Role),
-                                new Claim("Token", account.Token)
-                            };
+                    var claims = new List<Claim>
+                        {
+                            new Claim("ID", account.Id.ToString()),
+                            new Claim("Name", account.Name),
+                            new Claim("Email", account.Email),
+                            new Claim("Phone", account.Phone),
+                            new Claim("Address", account.AddressDetail),
+                            new Claim("Role", account.Role),
+                            new Claim("Token", account.Token)
+                        };
 
-                            var claimsIdentity = new ClaimsIdentity(
-                                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var claimsIdentity = new ClaimsIdentity(
+                        claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                            var authProperties = new AuthenticationProperties
-                            {
-                                IsPersistent = true
-                            };
+                    var authProperties = new AuthenticationProperties
+                    {
+                        IsPersistent = true
+                    };
 
-                            await HttpContext.SignInAsync(
-                                CookieAuthenticationDefaults.AuthenticationScheme,
-                                new ClaimsPrincipal(claimsIdentity),
-                                authProperties);
+                    await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity),
+                        authProperties);
 
-                            return RedirectToPage("/Index");
-
-                        }
+                    return RedirectToPage("/Index");
+                    } else {
+                            ResponseMessage = "Login failed!";
+                    }
                 }
                 catch (HttpRequestException ex)
                 {
@@ -95,8 +99,8 @@ namespace G1Food_User.Pages
                 {
                     _logger.LogError($"An error occurred: {ex.Message}");
                 }
-            }
-            return Page();
+            //}
+            return RedirectToPage("/Login");
         }
     }
 }

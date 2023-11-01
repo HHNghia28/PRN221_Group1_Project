@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-12 col-lg-5">
                     <div class="form-container">
-                        <form id="register-form" action="" method="GET">
+                        <form id="register-form" method="get" asp-page="VerifyEmail">
                             <div class="form-heading text-center">
                                 <div class="form-logo">
                                     <img src="https://www.lotteria.vn/grs-static/images/lotteria_logo.svg"
@@ -24,11 +24,17 @@
                                     Hãy tạo tài khoản để mua sản phẩm!
                                 </p>
                             </div>
+@*                             @{
+                                if (@Model.ResponseMessage != "")
+                                {
+                                    <div class="w-full main-color fs-md">@Model.ResponseMessage</div>
+                                }
+                            } *@
                             <div class="form-body">
                                 <div class="d-flex">
                                     <div class="form-group">
-                                        <input class="form-input"
-                                               name="fullName"
+                                        <input name="name"
+                                                class="form-input"
                                                id="fullName"
                                                type="text"
                                                required
@@ -36,8 +42,8 @@
                                         <div class="form-error"></div>
                                     </div>
                                     <div class="form-group ml-1">
-                                        <input class="form-input"
-                                               name="phone"
+                                        <input name="phone"
+                                                class="form-input"
                                                id="phone"
                                                type="text"
                                                required
@@ -46,8 +52,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-input"
-                                           name="email"
+                                    <input name="email"
+                                            class="form-input"
                                            id="email"
                                            type="text"
                                            required
@@ -56,8 +62,9 @@
                                 </div>
                                 <div class="d-flex">
                                     <div class="form-group">
-                                        <input class="form-input"
-                                               name="password"
+                                        <input
+                                               class="form-input"
+                                               
                                                id="password"
                                                required
                                                type="password"
@@ -65,8 +72,8 @@
                                         <div class="form-error"></div>
                                     </div>
                                     <div class="form-group ml-1">
-                                        <input class="form-input"
-                                               name="password-confirm"
+                                        <input name="password"
+                                                class="form-input"
                                                id="password-confirm"
                                                required
                                                type="password"
@@ -75,8 +82,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-input"
-                                           name="address"
+                                    <input name="address"
+                                            class="form-input"
                                            id="address"
                                            type="text"
                                            placeholder="Địa chỉ"

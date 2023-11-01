@@ -51,8 +51,8 @@ const checkEmail = function (input) {
 }
 
 const checkPassword = function (input) {
-    const passwordPattern = /^[A-Za-z]\w{7,14}$/;
-    if (passwordPattern.test(input.value.trim())) {
+    //const passwordPattern = /^[A-Za-z@]\w{4,14}$/;
+    if (input.value.trim().length > 0) {
         showSuccess(input);
         return true;
     } else {
@@ -67,9 +67,7 @@ const checkPasswordConfirm = function (password, passwordConfirm) {
     const passValue = password.value.trim();
     const confirmPassValue = passwordConfirm.value.trim();
 
-    if (passValue === confirmPassValue 
-        && confirmPassValue !== ''
-        && passwordPattern.test(confirmPassValue)) {
+    if (passValue === confirmPassValue) {
         showSuccess(passwordConfirm);
         return true;
     } else {
@@ -149,7 +147,7 @@ address.addEventListener('blur', (e) => {
 })
 
 formRegister.addEventListener("submit", (event) => {
-    event.preventDefault(); // prevent load page
+    //event.preventDefault(); // prevent load page
     let isEmailValid = checkEmail(email);
     let isPasswordValid = checkPassword(password);
     let isPasswordConfirmValid = checkPasswordConfirm(password, passwordConfirm);
