@@ -117,7 +117,7 @@ namespace DataAccess.DAO
                 Email = register.Email,
                 EncryptedPassword = passwordHash,
                 RoleId = new Guid("C73813A0-CE6E-4F59-B281-507690B51406"),
-                StatusId = new Guid("2BB38E30-BCAC-45C4-A05E-09BF7B1BCC9E")
+                StatusId = new Guid("750301CE-21B9-444E-A0D3-53824614CA40")
             };
 
             User user = new User

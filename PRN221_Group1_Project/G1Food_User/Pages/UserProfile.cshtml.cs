@@ -20,7 +20,7 @@ namespace G1Food_User.Pages
         public string userEmailClaim;
         public string userPhoneClaim;
         public string userAddressClaim;
-
+        public string userTokenClaim;
 
         public IEnumerable<OrderResponse> Orders { get; set; }
         public AccountResponse Account;
@@ -47,8 +47,9 @@ namespace G1Food_User.Pages
                 userEmailClaim = user.FindFirst("Email")?.Value;
                 userPhoneClaim = user.FindFirst("Phone")?.Value;
                 userAddressClaim = user.FindFirst("Address")?.Value;
+                userTokenClaim = user.FindFirst("Token")?.Value;
 
-                if(userIDClaim == null) {
+                if (userIDClaim == null) {
                     return RedirectToPage("/Login");
                 } else
                 {

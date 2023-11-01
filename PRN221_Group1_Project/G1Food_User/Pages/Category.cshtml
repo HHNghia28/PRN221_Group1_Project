@@ -14,30 +14,26 @@
             <div class="row">
                 <div class="col-sm-12 mt-5">
                     <div class="owl-carousel owl-theme" id="slider-category">
-                        <div class="item category-item active">
+                        <a href="Category?cID=b2671dfd-cb89-4d7c-a188-0b55d60783f6" class="item category-item">
+                            <img class="category-img" src="./img/chiken_group.jpg" alt="" />
+                            <span>Gà</span>
+                        </a>
+                        <a href="Category?cID=6cb9e642-53b3-4a5d-acda-58bea2a46539" class="item category-item">
+                            <img class="category-img" src="./img/rice.jpg" alt="" />
+                            <span>Cơm gà</span>
+                        </a>
+                        <a href="Category?cID=abbe0005-f46f-475c-b800-922befdc8488" class="item category-item">
+                            <img class="category-img" src="./img/drink.jpg"  alt="" />
+                            <span>Nước</span>
+                        </a>
+                        <a href="Category?cID=14ef0a63-d3b3-420f-87d7-99cb1315fe61" class="item category-item">
                             <img class="category-img" src="./img/combo.jpg" alt="" />
                             <span>Combo</span>
-                        </div>
-                        <div class="item category-item">
-                            <img class="category-img" src="./img/drink.jpg" alt="" />
-                            <span>Drink</span>
-                        </div>
-                        <div class="item category-item">
+                        </a>
+                        <a href="Category?cID=5bbc85c9-41c9-4d39-a003-9b919ee632f1" class="item category-item">
                             <img class="category-img" src="./img/hanbager.jpg" alt="" />
-                            <span>Hambager</span>
-                        </div>
-                        <div class="item category-item">
-                            <img class="category-img" src="./img/chiken_group.jpg" alt="" />
-                            <span>Ckitken group</span>
-                        </div>
-                        <div class="item category-item">
-                            <img class="category-img" src="./img/rice_nodles.jpg" alt="" />
-                            <span>Nodles</span>
-                        </div>
-                        <div class="item category-item">
-                            <img class="category-img" src="./img/rice_nodles.jpg" alt="" />
-                            <span>Rice nodles</span>
-                        </div>
+                            <span>Khoai tây chiên</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -47,6 +43,9 @@
                     <div class="diliver"></div>
                     <div class="d-flex justify-content-between mt-3">
                         <h4> <i class="fa-solid fa-burger main-color mr-2"></i>Tất cả sản phẩm</h4>
+                        <form method="get">
+                            <input name="txtSearch" type="text" placeholder="Tên sản phẩm"/>
+                        </form>
                         <a href="./Index" class="btn sm">
                             <i class="fa-solid fa-left-long"></i>
                             Trở về
@@ -74,7 +73,7 @@
                                                         @string.Format("{0:N0} VND", @product.Price * (1 - @product.SalePercent / 100))
                                                     }
                                                 </p>
-                                                <button class="btn full mt-2">Thêm vào giỏ hàng</button>
+                                                <a href="../ProductDetail?productID=@product.Id" class="btn full mt-2">Thêm vào giỏ hàng</a>
                                             </div>
                                         </div>
                                     </div>

@@ -1,4 +1,5 @@
 using G1FOODLibrary.DTO;
+using G1FOODLibrary.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Http.Headers;
@@ -10,10 +11,10 @@ namespace G1Food_User.Pages
     {
         private readonly ILogger<CategoryModel> _logger;
         private readonly HttpClient _client;
-        private readonly string _voucherApiUrl;
         private readonly string _productApiUrl;
 
         public IEnumerable<ProductResponse> Products { get; private set; }
+        public IEnumerable<CategoryResponse> Categories { get; private set; }
 
         public CategoryModel(ILogger<CategoryModel> logger, IConfiguration configuration)
         {
@@ -25,6 +26,8 @@ namespace G1Food_User.Pages
         }
         public async Task OnGet()
         {
+            string categroyID = Request.Query["cID"];
+            string txtSearch = Request.Query["txtSearch"];
             try
             {
                 HttpResponseMessage response = await _client.GetAsync($"{_productApiUrl}getProducts");
@@ -40,6 +43,20 @@ namespace G1Food_User.Pages
                 if (apiResponse.Success)
                 {
                     Products = JsonSerializer.Deserialize<List<ProductResponse>>(apiResponse.Data.ToString(), options);
+                    if (categroyID != null)
+                    {
+                        foreach (var product in Products)
+                        {
+                            Products = Products.Where(product => product.CategogyId.ToString() == categroyID);
+                        }
+                    }
+                    if(txtSearch != null)
+                    {
+                        foreach (var product in Products)
+                        {
+                            Products = Products.Where(product => product.Name.ToUpper().Contains(txtSearch.ToUpper().Trim()));
+                        }
+                    }
                 }
                 else
                 {
@@ -54,6 +71,7 @@ namespace G1Food_User.Pages
             {
                 _logger.LogError($"An error occurred: {ex.Message}");
             }
+            
         }
     }
 }

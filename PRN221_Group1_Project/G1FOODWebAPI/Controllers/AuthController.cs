@@ -121,6 +121,7 @@ namespace G1FOODWebAPI.Controllers
                 });
             }
 
+            string token = "";
             try
             {
                 AccountResponse account = new AccountResponse
@@ -128,11 +129,17 @@ namespace G1FOODWebAPI.Controllers
                     Email = email,
                     RoleId = new Guid("C73813A0-CE6E-4F59-B281-507690B51406")
                 };
-                
-                string authentication = CreateToken(account, 8);
 
-                SendEmail(authentication, email);
+                Random rand = new Random();
+                StringBuilder numericToken = new StringBuilder();
 
+                for (int i = 0; i < 6; i++)
+                {
+                    numericToken.Append(rand.Next(0, 10)); // Generates a random digit between 0 and 9.
+                }
+
+                token = numericToken.ToString(); // 8 is the token length.
+                SendEmail(token, email);
             }
             catch (Exception ex)
             {
@@ -140,6 +147,7 @@ namespace G1FOODWebAPI.Controllers
                 {
                     StatusCode = 400,
                     Success = false,
+                    Data = token.ToString(),
                     Message = ex.Message
                 });
             }
@@ -148,6 +156,7 @@ namespace G1FOODWebAPI.Controllers
             {
                 StatusCode = 200,
                 Success = true,
+                Data = token.ToString(),
                 Message = "Send mail successful!"
             });
         }
@@ -285,7 +294,9 @@ namespace G1FOODWebAPI.Controllers
             message.From = new MailAddress(fromMail);
             message.Subject = "G1Food Email Authentication";
             message.To.Add(new MailAddress(email));
-            message.Body = "<html><body> " + s + " </body></html>";
+            message.Body = "<html><body> " +
+                        "<p>Please enter <p>" + s + 
+                " </body></html>";
             message.IsBodyHtml = true;
 
             var smtpClient = new SmtpClient("smtp.gmail.com")

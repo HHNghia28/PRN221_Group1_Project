@@ -1,0 +1,60 @@
+﻿@page
+@model G1Food_User.Pages.EnterEmailModel
+@{
+}
+
+<body>
+    <div class="container-fluid bg-primary z-1000 position-fixed h-100 wrapper animation-form">
+        <div class="container form-wrapper">
+            <div class="row">
+                <div class="col-sm-12 col-lg-7 form-img ">
+                    <img class="" src="./img/login_img.jpg" alt="" />
+                </div>
+                <div class="col-sm-12 col-lg-5">
+                    <div class="form-container">
+                        <form id="verifyEmail-form" method="get" asp-page="VerifyEmailUpdatePassword">
+                            <div class="form-heading text-center">
+                                <div class="form-logo">
+                                    <img src="https://www.lotteria.vn/grs-static/images/lotteria_logo.svg"
+                                         alt="logo" />
+                                </div>
+                                <h5 class="form-heading">Đăng kí tài khoản</h5>
+                                <p class="form-text text-black-50">
+                                    Hãy tạo tài khoản để mua sản phẩm!
+                                </p>
+                            </div>
+                            <div class="form-body">
+                                <div class="d-flex">
+                                    <div class="form-group">
+                                        <input name="email"
+                                               class="form-input"
+                                               id="email"
+                                               type="text"
+                                               required
+                                               value=""
+                                               placeholder="Nhập email của bạn" />
+                                        <div class="form-error"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn mt-3 full">
+                                        Xác nhận
+                                    </button>
+                                </div>
+                                <div class="form-group d-flex justify-content-between align-items-center">
+                                    <span class="fs-md">
+                                        hoặc
+                                        <a href="./Login" class="fs-md bold main-color">đăng nhập</a> tài khoản?
+                                    </span>
+                                    <a href="./Index" class="fs-md main-color"><i class="fa-solid fa-left-long"></i> Trở về</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/register.js" type="text/javascript" asp-append-version="true"></script>
+</body>
+
