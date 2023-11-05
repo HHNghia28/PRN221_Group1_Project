@@ -1,4 +1,4 @@
-using Azure.Core;
+﻿using Azure.Core;
 using G1FOODLibrary.DTO;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
@@ -37,8 +37,6 @@ namespace G1Food_User.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            //if (ModelState.IsValid)
-            //{
                 AccountResponse account = null;
                 try
                 {
@@ -53,42 +51,38 @@ namespace G1Food_User.Pages
 
                     APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
                     if (apiResponse.Success)
-                    {
+                    {   
+                            account = JsonSerializer.Deserialize<AccountResponse>(apiResponse.Data.ToString(), options);
 
-                        ResponseMessage = "Login successfully!";
-                        
-                        account = JsonSerializer.Deserialize<AccountResponse>(apiResponse.Data.ToString(), options);
+                    
 
-                    //if (account.RoleId == new Guid("d1ddb501-e7fa-4d50-9d1b-e2713c0a3b2d"))
-                    //{
+                        var claims = new List<Claim>
+                            {
+                                new Claim("ID", account.Id.ToString()),
+                                new Claim("Name", account.Name),
+                                new Claim("Email", account.Email),
+                                new Claim("Phone", account.Phone),
+                                new Claim("Address", account.AddressDetail),
+                                new Claim("Role", account.Role),
+                                new Claim("Token", account.Token)
+                            };
 
-                    var claims = new List<Claim>
+                        var claimsIdentity = new ClaimsIdentity(
+                            claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                        var authProperties = new AuthenticationProperties
                         {
-                            new Claim("ID", account.Id.ToString()),
-                            new Claim("Name", account.Name),
-                            new Claim("Email", account.Email),
-                            new Claim("Phone", account.Phone),
-                            new Claim("Address", account.AddressDetail),
-                            new Claim("Role", account.Role),
-                            new Claim("Token", account.Token)
+                            IsPersistent = true
                         };
 
-                    var claimsIdentity = new ClaimsIdentity(
-                        claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        await HttpContext.SignInAsync(
+                            CookieAuthenticationDefaults.AuthenticationScheme,
+                            new ClaimsPrincipal(claimsIdentity),
+                            authProperties);
 
-                    var authProperties = new AuthenticationProperties
-                    {
-                        IsPersistent = true
-                    };
-
-                    await HttpContext.SignInAsync(
-                        CookieAuthenticationDefaults.AuthenticationScheme,
-                        new ClaimsPrincipal(claimsIdentity),
-                        authProperties);
-
-                    return RedirectToPage("/Index");
+                        return RedirectToPage("/Index");
                     } else {
-                            ResponseMessage = "Login failed!";
+                            ResponseMessage = "Email hoặc mật khẩu không đúng!";
                     }
                 }
                 catch (HttpRequestException ex)
@@ -99,8 +93,7 @@ namespace G1Food_User.Pages
                 {
                     _logger.LogError($"An error occurred: {ex.Message}");
                 }
-            //}
-            return RedirectToPage("/Login");
+            return Page();
         }
     }
 }

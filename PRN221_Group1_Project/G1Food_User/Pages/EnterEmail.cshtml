@@ -18,9 +18,9 @@
                                     <img src="https://www.lotteria.vn/grs-static/images/lotteria_logo.svg"
                                          alt="logo" />
                                 </div>
-                                <h5 class="form-heading">Đăng kí tài khoản</h5>
+                                <h5 class="form-heading">Xác thực tài khoản</h5>
                                 <p class="form-text text-black-50">
-                                    Hãy tạo tài khoản để mua sản phẩm!
+                                    Nhập email để xác thực! 
                                 </p>
                             </div>
                             <div class="form-body">
@@ -31,7 +31,6 @@
                                                id="email"
                                                type="text"
                                                required
-                                               value=""
                                                placeholder="Nhập email của bạn" />
                                         <div class="form-error"></div>
                                     </div>
@@ -55,6 +54,37 @@
             </div>
         </div>
     </div>
-    <script src="~/js/register.js" type="text/javascript" asp-append-version="true"></script>
+    <script>
+        const email = document.getElementById("email");
+        const form = document.getElementById("verifyEmail-form");
+        consele.log(email);
+        consele.log(form);
+
+        function showError(input, message) {
+            let parentTag = input.parentElement;
+            let errorMessage = parentTag.querySelector(".form-error");
+            errorMessage.innerText = message;
+            input.style.borderColor = "var(--main-color)";
+        }
+
+        function showSuccess(input) {
+            let parentTag = input.parentElement;
+            let errorMessage = parentTag.querySelector(".form-error");
+            errorMessage.innerText = "";
+            input.style.borderColor = "var(--success)";
+        }
+        email.addEventListener('blur', (e) => {
+            checkEmail(email);
+        })
+        form.addEventListener("submit", (event) => {
+            let isEmailValid = checkEmail(email);
+            if (isEmailValid) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+    </script>
 </body>
 

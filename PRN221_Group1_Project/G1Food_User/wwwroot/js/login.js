@@ -37,19 +37,19 @@ const checkEmail = function (input) {
         return true;
     } else {
         showError(input, 'Email không hợp lệ!')
-        // input.focus();
+         /*input.focus();*/
         return false;
     }
 }
 
 const checkPassword = function (input) {
     //const passwordPattern = /^[A-Za-z@]\w{4,14}$/;
-    if (input.value.trim().length > 0) {
+    if (input.value.trim().length >= 6) {
         showSuccess(input);
         return true;
     } else {
         showError(input, 'Mật khẩu không hợp lệ!')
-        // input.focus();
+         //input.focus();
         return false;
     }
 }
@@ -62,8 +62,7 @@ password.addEventListener('blur', (e) => {
 })
 
 formLogin.addEventListener("submit", (event) => {
-/*    event.preventDefault(); // prevent load page*/
-    let isEmailValid = checkPassword(email);
+    let isEmailValid = checkEmail(email);
     let isPasswordValid = checkPassword(password);
     if (isEmailValid && isPasswordValid) {
         return true;

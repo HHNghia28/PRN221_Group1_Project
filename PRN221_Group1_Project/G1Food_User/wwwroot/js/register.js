@@ -52,7 +52,7 @@ const checkEmail = function (input) {
 
 const checkPassword = function (input) {
     //const passwordPattern = /^[A-Za-z@]\w{4,14}$/;
-    if (input.value.trim().length > 0) {
+    if (input.value.trim().length >= 6) {
         showSuccess(input);
         return true;
     } else {

@@ -39,7 +39,7 @@
                 </div>
                 <ul class="header-list d-none d-lg-flex">
                     <li class="active"><a href="../Category" class="bold">BESTSELLER</a></li>
-                    <li><a href="../Category" class="bold">KHUYẾN MÃI</a></li>
+                    <li><a href="../Category" class="bold">DANH MỤC</a></li>
                     <li><a href="#" class="bold">CỬA HÀNG</a></li>
                 </ul>
             </div>
@@ -57,9 +57,13 @@
                         <a href="../Cart" class="">
                             <i class="fa-solid fa-cart-plus"></i>
                             <div class="cart-quantiy position-absolute">
-                              @{
-                                    var cartQuantity = Context.Request.Cookies["cartQuantity"];
-                              }
+                                @{
+                                    string cartQuantity = Context.Request.Cookies["cartQuantity"];
+                                    if (cartQuantity == null)
+                                    {
+                                        cartQuantity = "0";
+                                    }
+                                }
                                 @cartQuantity
                             </div>
                         </a>
@@ -84,7 +88,7 @@
                                 </li>
                                     <li class="d-flex align-items-center">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <button type="submit">Đăng xuất</button>
+                                        <button class="bg-transparent" type="submit">Đăng xuất</button>
                                     </li>
                                 </ul>
                             </div>
@@ -104,7 +108,7 @@
             </div>
             <ul class="">
                 <li class="active"><a href="../Category" class="bold">BESTSELLER</a></li>
-                <li><a href="../Category" class="bold">KHUYẾN MÃI</a></li>
+                <li><a href="../Category" class="bold">DANH MỤC</a></li>
                 <li><a href="../Category" class="bold">CỬA HÀNG</a></li>
                 <li class="nav-link btn-register">
                     <a href="../Register" class="bold-500">Đăng kí</a>

@@ -1,0 +1,102 @@
+﻿@page
+@model G1Food_User.Pages.OrderDetailModel
+@{
+    ViewData["Title"] = "Order Detail";
+}
+<head>
+    <link rel="stylesheet" href="~/css/userProfile.css" type="text/css" asp-append-version="true" />
+</head>
+<body>
+    <main class="container-fluid mt-content bg-main">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-sm-12">
+                    <div class="w-full d-flex justify-content-between algin-items-center mt-5">
+                         <h6>Chi tiếc sản phẩm</h6>
+                        <div>
+                            <i class="main-color fa-solid fa-tags"></i>
+                            <span class="bold m-lg-0">Voucher: </span>
+                            <span class="main-color bold">
+                                @{
+                                    if (Model.Orders.VoucherCode != null)
+                                    {
+                                        @Model.Orders.VoucherCode
+                                        <span>-</span>
+                                        @Model.Orders.VoucherPercent
+                                    <span>%</span>
+                                    } else {
+                                        <span>chưa có voucher!</span>
+                                    }
+                                }
+                            </span>
+                        </div>
+                    </div>
+                    <table class="table w-full table-hover table-bordered text-center mt-4">
+                        <thead class="align-middle">
+                            <tr>
+                                <th>No.</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Giảm giá</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                            </tr>
+                        </thead>
+                        <tbody class="order-list">
+                           
+                            @{
+                                int orderNo = 1;
+                                double totalPrice = 0;
+                                if (Model.Orders != null)
+                                    {
+                                        foreach (var od in Model.Orders.Details)
+                                        {
+                                        <tr>
+                                            <td class="align-middle product-name bold">@orderNo</td>
+                                            <td class="align-middle mw-table-name">@od.ProductName</td>
+                                            <td class="align-middle">
+                                                <img class="fit-img rounded-sm"
+                                                     src="@od.Image"
+                                                     alt="@od.ProductName" />
+                                            </td>
+                                            <td class="align-middle">- @od.SalePercent%</td>
+                                            <td class="align-middle product-quanity">
+                                                <div class="quantity-group justify-content-center">
+                                                   <input type="number"
+                                                           id="quantity-input"
+                                                           value="@od.Quantity"
+                                                           min="1" />
+                                                </div>
+                                            </td>
+                                            <td class="align-middle product-total bold main-color">
+                                                @{
+                                                    var price = (od.Price - (od.Price * (decimal)od.SalePercent / 100)) * (decimal)od.Quantity;
+                                                    @string.Format("{0:N0} VND", price);
+                                                    totalPrice += (double)price;
+                                                }
+                                            </td>
+                                            </tr>
+                                        orderNo++;
+                                        }
+                                    }
+                                }
+                            
+                        </tbody>
+                    </table>
+                    <div class="w-full d-flex justify-content-between algin-items-center mt-5">
+                        <a class="btn sm" href="./UserProfile">
+                            Quay lại
+                            <i class="fa-solid fa-left-long"></i>
+                        </a>
+                        <div>
+                            <span class="bold">Tổng: </span>
+                            <span class="main-color bold">
+                                @string.Format("{0:N0} VND", @totalPrice + 30000)
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>

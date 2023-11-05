@@ -3,7 +3,7 @@ $('#slider-category').owlCarousel({
     loop:true,
     dotsEach: 1,
     items: 1,
-    margin:1,
+    margin:2,
     dots:true,
     autoplay:true,
     autoplayTimeout: 2000,

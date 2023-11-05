@@ -48,3 +48,7 @@
     z-index: 1200;
     cursor: pointer;
 }
+
+.mw-table-name {
+    max-width: 180px;
+}
