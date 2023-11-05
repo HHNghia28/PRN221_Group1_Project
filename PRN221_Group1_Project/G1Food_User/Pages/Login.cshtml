@@ -26,13 +26,10 @@
                                 </p>
                             </div>
                            @{
-                                if (@Model.ResponseMessage != "")
-                                {
-                                    <div class="w-full main-color fs-md">@Model.ResponseMessage</div>
-                                }
+                                <div class="w-full main-color fs-md">@Model.ResponseMessage</div>
                                 if (ViewContext.HttpContext.Request.Cookies["isRegistered"] == "isRegistered")
                                 {
-                                    <div class="w-full primary fs-md">Register successfully!</div>
+                                    <div class="w-full primary fs-md text-success">Register successfully!</div>
                                 }
                             }
                             <div class="form-body">

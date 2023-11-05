@@ -5,6 +5,10 @@
     cursor: pointer;
 }
 
+.category-item + .category-item {
+    margin-left: 16px;
+} 
+
 .category-img {
     border-radius: var(--rounded-sm);
     margin-bottom: 12px;

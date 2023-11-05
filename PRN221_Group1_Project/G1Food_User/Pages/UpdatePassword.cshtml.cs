@@ -62,7 +62,7 @@ namespace G1Food_User.Pages
             catch (Exception ex)
             {
                 _logger.LogError($"An error occurred: {ex.Message}");
-            }
+            } 
             
             if(Accounts != null)
             {
@@ -80,10 +80,12 @@ namespace G1Food_User.Pages
         {
             try
             {
-                string accountID = Request.Query["accountID"];
-                string newPassword = Request.Query["password-confirm"];
+                // Get the value of 'accountID' from the form
+                string aID = Request.Form["accountID"];
 
-                HttpResponseMessage response = await _client.PutAsJsonAsync($"{_accountApiUrl}updatePassword?id={accountID}", newPassword);
+                // Get the value of 'password-confirm' from the form
+                string newPass = Request.Form["password-confirm"];
+                HttpResponseMessage response = await _client.PutAsJsonAsync($"{_accountApiUrl}updatePassword?id={aID}", newPass);
                 response.EnsureSuccessStatusCode();
 
                 string stringData = await response.Content.ReadAsStringAsync();

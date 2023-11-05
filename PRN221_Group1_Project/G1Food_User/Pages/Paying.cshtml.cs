@@ -1,4 +1,4 @@
-
+﻿
 
 
 using Azure;
@@ -6,9 +6,11 @@ using G1FOODLibrary.DTO;
 using G1FOODLibrary.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
+using System.Xml;
 
 namespace G1Food_User.Pages
 {
@@ -117,18 +119,18 @@ namespace G1Food_User.Pages
                     if (apiResponse.Success)
                     {
                         ListCarts = JsonSerializer.Deserialize<List<CartResponse>>(apiResponse.Data.ToString(), options);
-                        if (ListCarts != null && ListCarts.Count() > 0)
-                        {
-                            foreach (var item in ListCarts)
-                            {
-                                Orders.Add(new OrderDetailRequest
-                                {
-                                    Quantity = item.Quantity,
-                                    Note = null,
-                                    ProductId = item.ProductId,
-                                });
-                            }
-                        }
+                        //if (ListCarts != null && ListCarts.Count() > 0)
+                        //{
+                        //    foreach (var item in ListCarts)
+                        //    {
+                        //        Orders.Add(new OrderDetailRequest
+                        //        {
+                        //            Quantity = item.Quantity,
+                        //            Note = null,
+                        //            ProductId = item.ProductId,
+                        //        });
+                        //    }
+                        //}
                     }
                     else
                     {
@@ -148,10 +150,15 @@ namespace G1Food_User.Pages
         }
 
         public async Task<IActionResult> OnPostAsync() {
-            string userID = "";
+            Guid? userID = null;
+            var user = HttpContext.User as ClaimsPrincipal;
+
+            // Find the "ID" claim
+            userIDClaim = user.FindFirst("ID")?.Value;
+            List<UserResponse> userResponses = new List<UserResponse>();
             try
             {
-                HttpResponseMessage response = await _client.GetAsync($"{_accountApiUrl}getUserByAccountId?id=d5cac6e2-1456-47e1-8ead-e082a5b047fa");
+                HttpResponseMessage response = await _client.GetAsync($"{_accountApiUrl}getUserByAccountId?id={userIDClaim}");
                 response.EnsureSuccessStatusCode();
 
                 string stringData = await response.Content.ReadAsStringAsync();
@@ -160,7 +167,15 @@ namespace G1Food_User.Pages
                     PropertyNameCaseInsensitive = true
                 };
                 APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
-              
+                if(apiResponse.Success)
+                {
+                    userResponses = JsonSerializer.Deserialize<List<UserResponse>>(apiResponse.Data.ToString(), options);
+                }
+                foreach (var item in userResponses)
+                {
+                    userID = item.Id;
+                }
+
             }
             catch (HttpRequestException ex)
             {
@@ -172,16 +187,53 @@ namespace G1Food_User.Pages
             }
 
             try
-                {
-                    //List<OrderDetailRequest> newOrderDetail = Orders.Where(item => item.Quantity != 0).ToList();
+            {
+                HttpResponseMessage response = await _client.GetAsync($"{_cartApiUrl}getCarts?id={userIDClaim}");
+                response.EnsureSuccessStatusCode();
 
-                    OrderRequest orderRequest = new OrderRequest
+                string stringData = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                
+                APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
+
+                if (apiResponse.Success)
+                {
+                    ListCarts = JsonSerializer.Deserialize<List<CartResponse>>(apiResponse.Data.ToString(), options);
+                    if (ListCarts != null && ListCarts.Count() > 0)
                     {
-                        Note = note,
-                        UserId = Guid.Parse(userID),
-                        VoucherCode = null,
+                        foreach (var item in ListCarts)
+                        {
+                            Orders.Add(new OrderDetailRequest
+                            {
+                                Quantity = item.Quantity,
+                                Note = null,
+                                ProductId = item.ProductId,
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    _logger.LogError($"API call failed with message: {apiResponse.Message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An error occurred: {ex.Message}");
+            }
+
+            try
+            {
+                OrderRequest orderRequest = new OrderRequest
+                    {
+                    Note = note,
+                        UserId = userID,
+                        VoucherCode = voucherCode,
                         Details = Orders
-                    };
+                };
 
                     HttpResponseMessage response = await _client.PostAsJsonAsync($"{_orderApiUrl}addOrder", orderRequest);
                     response.EnsureSuccessStatusCode();
@@ -194,28 +246,17 @@ namespace G1Food_User.Pages
 
                     APIResponse apiResponse = JsonSerializer.Deserialize<APIResponse>(stringData, options);
 
-                    if (apiResponse.Success)
-                    {
-                        return RedirectToPage("./UserProfile");
-                    }
-                    else
-                    {
-                        _logger.LogError($"API call failed with message: {apiResponse.Message}");
-                    }
-                    foreach (var cart in ListCarts)
-                    {
-                        response = await _client.DeleteAsync($"{_cartApiUrl}deleteCarts?id={cart.Id.ToString()}");
-                        response.EnsureSuccessStatusCode();
-                    }
-                    if (ListCarts.Count() <= 0)
-                    {
-                        if (HttpContext.Request.Cookies.TryGetValue("cartQuantity", out string cartQuantity))
-                        {
-                            int newCartQuantity = 0;
-                            Response.Cookies.Append("cartQuantity", newCartQuantity.ToString());
-                        }
-                    }
+                foreach (var cart in ListCarts)
+                {
+                    response = await _client.DeleteAsync($"{_cartApiUrl}deleteCarts?id={cart.Id.ToString()}");
+                    response.EnsureSuccessStatusCode();
                 }
+                if (ListCarts.Count() <= 0)
+                {
+                    int newCartQuantity = 0;
+                    Response.Cookies.Append("cartQuantity", newCartQuantity.ToString());
+                }
+            }
                 catch (HttpRequestException ex)
                 {
                     _logger.LogError($"HTTP request failed with error: {ex.Message}");
@@ -224,8 +265,7 @@ namespace G1Food_User.Pages
                 {
                     _logger.LogError($"An error occurred: {ex.Message}");
                 }
-            //}
-            return RedirectToPage("Index");
+            return RedirectToPage("./UserProfile");
         }
     }
 }

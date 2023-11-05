@@ -1,5 +1,6 @@
 // Set active navbar tab
 const navItems = document.querySelectorAll('.header-list li');
+if (navItems != null) {
 navItems.forEach(item => {
     item.addEventListener('click', (e) => {
         //e.preventDefault();
@@ -10,11 +11,4 @@ navItems.forEach(item => {
     })
 })
 
-//   Handle show form input comment
-// const inputComment = document.querySelector('.comment-wrapper.reply input');
-// const buttonReplyComment = document.querySelector('.comment-wrapper.reply button');
-// console.log(inputComment);
-// console.log(buttonReplyComment)
-// buttonReplyComment.addEventListener('click', () => {
-//     inputComment.style.display = 'block';
-// })
+}

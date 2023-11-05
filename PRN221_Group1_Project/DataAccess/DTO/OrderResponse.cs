@@ -16,9 +16,13 @@ namespace G1FOODLibrary.DTO
 
         public string? Status { get; set; }
 
+        public Guid? UserID { get; set; }
         public string? Username { get; set; }
 
         public int SalePercent { get; set; }
+
+        public string? VoucherCode { get; set; }
+        public int? VoucherPercent { get; set; }
 
         public IEnumerable<OrderDetailResponse> Details { get; set; } = null;
     }

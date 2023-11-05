@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="~/css/userProfile.css" type="text/css" asp-append-version="true" />
 </head>
 <body>
-    <div class="overplay d-none"></div>
     <main class="container-fluid mt-content bg-main">
         <div class="container">
             <div class="row mt-5">
@@ -23,7 +22,7 @@
                                 }
                             } (@orderQuanity)
                         </h6>
-                        <a class="btn sm" href="./index.html">
+                        <a class="btn sm" href="./Index">
                             <i class="fa-solid fa-left-long"></i>
                             Trở về
                         </a>
@@ -31,9 +30,9 @@
                     <table class="table table-hover table-bordered text-center mt-5">
                         <thead class="align-middle">
                             <tr>
-                                <th>Mã đơn</th>
+                                <th>No.</th>
                                 <th>Ngày đặt</th>
-                                <th>Ngày giao</th>
+                                <th>Trạng thái</th>
                                 <th>Số lượng</th>
                                 <th>Note</th>
                                 <th>Giá</th>
@@ -41,172 +40,51 @@
                         </thead>
                         <tbody class="order-list">
                             @{
+                                int noOrder = 1;
                                 if(@Model.Orders != null)
                                 {
                                     foreach (var order in @Model.Orders)
                                     {
+                                        
                                         <tr>
-                                            <td class="align-middle product-name bold">@order.Id</td>
-                                            <td class="align-middle">@order.Date</td>
-                                            <td class="align-middle">25/09/2023</td>
+                                            <td class="align-middle product-name bold">
+                                                <a href="./OrderDetail?orderID=@order.Id">@noOrder</a>
+                                            </td>
+                                            <td class="align-middle">
+                                                <a href="./OrderDetail?orderID=@order.Id">@order.Date</a>
+                                           </td>
+                                            <td class="align-middle">
+                                                <a href="./OrderDetail?orderID=@order.Id">@order.Status</a>
+                                            </td>
                                             <td class="align-middle product-quanity">
-                                                <div class="quantity-group justify-content-center">
-                                                    <input type="number"
-                                                           id="quantity-input"
-                                                           value="1"
-                                                           min="1" />
-                                                </div>
+                                                    <a class="quantity-group justify-content-center" href="./OrderDetail?orderID=@order.Id">
+                                                        <input type="number"
+                                                               id="quantity-input"
+                                                               value="@order.Details.Count()"
+                                                               min="1" />
+                                                    </a>
                                             </td>
                                             <td class="align-middle">@order.Note</td>
-                                            <td class="align-middle product-total bold main-color">
-                                                120k
-                                            </td>
+                                                @{
+                                                    double totalPrice = 0;
+                                                    foreach (var orderDetail in order.Details)
+                                                    {
+                                                        var price = (orderDetail.Price - (orderDetail.Price * (decimal)orderDetail.SalePercent / 100)) * (decimal)orderDetail.Quantity;
+                                                        totalPrice += (double)price;
+                                                    }
+                                                <td class="align-middle product-total bold main-color">
+                                                    <a href="./OrderDetail?orderID=@order.Id">
+                                                        @string.Format("{0:N0} VND", totalPrice + 30000)
+                                                    </a>
+                                                </td>
+                                                }
                                         </tr>
+                                        noOrder++;
                                     }
                                 }
                             }
                         </tbody>
                     </table>
-                    <div class="oderDetail-container d-none animation-scale">
-                        <div class="wrapper-icon position-absolute btn-close-order-detail">
-                            <i class="fa-solid fa-xmark"></i>
-                        </div>
-                        <div class="w-full d-flex justify-content-between mt-3">
-                            <div>
-                                <span class="bold">Mã đơn: </span>
-                                <span class="main-color bold">#ABC123</span>
-                            </div>
-                            <div>
-                                <span class="bold">Tổng: </span>
-                                <span class="main-color bold">125.000đ</span>
-                            </div>
-                        </div>
-                        <table class="table table-responsive table-hover table-bordered text-center mt-3">
-                            <thead class="align-middle">
-                                <tr>
-                                    <th>Sản phẩm</th>
-                                    <th>Hình ảnh</th>
-                                    <th>Ngày đặt</th>
-                                    <th>Ngày giao</th>
-                                    <th>Giảm giá</th>
-                                    <th>Số lượng</th>
-                                    <th>Giá</th>
-                                </tr>
-                            </thead>
-                            <tbody class="order-list">
-                                <tr>
-                                    <td class="align-middle product-name bold">Gà không cay</td>
-                                    <td class="align-middle">
-                                        <img class="fit-img rounded-sm"
-                                             src="./img/card_1.jpg"
-                                             alt="" />
-                                    </td>
-                                    <td class="align-middle">23/09/2023</td>
-                                    <td class="align-middle">23/09/2023</td>
-                                    <td class="align-middle">-10%</td>
-                                    <td class="align-middle product-quanity">
-                                        <div class="quantity-group justify-content-center">
-                                            <input type="number"
-                                                   id="quantity-input"
-                                                   value="2"
-                                                   min="1" />
-                                        </div>
-                                    </td>
-                                    <td class="align-middle product-total bold main-color">
-                                        120.000vnd
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle product-name bold">Gà không cay</td>
-                                    <td class="align-middle">
-                                        <img class="fit-img rounded-sm"
-                                             src="./img/card_1.jpg"
-                                             alt="" />
-                                    </td>
-                                    <td class="align-middle">23/09/2023</td>
-                                    <td class="align-middle">23/09/2023</td>
-                                    <td class="align-middle">-10%</td>
-                                    <td class="align-middle product-quanity">
-                                        <div class="quantity-group justify-content-center">
-                                            <input type="number"
-                                                   id="quantity-input"
-                                                   value="2"
-                                                   min="1" />
-                                        </div>
-                                    </td>
-                                    <td class="align-middle product-total bold main-color">
-                                        120.000vnd
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle product-name bold">Gà không cay</td>
-                                    <td class="align-middle">
-                                        <img class="fit-img rounded-sm"
-                                             src="./img/card_1.jpg"
-                                             alt="" />
-                                    </td>
-                                    <td class="align-middle">23/09/2023</td>
-                                    <td class="align-middle">23/09/2023</td>
-                                    <td class="align-middle">-10%</td>
-                                    <td class="align-middle product-quanity">
-                                        <div class="quantity-group justify-content-center">
-                                            <input type="number"
-                                                   id="quantity-input"
-                                                   value="2"
-                                                   min="1" />
-                                        </div>
-                                    </td>
-                                    <td class="align-middle product-total bold main-color">
-                                        120.000vnd
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle product-name bold">Gà không cay</td>
-                                    <td class="align-middle">
-                                        <img class="fit-img rounded-sm"
-                                             src="./img/card_1.jpg"
-                                             alt="" />
-                                    </td>
-                                    <td class="align-middle">23/09/2023</td>
-                                    <td class="align-middle">23/09/2023</td>
-                                    <td class="align-middle">-10%</td>
-                                    <td class="align-middle product-quanity">
-                                        <div class="quantity-group justify-content-center">
-                                            <input type="number"
-                                                   id="quantity-input"
-                                                   value="2"
-                                                   min="1" />
-                                        </div>
-                                    </td>
-                                    <td class="align-middle product-total bold main-color">
-                                        120.000vnd
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle product-name bold">Gà không cay</td>
-                                    <td class="align-middle">
-                                        <img class="fit-img rounded-sm"
-                                             src="./img/card_1.jpg"
-                                             alt="" />
-                                    </td>
-                                    <td class="align-middle">23/09/2023</td>
-                                    <td class="align-middle">23/09/2023</td>
-                                    <td class="align-middle">-10%</td>
-                                    <td class="align-middle product-quanity">
-                                        <div class="quantity-group justify-content-center">
-                                            <input type="number"
-                                                   id="quantity-input"
-                                                   value="2"
-                                                   min="1" />
-                                        </div>
-                                    </td>
-                                    <td class="align-middle product-total bold main-color">
-                                        120.000vnd
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
                 <div class="col-sm-12 col-md-4 mt-5">
                     <div class="paying-info">
@@ -249,5 +127,4 @@
             </div>
         </div>
     </main>
-    <script src="~/js/orderDetail.js" type="text/javascript" asp-append-version="true"></script>
 </body>

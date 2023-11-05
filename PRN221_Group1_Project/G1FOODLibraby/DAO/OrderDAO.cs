@@ -309,10 +309,11 @@ namespace DataAccess.DAO
                         Id = order.Id,
                         Date = order.Date,
                         Note = order.Note,
+                        UserID = order.User.Id,
                         Status = order.Status.Name,
                         Username = order.User == null ? "Khách tại cửa hàng" : order.User.Name,
                         Details = details
-                    });
+                    }); ;
                 }
             }
 
@@ -394,6 +395,8 @@ namespace DataAccess.DAO
                     Date = order.Date,
                     Status = order.Status.Name,
                     Username = order.User.Name,
+                    VoucherCode = order.Voucher.Code,
+                    VoucherPercent = order.Voucher.SalePercent,
                     Details = orderDetailResponses
                 };
 

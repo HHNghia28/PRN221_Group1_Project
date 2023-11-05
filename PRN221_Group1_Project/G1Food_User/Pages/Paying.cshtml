@@ -126,16 +126,19 @@
                         <div class="d-flex mt-2 align-items-lg-center">
                             <span class="bold mr-2">Voucher:</span>
                                 <select asp-for="@Model.voucherCode" id="voucherCode" class="paying-voucher fs-md">
-                                @{
-                                    if(Model.Vouchers != null)
-                                    {
-                                        foreach (var voucher in Model.Vouchers)
+                                    @{
+                                        if(Model.Vouchers != null)
                                         {
-                                            <option class="flex justify-content-between fs-md pd-1" value="@voucher.Id">
-                                                @voucher.Code
-                                                <span class="fs-md"> - @voucher.SalePercent%</span>
-                                                <span class="fs-md">(@voucher.Description)</span>
-                                            </option>
+                                            foreach (var voucher in Model.Vouchers)
+                                            {
+                                                if (voucher.Status == "Còn")
+                                                {
+                                                    <option class="flex justify-content-between fs-md pd-1" value="@voucher.Code">
+                                                    @voucher.Code
+                                                    <span class="fs-md"> - @voucher.SalePercent%</span>
+                                                    <span class="fs-md">(@voucher.Description)</span>
+                                                </option>
+                                                }
                                         }
                                     }
                                 }
