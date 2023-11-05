@@ -292,10 +292,12 @@ namespace G1FOODWebAPI.Controllers
 
             MailMessage message = new MailMessage();
             message.From = new MailAddress(fromMail);
-            message.Subject = "G1Food Email Authentication";
+            message.Subject = "[G1Food xác thực email]";
             message.To.Add(new MailAddress(email));
             message.Body = "<html><body> " +
-                        "<p>Please enter <p>" + s + 
+                        "<p>Mã xác thực email của bạn là:  <span style={color:red;font-weight:bold}>" + s + "</span></p>" +
+                        "<p>Trân trọng</p>" +
+                        "<p>G1Food</p>" +
                 " </body></html>";
             message.IsBodyHtml = true;
 
