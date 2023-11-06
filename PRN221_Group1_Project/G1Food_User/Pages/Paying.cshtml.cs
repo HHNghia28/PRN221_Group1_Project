@@ -251,10 +251,10 @@ namespace G1Food_User.Pages
                     response = await _client.DeleteAsync($"{_cartApiUrl}deleteCarts?id={cart.Id.ToString()}");
                     response.EnsureSuccessStatusCode();
                 }
-                if (ListCarts.Count() <= 0)
+                if (HttpContext.Request.Cookies.TryGetValue("cartQuantity", out string cartQuantity))
                 {
-                    int newCartQuantity = 0;
-                    Response.Cookies.Append("cartQuantity", newCartQuantity.ToString());
+                    int newQuantity = 0;
+                    Response.Cookies.Append("cartQuantity", newQuantity.ToString());
                 }
             }
                 catch (HttpRequestException ex)

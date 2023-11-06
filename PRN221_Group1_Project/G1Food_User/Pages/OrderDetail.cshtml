@@ -59,7 +59,15 @@
                                                      src="@od.Image"
                                                      alt="@od.ProductName" />
                                             </td>
-                                            <td class="align-middle">- @od.SalePercent%</td>
+                                            @{
+                                                if(od.SalePercent != 0)
+                                                {
+                                                    <td class="align-middle">- @od.SalePercent%</td>
+                                                } else
+                                                {
+                                                    <td class="align-middle">Chưa giảm</td>
+                                                }
+                                            }
                                             <td class="align-middle product-quanity">
                                                 <div class="quantity-group justify-content-center">
                                                    <input type="number"
@@ -91,7 +99,7 @@
                         <div>
                             <span class="bold">Tổng: </span>
                             <span class="main-color bold">
-                                @string.Format("{0:N0} VND", @totalPrice + 30000)
+                                @string.Format("{0:N0} VND", @totalPrice + 30000 - (@totalPrice * 0.05))
                             </span>
                         </div>
                     </div>
