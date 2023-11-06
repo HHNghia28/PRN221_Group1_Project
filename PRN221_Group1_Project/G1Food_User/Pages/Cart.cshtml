@@ -63,7 +63,16 @@
                                                     </div>
                                                    </form>
                                                 </td>
-                                                <td class="align-middle product-discount">- @cart.SalePercent%</td>
+                                                @{
+                                                    if (@cart.SalePercent != 0)
+                                                    {
+                                                        <td class="align-middle product-discount">- @cart.SalePercent%</td>
+                                                    } else
+                                                    {
+                                                        <td class="align-middle product-discount">Chưa giảm giá</td>
+                                                    }
+                                                }
+
                                                 <td class="align-middle product-total bold main-color">
                                                     @{
                                                         var price = (cart.Price - (cart.Price * (decimal)cart.SalePercent / 100)) * (decimal)cart.Quantity;
@@ -112,7 +121,7 @@
                     </div>
                     <div class="d-flex justify-content-between mt-2">
                         <span class="bold">Thuế:</span>
-                        <span class="bold total-money">0 vnd</span>
+                        <span class="bold total-money">+ 0 VND</span>
                     </div>
                     <div class="d-flex justify-content-between mt-2">
                         <span class="bold">Tổng cộng:</span>

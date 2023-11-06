@@ -28,21 +28,38 @@
                                 <p class="product-detail-description">
                                     @Model.Product.Description
                                 </p>
-                                <p class="product-detail-price">
+                                <div class="d-flex align-items-baseline">
+                                    <p class="product-detail-price">
+                                        @{
+                                            @string.Format("{0:N0} VND", @Model.Product.Price - (@Model.Product.Price * @Model.Product.SalePercent /100))
+                                        }
+                                    </p>
                                     @{
-                                        @string.Format("{0:N0} VND", @Model.Product.Price)
+                                        if (@Model.Product.SalePercent != 0)
+                                        {
+                                            <p class="main-color fs-ml bold mx-lg-4">
+                                                - @Model.Product.SalePercent%
+                                            </p>
+                                        }
                                     }
-                                </p>
-                                        <p class="">
-                                            <i class="fa-solid fa-tags"></i>
-                                    - @Model.Product.SalePercent %
-                                        </p>
+                                </div>
+                                @{
+                                    if (@Model.Product.Price != @Model.Product.Price - (@Model.Product.Price * @Model.Product.SalePercent / 100))
+                                    {
                                         <p class="card-discount">
                                             <i class="fa-solid fa-tags"></i>
-                                            @{
-                                                @string.Format("{0:N0} VND", @Model.Product.Price - (@Model.Product.Price * @Model.Product.SalePercent /100))
-                                            }
+                                            @string.Format("{0:N0} VND", @Model.Product.Price)
                                         </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="">
+                                            <i class="fa-solid fa-tags main-color"></i>
+                                            <span class="text-black-50">Giá gốc siêu sóc</span>
+
+                                        </p>
+                                    }
+                                }
 
                                 <div class="quantity-group align-items-left">
                                     <button type="button"

@@ -56,6 +56,7 @@ namespace G1Food_User.Pages
                 if (apiResponse.Success)
                 {
                     Products = JsonSerializer.Deserialize<List<ProductResponse>>(apiResponse.Data.ToString(), options);
+                    
                 }
                 else
                 {

@@ -127,6 +127,10 @@
     transform: translateY(-12px);
 }
 
+.card-img {
+
+}
+
 .card-product:hover .card-img {
     transform: scale(1.1);
     transition: all 0.3s linear;
@@ -135,9 +139,12 @@
     padding: 16px;
 }
 .card-product-body p {
-    margin-bottom: 8px;
+    /*margin-bottom: 8px;*/
 }
-.card-name a{
+.card-name {
+    margin-bottom: 0;
+}
+.card-name a {
     --font-size-name: 20px;
     color: var(--black-color);
     font-size: var(--font-size-name);
@@ -145,7 +152,8 @@
 }
 .card-description {
     font-size: var(--font-size-md);
-    color: #888;
+    color: #333;
+    margin-bottom: 0;
 }
 .card-price {
     font-size: var(--font-size-lg);

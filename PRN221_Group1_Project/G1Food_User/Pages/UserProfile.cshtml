@@ -41,11 +41,11 @@
                         <tbody class="order-list">
                             @{
                                 int noOrder = 1;
+                               
                                 if(@Model.Orders != null)
                                 {
                                     foreach (var order in @Model.Orders)
                                     {
-                                        
                                         <tr>
                                             <td class="align-middle product-name bold">
                                                 <a href="./OrderDetail?orderID=@order.Id">@noOrder</a>
@@ -67,14 +67,15 @@
                                             <td class="align-middle">@order.Note</td>
                                                 @{
                                                     double totalPrice = 0;
+                                                     double? voucherPercent = 0.05;
                                                     foreach (var orderDetail in order.Details)
                                                     {
                                                         var price = (orderDetail.Price - (orderDetail.Price * (decimal)orderDetail.SalePercent / 100)) * (decimal)orderDetail.Quantity;
                                                         totalPrice += (double)price;
                                                     }
-                                                <td class="align-middle product-total bold main-color">
+                                                <td class="align-middle product-total bold c-main">
                                                     <a href="./OrderDetail?orderID=@order.Id">
-                                                        @string.Format("{0:N0} VND", totalPrice + 30000)
+                                                        @string.Format("{0:N0} VND",  @totalPrice - (@voucherPercent * @totalPrice) + 30000)
                                                     </a>
                                                 </td>
                                                 }

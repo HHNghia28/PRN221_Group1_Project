@@ -14,25 +14,25 @@
             <div class="row">
                 <div class="col-sm-12 mt-5">
                     <div class="owl-carousel owl-theme" id="slider-category">
-                        <a href="Category?cID=b2671dfd-cb89-4d7c-a188-0b55d60783f6" class="item category-item text-center">
+                        <a href="Category?cID=b2671dfd-cb89-4d7c-a188-0b55d60783f6" class="item category-item">
                             <img class="category-img" src="./img/chiken_group.jpg" alt="" />
-                            <span>Gà</span>
+                            <div class="">Gà</div>
                         </a>
-                        <a href="Category?cID=6cb9e642-53b3-4a5d-acda-58bea2a46539" class="item category-item text-center">
+                        <a href="Category?cID=6cb9e642-53b3-4a5d-acda-58bea2a46539" class="item category-item">
                             <img class="category-img" src="./img/rice.jpg" alt="" />
-                            <span>Cơm gà</span>
+                            <div class="">Cơm gà</div>
                         </a>
-                        <a href="Category?cID=abbe0005-f46f-475c-b800-922befdc8488" class="item category-item text-center">
+                        <a href="Category?cID=abbe0005-f46f-475c-b800-922befdc8488" class="item category-item">
                             <img class="category-img" src="./img/drink.jpg"  alt="" />
-                            <span>Nước</span>
+                            <div class="">Nước</div>
                         </a>
-                        <a href="Category?cID=14ef0a63-d3b3-420f-87d7-99cb1315fe61" class="item category-item text-center">
+                        <a href="Category?cID=14ef0a63-d3b3-420f-87d7-99cb1315fe61" class="item category-item">
                             <img class="category-img" src="./img/combo.jpg" alt="" />
-                            <span>Combo</span>
+                            <div class="">Combo</div>
                         </a>
-                        <a href="Category?cID=5bbc85c9-41c9-4d39-a003-9b919ee632f1" class="item category-item text-center">
+                        <a href="Category?cID=5bbc85c9-41c9-4d39-a003-9b919ee632f1" class="item category-item">
                             <img class="category-img" src="./img/hanbager.jpg" alt="" />
-                            <span>Khoai tây chiên</span>
+                            <div class="">Khoai tây chiên</div>
                         </a>
                     </div>
                 </div>
@@ -44,37 +44,71 @@
                     <div class="d-flex justify-content-between align-items-end mt-3">
                         <h4> <i class="fa-solid fa-burger main-color mr-2"></i>Tất cả sản phẩm</h4>
                         <form method="get" class="">
-                            <input name="txtSearch" class="p-2 rounded-1 shadow-sm" type="text" placeholder="Nhập tên sản phẩm" />
+                            <input name="txtSearch" class="p-2 rounded-1 shadow-sm search-input" type="text" placeholder="Nhập tên sản phẩm" />
                             <button class="btn main p-2 m-lg-1 text-white">Tìm kiếm</button>
                         </form>
                     </div>
                     <div class="row mt-1">
                         @{
-                            if(Model.Products != null)
+                            if(Model.Products.Count() > 0)
                             {
                                 foreach(var product in Model.Products)
                                 {
                                     <div class="col-sm-12 col-md-6 col-lg-3 mt-4">
                                         <div class="card-product">
                                             <a href="../ProductDetail?productID=@product.Id"><img class="card-img" src="@product.Image" alt=""></a>
-                                            <div class="card-product-body mt-2">
+                                            <div class="card-product-body">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="card-name max-line-1">
                                                         <a href="../ProductDetail?productID=@product.Id">@product.Name</a>
                                                     </p>
                                                     <i class="fa-regular fa-heart"></i>
                                                 </div>
-                                                <p class="card-description max-line-1">@product.Description</p>
-                                                <p class="card-price"> @{@string.Format("{0:N0} VND", @product.Price)}</p>
-                                                <p class="card-discount"><i class="fa-solid fa-tags"></i>@{
-                                                        @string.Format("{0:N0} VND", @product.Price * (1 - @product.SalePercent / 100))
+                                                    <p class="card-description max-line-1">@product.Description</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="card-price"> 
+                                                    @{
+                                                            @string.Format("{0:N0} VND", @product.Price - (@product.Price * @product.SalePercent /100))
+                                                        }
+                                                        </p>
+                                                    @{
+                                                        if (product.SalePercent != 0)
+                                                        {
+                                                            <p class="main-color fs-3">
+                                                                - @product.SalePercent%
+                                                            </p>
+                                                        }
                                                     }
-                                                </p>
+                                                </div>
+                                                @{
+                                                    if (@product.Price != @product.Price - (@product.Price * @product.SalePercent / 100))
+                                                    {
+                                                        <p class="card-discount">
+                                                            <i class="fa-solid fa-tags"></i>
+                                                            @string.Format("{0:N0} VND", @product.Price)
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="">
+                                                            <i class="fa-solid fa-tags main-color"></i>
+                                                            <span class="text-black-50">Giá gốc siêu sóc</span>
+
+                                                        </p>
+                                                    }
+                                                }
                                                 <a href="../ProductDetail?productID=@product.Id" class="btn full mt-2">Thêm vào giỏ hàng</a>
                                             </div>
                                         </div>
                                     </div>
                                 }
+                            }
+                            else
+                            {
+                                <div class="w-full text-center product-img p-4">
+                                    <img src="~/img/no_product.png" alt="no-product">
+                                    <div class="bold fs-md">Chưa có sản phẩm</div>
+                                </div>
                             }
                         }
                     </div>

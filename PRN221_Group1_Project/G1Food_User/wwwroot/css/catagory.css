@@ -5,24 +5,22 @@
     cursor: pointer;
 }
 
-.category-item + .category-item {
-    margin-left: 16px;
-} 
-
 .category-img {
     border-radius: var(--rounded-sm);
     margin-bottom: 12px;
 }
 
-.category-item span {
+.category-item div {
     font-weight: 500;
+    width: 100% !important;
+    text-align: center !important;
 }
 
 .category-item.active > img {
-    border: 3px solid var(--main-color);
+    border: 3px solid var(--main-color) !important;
 }
 .category-item.active > span {
-    color: var(--main-color);
+    color: var(--main-color) !important;
 }
 .owl-theme .owl-dots {
     position: relative;
@@ -50,4 +48,8 @@
 }
 .card-price {
     font-size: var(--font-size-mml);
+}
+.search-input {
+    border-radius: 6px;
+    padding-left: 6px;
 }
